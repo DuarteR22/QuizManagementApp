@@ -5,16 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/btn_cancelar"
+        android:layout_width="162dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="36dp"
+        android:text="Cancelar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_responder"
+        app:layout_constraintTop_toBottomOf="@+id/tv_resposta_correta_4" />
+
     <TextView
         android:id="@+id/tv_resposta_correta_4"
         android:layout_width="361dp"
         android:layout_height="47dp"
         android:layout_marginStart="3dp"
         android:layout_marginTop="1dp"
-        android:gravity="center"
         android:text="Pergunta"
         android:textSize="22sp"
-        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/rg_respostas_corretas"
         app:layout_constraintTop_toBottomOf="@+id/tv_resposta_correta_3" />
 
@@ -23,10 +31,8 @@
         android:layout_width="361dp"
         android:layout_height="47dp"
         android:layout_marginStart="3dp"
-        android:gravity="center"
         android:text="Pergunta"
         android:textSize="22sp"
-        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/rg_respostas_corretas"
         app:layout_constraintTop_toBottomOf="@+id/tv_resposta_correta_2" />
 
@@ -36,10 +42,8 @@
         android:layout_height="47dp"
         android:layout_marginStart="3dp"
         android:layout_marginTop="3dp"
-        android:gravity="center"
         android:text="Pergunta"
         android:textSize="22sp"
-        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/rg_respostas_corretas"
         app:layout_constraintTop_toBottomOf="@+id/tv_resposta_correta_1" />
 
@@ -49,10 +53,8 @@
         android:layout_height="47dp"
         android:layout_marginStart="3dp"
         android:layout_marginTop="18dp"
-        android:gravity="center"
         android:text="Resposta:"
         android:textSize="22sp"
-        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/rg_respostas_corretas"
         app:layout_constraintTop_toBottomOf="@+id/tv_respostas_titulo3" />
 
@@ -117,4 +119,14 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_responder"
+        android:layout_width="162dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="36dp"
+        android:text="Responder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_resposta_correta_4" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,11 +1,14 @@
 package com.example.quizmanagementapp
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.widget.Button
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.findViewTreeViewModelStoreOwner
 
@@ -20,6 +23,7 @@ class ResolverQuestao : AppCompatActivity() {
     private lateinit var radioButtonResposta2: RadioButton
     private lateinit var radioButtonResposta3: RadioButton
     private lateinit var radioButtonResposta4: RadioButton
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +41,10 @@ class ResolverQuestao : AppCompatActivity() {
         radioButtonResposta3 = findViewById(R.id.rb_resposta_3)
         radioButtonResposta4 = findViewById(R.id.rb_resposta_4)
 
+
+        val btnResponder: Button = findViewById(R.id.btn_responder)
+        val btnCancelar: Button = findViewById(R.id.btn_cancelar)
+
         val rgRespotaCorreta: RadioGroup = findViewById(R.id.rg_respostas_corretas)
         var numeroRespostaCorreta = -1
         val idQuestao = intent.getIntExtra("id_questao", -1)
@@ -44,8 +52,33 @@ class ResolverQuestao : AppCompatActivity() {
 
         val numeroRespostas: Int = questaoAtual!!.numRespostas
 
-        atualizaEditTextRespostas(numeroRespostas)
-        
+        val intentResposta = Intent(this, MainActivity::class.java)
+
+        var resposta1 : String = ""
+        var resposta2 : String = ""
+        var resposta3 : String = ""
+        var resposta4 : String = ""
+        when(numeroRespostas){
+
+            2 -> {
+                resposta1 = questaoAtual.respostas[0]
+                resposta2 = questaoAtual.respostas[1]
+            }
+            3 -> {
+                resposta1 = questaoAtual.respostas[0]
+                resposta2 = questaoAtual.respostas[1]
+                resposta3 = questaoAtual.respostas[2]
+            }
+            4 -> {
+                resposta1 = questaoAtual.respostas[0]
+                resposta2 = questaoAtual.respostas[1]
+                resposta3 = questaoAtual.respostas[2]
+                resposta4 = questaoAtual.respostas[3]
+            }
+        }
+        textViewEnunciado.setText(questaoAtual.pergunta)
+        atualizaEditTextRespostas(numeroRespostas, resposta1, resposta2, resposta3, resposta4)
+
         rgRespotaCorreta.setOnCheckedChangeListener{group, checkedId ->
             val respostaSelecionadaId: Int = rgRespotaCorreta.checkedRadioButtonId
 
@@ -59,12 +92,27 @@ class ResolverQuestao : AppCompatActivity() {
                 numeroRespostaCorreta = 4
         }
 
+
+
+        btnResponder.setOnClickListener{
+            if(numeroRespostaCorreta == questaoAtual.respostaCorreta){
+
+                Toast.makeText(this, "Resposta Correta!", Toast.LENGTH_SHORT).show()
+                startActivity(intentResposta)
+            }
+        }
+        btnCancelar.setOnClickListener{
+            startActivity(intentResposta)
+        }
+
     }
-    fun atualizaEditTextRespostas(count: Int){
+    fun atualizaEditTextRespostas(count: Int, resposta1: String, resposta2: String, resposta3: String, resposta4: String){
 
         if(count == 2){
             textViewResposta1.visibility = VISIBLE
             textViewResposta2.visibility = VISIBLE
+            textViewResposta1.setText(resposta1)
+            textViewResposta2.setText(resposta2)
             textViewResposta3.visibility = GONE
             textViewResposta4.visibility = GONE
             radioButtonResposta1.visibility = VISIBLE
@@ -76,6 +124,9 @@ class ResolverQuestao : AppCompatActivity() {
             textViewResposta1.visibility = VISIBLE
             textViewResposta2.visibility = VISIBLE
             textViewResposta3.visibility = VISIBLE
+            textViewResposta1.setText(resposta1)
+            textViewResposta2.setText(resposta2)
+            textViewResposta3.setText(resposta3)
             textViewResposta4.visibility = GONE
             radioButtonResposta1.visibility = VISIBLE
             radioButtonResposta2.visibility = VISIBLE
@@ -87,6 +138,10 @@ class ResolverQuestao : AppCompatActivity() {
             textViewResposta2.visibility = VISIBLE
             textViewResposta3.visibility = VISIBLE
             textViewResposta4.visibility = VISIBLE
+            textViewResposta1.setText(resposta1)
+            textViewResposta2.setText(resposta2)
+            textViewResposta3.setText(resposta3)
+            textViewResposta4.setText(resposta4)
             radioButtonResposta1.visibility = VISIBLE
             radioButtonResposta2.visibility = VISIBLE
             radioButtonResposta3.visibility = VISIBLE

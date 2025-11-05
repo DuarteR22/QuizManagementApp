@@ -118,7 +118,7 @@ class InserirQuestao : AppCompatActivity(){
                     else{
                         val respostasLista = listOf(editTextResposta1Final,editTextResposta2Final, editTextResposta3Final, editTextResposta4Final)
                         val questao = Questao(editTextPerguntaFinal, 3,respostasLista, numeroRespostaCorreta)
-                        gereQuestoes.adicionarQuestao(questao)
+                        GereQuestoes.adicionarQuestao(questao)
                         Toast.makeText(this, "Questao guardada com sucesso!", Toast.LENGTH_SHORT).show()
 
                         startActivity(intentGuardar)
@@ -139,7 +139,7 @@ class InserirQuestao : AppCompatActivity(){
                     else{
                         val respostasLista = listOf(editTextResposta1Final,editTextResposta2Final, editTextResposta3Final, editTextResposta4Final)
                         val questao = Questao(editTextPerguntaFinal, 3,respostasLista, numeroRespostaCorreta)
-                        gereQuestoes.adicionarQuestao(questao)
+                        GereQuestoes.adicionarQuestao(questao)
                         Toast.makeText(this, "Questao guardada com sucesso!", Toast.LENGTH_SHORT).show()
                         startActivity(intentGuardar)
                     }
