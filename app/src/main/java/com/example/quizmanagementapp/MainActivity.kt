@@ -11,6 +11,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 
 import com.example.quizmanagementapp.ui.theme.QuizManagementAppTheme
+import java.sql.Types.NULL
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,13 +22,31 @@ class MainActivity : AppCompatActivity() {
         val btnInserirPergunta: Button = findViewById(R.id.btn_inserir_questao)
 
         val editTextIndice: EditText = findViewById(R.id.et_indice_questao)
-
+        val btnResolverPergunta: Button = findViewById(R.id.btn_resolve_questao)
         btnInserirQuiz.setOnClickListener {
 
             val intentQuiz = Intent(this, InserirQuiz::class.java)
             startActivity(intentQuiz)
         }
+        btnInserirPergunta.setOnClickListener{
+            val intentPergunta = Intent(this, InserirQuestao::class.java)
+            startActivity(intentPergunta)
+        }
 
+        btnResolverPergunta.setOnClickListener{
+            var editTextIndiceFinal = editTextIndice.text.toString().trim()
+            val id = editTextIndiceFinal.toInt()
+            if (!editTextIndiceFinal.isEmpty()){
+                if (id > 0){
 
+                    val questaoEncontrada = GereQuestoes.encontraQuestao(id)
+                    if (questaoEncontrada != null){
+                        val intentResolver = Intent(this, ResolverQuestao::class.java)
+                        intentResolver.putExtra("id_questao",id)
+                        startActivity(intentResolver)
+                    }
+                }
+            }
+        }
     }
 }

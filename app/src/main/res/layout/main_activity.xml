@@ -83,13 +83,13 @@
         android:hint="Índice"
         android:inputType="number"
         android:minHeight="48dp"
-        app:layout_constraintEnd_toStartOf="@+id/btn_resolve_question"
+        app:layout_constraintEnd_toStartOf="@+id/btn_resolve_questao"
         app:layout_constraintHorizontal_weight="2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_titulo_questao" />
 
     <Button
-        android:id="@+id/btn_resolve_question"
+        android:id="@+id/btn_resolve_questao"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Resolver"
