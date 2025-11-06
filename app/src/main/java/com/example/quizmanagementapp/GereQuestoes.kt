@@ -1,5 +1,6 @@
 package com.example.quizmanagementapp
 import android.widget.Toast
+import com.example.quizmanagementapp.GereQuiz.listaQuizzes
 
 object GereQuestoes {
 
@@ -15,4 +16,9 @@ object GereQuestoes {
         else
             return null
     }
+    fun numeroQuestoes(): Int{
+
+        return listaQuestoes.count()
+    }
+
 }

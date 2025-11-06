@@ -14,15 +14,12 @@ import androidx.lifecycle.findViewTreeViewModelStoreOwner
 
 class ResolverQuestao : AppCompatActivity() {
 
-    private lateinit var textViewResposta1: TextView
-    private lateinit var textViewResposta2: TextView
-    private lateinit var textViewResposta3: TextView
-    private lateinit var textViewResposta4: TextView
 
-    private lateinit var radioButtonResposta1: RadioButton
-    private lateinit var radioButtonResposta2: RadioButton
-    private lateinit var radioButtonResposta3: RadioButton
-    private lateinit var radioButtonResposta4: RadioButton
+
+    private lateinit var buttonResposta1: Button
+    private lateinit var buttonResposta2: Button
+    private lateinit var buttonResposta3: Button
+    private lateinit var buttonResposta4: Button
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,21 +28,11 @@ class ResolverQuestao : AppCompatActivity() {
 
 
         val textViewEnunciado: TextView = findViewById(R.id.tv_enunciado_pergunta)
-        textViewResposta1 = findViewById(R.id.tv_resposta_correta_1)
-        textViewResposta2 = findViewById(R.id.tv_resposta_correta_2)
-        textViewResposta3 = findViewById(R.id.tv_resposta_correta_3)
-        textViewResposta4 = findViewById(R.id.tv_resposta_correta_4)
+        buttonResposta1 = findViewById(R.id.btn_resposta_1)
+        buttonResposta2 = findViewById(R.id.btn_resposta_2)
+        buttonResposta3 = findViewById(R.id.btn_resposta_3)
+        buttonResposta4 = findViewById(R.id.btn_resposta_4)
 
-        radioButtonResposta1 = findViewById(R.id.rb_resposta_1)
-        radioButtonResposta2 = findViewById(R.id.rb_resposta_2)
-        radioButtonResposta3 = findViewById(R.id.rb_resposta_3)
-        radioButtonResposta4 = findViewById(R.id.rb_resposta_4)
-
-
-        val btnResponder: Button = findViewById(R.id.btn_responder)
-        val btnCancelar: Button = findViewById(R.id.btn_cancelar)
-
-        val rgRespotaCorreta: RadioGroup = findViewById(R.id.rg_respostas_corretas)
         var numeroRespostaCorreta = -1
         val idQuestao = intent.getIntExtra("id_questao", -1)
         val questaoAtual = GereQuestoes.encontraQuestao(idQuestao)
@@ -78,74 +65,99 @@ class ResolverQuestao : AppCompatActivity() {
         }
         textViewEnunciado.setText(questaoAtual.pergunta)
         atualizaEditTextRespostas(numeroRespostas, resposta1, resposta2, resposta3, resposta4)
+        numeroRespostaCorreta = questaoAtual.respostaCorreta
+        when(numeroRespostaCorreta){
 
-        rgRespotaCorreta.setOnCheckedChangeListener{group, checkedId ->
-            val respostaSelecionadaId: Int = rgRespotaCorreta.checkedRadioButtonId
-
-            if(respostaSelecionadaId == R.id.rb_resposta_1)
-                numeroRespostaCorreta = 1
-            else if(respostaSelecionadaId == R.id.rb_resposta_2)
-                numeroRespostaCorreta = 2
-            else if(respostaSelecionadaId == R.id.rb_resposta_3)
-                numeroRespostaCorreta = 3
-            else if(respostaSelecionadaId == R.id.rb_resposta_4)
-                numeroRespostaCorreta = 4
-        }
-
-
-
-        btnResponder.setOnClickListener{
-            if(numeroRespostaCorreta == questaoAtual.respostaCorreta){
-
-                Toast.makeText(this, "Resposta Correta!", Toast.LENGTH_SHORT).show()
-                startActivity(intentResposta)
+            1 -> {
+                buttonResposta1.setOnClickListener{
+                    Toast.makeText(this, "Resposta Correta!", Toast.LENGTH_SHORT).show()
+                    startActivity(intentResposta)
+                }
+                buttonResposta2.setOnClickListener {
+                    Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                }
+                buttonResposta3.setOnClickListener {
+                    Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                }
+                buttonResposta4.setOnClickListener {
+                    Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                }
+            }
+            2 -> {
+                buttonResposta1.setOnClickListener{
+                    Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                }
+                buttonResposta2.setOnClickListener{
+                    Toast.makeText(this, "Resposta Correta!", Toast.LENGTH_SHORT).show()
+                    startActivity(intentResposta)
+                }
+                buttonResposta3.setOnClickListener {
+                    Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                }
+                buttonResposta4.setOnClickListener {
+                    Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                }
+            }
+            3 -> {
+                buttonResposta1.setOnClickListener{
+                    Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                }
+                buttonResposta2.setOnClickListener {
+                    Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                }
+                buttonResposta3.setOnClickListener{
+                    Toast.makeText(this, "Resposta Correta!", Toast.LENGTH_SHORT).show()
+                    startActivity(intentResposta)
+                }
+                buttonResposta4.setOnClickListener {
+                    Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                }
+            }
+            4 -> {
+                buttonResposta1.setOnClickListener{
+                    Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                }
+                buttonResposta2.setOnClickListener {
+                    Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                }
+                buttonResposta3.setOnClickListener {
+                    Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                }
+                buttonResposta4.setOnClickListener{
+                    Toast.makeText(this, "Resposta Correta!", Toast.LENGTH_SHORT).show()
+                    startActivity(intentResposta)
+                }
             }
         }
-        btnCancelar.setOnClickListener{
-            startActivity(intentResposta)
-        }
-
     }
     fun atualizaEditTextRespostas(count: Int, resposta1: String, resposta2: String, resposta3: String, resposta4: String){
 
         if(count == 2){
-            textViewResposta1.visibility = VISIBLE
-            textViewResposta2.visibility = VISIBLE
-            textViewResposta1.setText(resposta1)
-            textViewResposta2.setText(resposta2)
-            textViewResposta3.visibility = GONE
-            textViewResposta4.visibility = GONE
-            radioButtonResposta1.visibility = VISIBLE
-            radioButtonResposta2.visibility = VISIBLE
-            radioButtonResposta3.visibility = GONE
-            radioButtonResposta4.visibility = GONE
+            buttonResposta1.visibility = VISIBLE
+            buttonResposta2.visibility = VISIBLE
+            buttonResposta3.visibility = GONE
+            buttonResposta4.visibility = GONE
+            buttonResposta1.setText(resposta1)
+            buttonResposta2.setText(resposta2)
         }
         else if (count == 3){
-            textViewResposta1.visibility = VISIBLE
-            textViewResposta2.visibility = VISIBLE
-            textViewResposta3.visibility = VISIBLE
-            textViewResposta1.setText(resposta1)
-            textViewResposta2.setText(resposta2)
-            textViewResposta3.setText(resposta3)
-            textViewResposta4.visibility = GONE
-            radioButtonResposta1.visibility = VISIBLE
-            radioButtonResposta2.visibility = VISIBLE
-            radioButtonResposta3.visibility = VISIBLE
-            radioButtonResposta4.visibility = GONE
+            buttonResposta1.visibility = VISIBLE
+            buttonResposta2.visibility = VISIBLE
+            buttonResposta3.visibility = VISIBLE
+            buttonResposta4.visibility = GONE
+            buttonResposta1.setText(resposta1)
+            buttonResposta2.setText(resposta2)
+            buttonResposta3.setText(resposta3)
         }
         else if (count == 4){
-            textViewResposta1.visibility = VISIBLE
-            textViewResposta2.visibility = VISIBLE
-            textViewResposta3.visibility = VISIBLE
-            textViewResposta4.visibility = VISIBLE
-            textViewResposta1.setText(resposta1)
-            textViewResposta2.setText(resposta2)
-            textViewResposta3.setText(resposta3)
-            textViewResposta4.setText(resposta4)
-            radioButtonResposta1.visibility = VISIBLE
-            radioButtonResposta2.visibility = VISIBLE
-            radioButtonResposta3.visibility = VISIBLE
-            radioButtonResposta4.visibility = VISIBLE
+            buttonResposta1.visibility = VISIBLE
+            buttonResposta2.visibility = VISIBLE
+            buttonResposta3.visibility = VISIBLE
+            buttonResposta4.visibility = VISIBLE
+            buttonResposta1.setText(resposta1)
+            buttonResposta2.setText(resposta2)
+            buttonResposta3.setText(resposta3)
+            buttonResposta4.setText(resposta4)
         }
     }
 }

@@ -14,5 +14,9 @@ object GereQuiz{
         else
             return null
     }
+    fun numeroQuizzes(): Int{
+
+        return listaQuizzes.count()
+    }
 
 }

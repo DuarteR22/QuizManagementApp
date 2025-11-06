@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_quizzes_count"
+        android:id="@+id/tv_numero_quizzes"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -59,7 +59,7 @@
         android:layout_marginTop="16dp"
         android:text="Questões: 0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_quizzes_count"
+        app:layout_constraintTop_toBottomOf="@id/tv_numero_quizzes"
         tools:text="Questões: 23" />
 
     <TextView

@@ -23,6 +23,12 @@ class MainActivity : AppCompatActivity() {
 
         val editTextIndice: EditText = findViewById(R.id.et_indice_questao)
         val btnResolverPergunta: Button = findViewById(R.id.btn_resolve_questao)
+
+        val textViewQuizzes: TextView = findViewById(R.id.tv_numero_quizzes)
+        val textViewQuestoes: TextView = findViewById(R.id.tv_numero_questoes)
+
+        textViewQuizzes.setText("Numero de Quizzes: "+ GereQuiz.numeroQuizzes().toString())
+        textViewQuestoes.setText("Numero de Questões: " + GereQuestoes.numeroQuestoes().toString())
         btnInserirQuiz.setOnClickListener {
 
             val intentQuiz = Intent(this, InserirQuiz::class.java)

@@ -6,101 +6,51 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/btn_cancelar"
-        android:layout_width="162dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="36dp"
-        android:text="Cancelar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn_responder"
-        app:layout_constraintTop_toBottomOf="@+id/tv_resposta_correta_4" />
+        android:id="@+id/btn_resposta_3"
+        android:layout_width="337dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="12dp"
+        android:text="Responder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_resposta_2" />
 
-    <TextView
-        android:id="@+id/tv_resposta_correta_4"
-        android:layout_width="361dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="1dp"
-        android:text="Pergunta"
-        android:textSize="22sp"
-        app:layout_constraintStart_toEndOf="@+id/rg_respostas_corretas"
-        app:layout_constraintTop_toBottomOf="@+id/tv_resposta_correta_3" />
+    <Button
+        android:id="@+id/btn_resposta_4"
+        android:layout_width="337dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="13dp"
+        android:text="Responder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_resposta_3" />
 
-    <TextView
-        android:id="@+id/tv_resposta_correta_3"
-        android:layout_width="361dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="3dp"
-        android:text="Pergunta"
-        android:textSize="22sp"
-        app:layout_constraintStart_toEndOf="@+id/rg_respostas_corretas"
-        app:layout_constraintTop_toBottomOf="@+id/tv_resposta_correta_2" />
-
-    <TextView
-        android:id="@+id/tv_resposta_correta_2"
-        android:layout_width="361dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="3dp"
-        android:text="Pergunta"
-        android:textSize="22sp"
-        app:layout_constraintStart_toEndOf="@+id/rg_respostas_corretas"
-        app:layout_constraintTop_toBottomOf="@+id/tv_resposta_correta_1" />
-
-    <TextView
-        android:id="@+id/tv_resposta_correta_1"
-        android:layout_width="361dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="18dp"
-        android:text="Resposta:"
-        android:textSize="22sp"
-        app:layout_constraintStart_toEndOf="@+id/rg_respostas_corretas"
+    <Button
+        android:id="@+id/btn_resposta_1"
+        android:layout_width="337dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="16dp"
+        android:text="Responder"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_respostas_titulo3" />
 
-    <RadioGroup
-        android:id="@+id/rg_respostas_corretas"
-        android:layout_width="30dp"
-        android:layout_height="192dp"
-        android:layout_marginTop="18dp"
+    <Button
+        android:id="@+id/btn_resposta_2"
+        android:layout_width="337dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="16dp"
+        android:text="Responder"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_respostas_titulo3">
-
-        <RadioButton
-            android:id="@+id/rb_resposta_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:text="" />
-
-        <RadioButton
-            android:id="@+id/rb_resposta_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:text="" />
-
-        <RadioButton
-            android:id="@+id/rb_resposta_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:text="" />
-
-        <RadioButton
-            android:id="@+id/rb_resposta_4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:text="" />
-    </RadioGroup>
+        app:layout_constraintTop_toBottomOf="@+id/btn_resposta_1" />
 
     <TextView
         android:id="@+id/tv_respostas_titulo3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="148dp"
+        android:layout_marginTop="120dp"
         android:text="Resposta Correta:"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -120,13 +70,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btn_responder"
-        android:layout_width="162dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="36dp"
-        android:text="Responder"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_resposta_correta_4" />
 </androidx.constraintlayout.widget.ConstraintLayout>
