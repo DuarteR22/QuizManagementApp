@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -43,7 +44,7 @@ class MainActivity : AppCompatActivity() {
             var editTextIndiceFinal = editTextIndice.text.toString().trim()
             val id = editTextIndiceFinal.toInt()
             if (!editTextIndiceFinal.isEmpty()){
-                if (id > 0){
+                if (id > 0 ){
 
                     val questaoEncontrada = GereQuestoes.encontraQuestao(id)
                     if (questaoEncontrada != null){
@@ -51,6 +52,8 @@ class MainActivity : AppCompatActivity() {
                         intentResolver.putExtra("id_questao",id)
                         startActivity(intentResolver)
                     }
+                    else
+                        Toast.makeText(this, "ID da questão não existe ou erro de escrita!", Toast.LENGTH_SHORT).show()
                 }
             }
         }

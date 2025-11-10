@@ -42,11 +42,10 @@ class InserirQuiz : AppCompatActivity() {
                 val quiz = Quiz(tituloQuiz, descricaoQuiz, tempoQuizFinal)
                 GereQuiz.adicionarQuiz(quiz)
                 Toast.makeText(this, "Quiz guardado com sucesso!", Toast.LENGTH_SHORT).show()
-                startActivity(intentCancelar)
-            }
+                finish()            }
         }
         btnCancelarQuiz.setOnClickListener{
-            startActivity(intentCancelar)
+            finish()
         }
     }
 

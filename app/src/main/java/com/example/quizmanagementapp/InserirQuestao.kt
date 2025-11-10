@@ -103,7 +103,7 @@ class InserirQuestao : AppCompatActivity(){
                         val questao = Questao(editTextPerguntaFinal, 2,respostasLista, numeroRespostaCorreta)
                         GereQuestoes.adicionarQuestao(questao)
                         Toast.makeText(this, "Questao guardada com sucesso!", Toast.LENGTH_SHORT).show()
-                        startActivity(intentGuardar)
+                        finish()
                     }
                     3 -> if (editTextResposta1Final.isEmpty() || editTextResposta2Final.isEmpty()||editTextPerguntaFinal.isEmpty() || numeroRespostaCorreta == -1 || editTextResposta3Final.isEmpty()){
                         if (editTextPerguntaFinal.isEmpty())
@@ -121,7 +121,7 @@ class InserirQuestao : AppCompatActivity(){
                         GereQuestoes.adicionarQuestao(questao)
                         Toast.makeText(this, "Questao guardada com sucesso!", Toast.LENGTH_SHORT).show()
 
-                        startActivity(intentGuardar)
+                        finish()
 
                     }
                     4 -> if (editTextResposta1Final.isEmpty() || editTextResposta2Final.isEmpty()||editTextPerguntaFinal.isEmpty() || numeroRespostaCorreta == -1 || editTextResposta3Final.isEmpty() || editTextResposta4Final.isEmpty()){
@@ -141,13 +141,13 @@ class InserirQuestao : AppCompatActivity(){
                         val questao = Questao(editTextPerguntaFinal, 3,respostasLista, numeroRespostaCorreta)
                         GereQuestoes.adicionarQuestao(questao)
                         Toast.makeText(this, "Questao guardada com sucesso!", Toast.LENGTH_SHORT).show()
-                        startActivity(intentGuardar)
+                        finish()
                     }
                 }
             }
         }
         btnCancelarPergunta.setOnClickListener(){
-            startActivity(intentGuardar)
+            finish()
         }
     }
 

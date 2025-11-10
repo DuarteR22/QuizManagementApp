@@ -71,7 +71,7 @@ class ResolverQuestao : AppCompatActivity() {
             1 -> {
                 buttonResposta1.setOnClickListener{
                     Toast.makeText(this, "Resposta Correta!", Toast.LENGTH_SHORT).show()
-                    startActivity(intentResposta)
+                    finish()
                 }
                 buttonResposta2.setOnClickListener {
                     Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
@@ -89,8 +89,7 @@ class ResolverQuestao : AppCompatActivity() {
                 }
                 buttonResposta2.setOnClickListener{
                     Toast.makeText(this, "Resposta Correta!", Toast.LENGTH_SHORT).show()
-                    startActivity(intentResposta)
-                }
+                    finish()                }
                 buttonResposta3.setOnClickListener {
                     Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
                 }
@@ -107,8 +106,7 @@ class ResolverQuestao : AppCompatActivity() {
                 }
                 buttonResposta3.setOnClickListener{
                     Toast.makeText(this, "Resposta Correta!", Toast.LENGTH_SHORT).show()
-                    startActivity(intentResposta)
-                }
+                    finish()                }
                 buttonResposta4.setOnClickListener {
                     Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
                 }
@@ -125,7 +123,7 @@ class ResolverQuestao : AppCompatActivity() {
                 }
                 buttonResposta4.setOnClickListener{
                     Toast.makeText(this, "Resposta Correta!", Toast.LENGTH_SHORT).show()
-                    startActivity(intentResposta)
+                    finish()
                 }
             }
         }
