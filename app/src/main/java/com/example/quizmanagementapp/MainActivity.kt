@@ -42,18 +42,25 @@ class MainActivity : AppCompatActivity() {
 
         btnResolverPergunta.setOnClickListener{
             var editTextIndiceFinal = editTextIndice.text.toString().trim()
-            val id = editTextIndiceFinal.toInt()
-            if (!editTextIndiceFinal.isEmpty()){
-                if (id > 0 ){
+            if (editTextIndiceFinal.isNullOrEmpty())
+                editTextIndice.error = "todos os campos são obrigatórios!"
+            else {
+                val id = editTextIndiceFinal.toInt()
+                if (!editTextIndiceFinal.isEmpty()) {
+                    if (id > 0) {
 
-                    val questaoEncontrada = GereQuestoes.encontraQuestao(id)
-                    if (questaoEncontrada != null){
-                        val intentResolver = Intent(this, ResolverQuestao::class.java)
-                        intentResolver.putExtra("id_questao",id)
-                        startActivity(intentResolver)
+                        val questaoEncontrada = GereQuestoes.encontraQuestao(id)
+                        if (questaoEncontrada != null) {
+                            val intentResolver = Intent(this, ResolverQuestao::class.java)
+                            intentResolver.putExtra("id_questao", id)
+                            startActivity(intentResolver)
+                        } else
+                            Toast.makeText(
+                                this,
+                                "ID da questão não existe ou erro de escrita!",
+                                Toast.LENGTH_SHORT
+                            ).show()
                     }
-                    else
-                        Toast.makeText(this, "ID da questão não existe ou erro de escrita!", Toast.LENGTH_SHORT).show()
                 }
             }
         }
