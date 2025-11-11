@@ -138,7 +138,7 @@ class InserirQuestao : AppCompatActivity(){
                     }
                     else{
                         val respostasLista = listOf(editTextResposta1Final,editTextResposta2Final, editTextResposta3Final, editTextResposta4Final)
-                        val questao = Questao(editTextPerguntaFinal, 3,respostasLista, numeroRespostaCorreta)
+                        val questao = Questao(editTextPerguntaFinal, 4,respostasLista, numeroRespostaCorreta)
                         GereQuestoes.adicionarQuestao(questao)
                         Toast.makeText(this, "Questao guardada com sucesso!", Toast.LENGTH_SHORT).show()
                         finish()

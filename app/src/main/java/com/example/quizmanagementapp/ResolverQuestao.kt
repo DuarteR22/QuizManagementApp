@@ -32,14 +32,13 @@ class ResolverQuestao : AppCompatActivity() {
         buttonResposta2 = findViewById(R.id.btn_resposta_2)
         buttonResposta3 = findViewById(R.id.btn_resposta_3)
         buttonResposta4 = findViewById(R.id.btn_resposta_4)
-
+        val buttonCancelar: Button = findViewById(R.id.btn_cancelar_resposta)
         var numeroRespostaCorreta = -1
         val idQuestao = intent.getIntExtra("id_questao", -1)
         val questaoAtual = GereQuestoes.encontraQuestao(idQuestao)
 
         val numeroRespostas: Int = questaoAtual!!.numRespostas
 
-        val intentResposta = Intent(this, MainActivity::class.java)
 
         var resposta1 : String = ""
         var resposta2 : String = ""
@@ -126,6 +125,9 @@ class ResolverQuestao : AppCompatActivity() {
                     finish()
                 }
             }
+        }
+        buttonCancelar.setOnClickListener {
+            finish()
         }
     }
     fun atualizaEditTextRespostas(count: Int, resposta1: String, resposta2: String, resposta3: String, resposta4: String){
