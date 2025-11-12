@@ -15,6 +15,10 @@ import com.example.quizmanagementapp.ui.theme.QuizManagementAppTheme
 import java.sql.Types.NULL
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var textViewQuizzes: TextView
+    private lateinit var textViewQuestoes: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
@@ -25,8 +29,8 @@ class MainActivity : AppCompatActivity() {
         val editTextIndice: EditText = findViewById(R.id.et_indice_questao)
         val btnResolverPergunta: Button = findViewById(R.id.btn_resolve_questao)
 
-        val textViewQuizzes: TextView = findViewById(R.id.tv_numero_quizzes)
-        val textViewQuestoes: TextView = findViewById(R.id.tv_numero_questoes)
+        textViewQuizzes = findViewById(R.id.tv_numero_quizzes)
+        textViewQuestoes = findViewById(R.id.tv_numero_questoes)
 
         textViewQuizzes.setText("Numero de Quizzes: "+ GereQuiz.numeroQuizzes().toString())
         textViewQuestoes.setText("Numero de Questões: " + GereQuestoes.numeroQuestoes().toString())
@@ -64,5 +68,10 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+    override fun onResume(){
+        super.onResume()
+        textViewQuizzes.setText("Numero de Quizzes: "+ GereQuiz.numeroQuizzes().toString())
+        textViewQuestoes.setText("Numero de Questões: " + GereQuestoes.numeroQuestoes().toString())
     }
 }
