@@ -1,4 +1,4 @@
-package com.example.quizmanagementapp
+package com.example.duarteramosquizgame
 
 import org.junit.Test
 

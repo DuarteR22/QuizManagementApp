@@ -27,31 +27,31 @@
             android:name=".InserirQuiz"
             android:exported="true"
             android:label="QuizManagementApp">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".InserirQuestao"
             android:exported="true"
             android:label="QuizManagementApp">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ResolverQuestao"
             android:exported="true"
             android:label="QuizManagementApp">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        </activity>
+        <activity
+            android:name=".QuestaoHelper"
+            android:exported="true"
+            android:label="QuizManagementApp">
+        </activity>
+        <activity
+            android:name=".QuizHelper"
+            android:exported="true"
+            android:label="QuizManagementApp">
+        </activity>
+        <activity
+            android:name=".QuizOpenHelper"
+            android:exported="true"
+            android:label="QuizManagementApp">
         </activity>
 
 

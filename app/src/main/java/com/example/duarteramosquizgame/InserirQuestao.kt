@@ -1,4 +1,4 @@
-package com.example.quizmanagementapp
+package com.example.duarteramosquizgame
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,6 +10,7 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.duarteramosquizgame.R
 
 class InserirQuestao : AppCompatActivity(){
 
@@ -77,6 +78,7 @@ class InserirQuestao : AppCompatActivity(){
             else
                 numeroRespostaCorreta = -1
         }
+        /**
         btnGuardarPergunta.setOnClickListener(){
             var editTextPerguntaFinal = editTextPergunta.text.toString().trim()
             var editTextResposta1Final = editTextResposta1.text.toString().trim()
@@ -149,6 +151,7 @@ class InserirQuestao : AppCompatActivity(){
         btnCancelarPergunta.setOnClickListener(){
             finish()
         }
+         **/
     }
 
     fun atualizaEditTextRespostas(count: Int){

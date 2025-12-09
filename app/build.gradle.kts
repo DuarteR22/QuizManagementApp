@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.quizmanagementapp"
+    namespace = "com.example.duarteramosquizgame"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.quizmanagementapp"
+        applicationId = "com.example.duarteramosquizgame"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
@@ -52,6 +52,8 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
+    implementation("androidx.recyclerview:recyclerview:1.4.0")
+    implementation("com.google.android.material:material:1.13.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -1,16 +1,13 @@
-package com.example.quizmanagementapp
+package com.example.duarteramosquizgame
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Button
-import android.widget.RadioButton
-import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.findViewTreeViewModelStoreOwner
+import com.example.duarteramosquizgame.R
 
 class ResolverQuestao : AppCompatActivity() {
 
@@ -35,6 +32,7 @@ class ResolverQuestao : AppCompatActivity() {
         val buttonCancelar: Button = findViewById(R.id.btn_cancelar_resposta)
         var numeroRespostaCorreta = -1
         val idQuestao = intent.getIntExtra("id_questao", -1)
+        /**
         val questaoAtual = GereQuestoes.encontraQuestao(idQuestao)
 
         val numeroRespostas: Int = questaoAtual!!.numRespostas
@@ -129,6 +127,7 @@ class ResolverQuestao : AppCompatActivity() {
         buttonCancelar.setOnClickListener {
             finish()
         }
+        */
     }
     fun atualizaEditTextRespostas(count: Int, resposta1: String, resposta2: String, resposta3: String, resposta4: String){
 

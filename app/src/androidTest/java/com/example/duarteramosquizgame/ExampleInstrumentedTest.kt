@@ -1,4 +1,4 @@
-package com.example.quizmanagementapp
+package com.example.duarteramosquizgame
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

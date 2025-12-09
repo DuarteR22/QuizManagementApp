@@ -1,4 +1,4 @@
-package com.example.quizmanagementapp
+package com.example.duarteramosquizgame
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,13 +6,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-
-import com.example.quizmanagementapp.ui.theme.QuizManagementAppTheme
-import java.sql.Types.NULL
+import com.example.duarteramosquizgame.R
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,18 +19,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 
-        val btnInserirQuiz: Button = findViewById(R.id.btn_inserir_quiz)
-        val btnInserirPergunta: Button = findViewById(R.id.btn_inserir_questao)
+        val fabAdicionarQuiz: FloatingActionButton = findViewById(R.id.fab_add_quiz)
+        val intentAdicionarQuiz = Intent(this, InserirQuiz::class.java)
 
-        val editTextIndice: EditText = findViewById(R.id.et_indice_questao)
-        val btnResolverPergunta: Button = findViewById(R.id.btn_resolve_questao)
-
-        textViewQuizzes = findViewById(R.id.tv_numero_quizzes)
-        textViewQuestoes = findViewById(R.id.tv_numero_questoes)
-
-        textViewQuizzes.setText("Numero de Quizzes: "+ GereQuiz.numeroQuizzes().toString())
-        textViewQuestoes.setText("Numero de Questões: " + GereQuestoes.numeroQuestoes().toString())
-        btnInserirQuiz.setOnClickListener {
+        fabAdicionarQuiz.setOnClickListener{
+            startActivity(intentAdicionarQuiz)
+        }
+        /**btnInserirQuiz.setOnClickListener {
 
             val intentQuiz = Intent(this, InserirQuiz::class.java)
             startActivity(intentQuiz)
@@ -67,11 +58,9 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-        }
+        }**/
     }
     override fun onResume(){
         super.onResume()
-        textViewQuizzes.setText("Numero de Quizzes: "+ GereQuiz.numeroQuizzes().toString())
-        textViewQuestoes.setText("Numero de Questões: " + GereQuestoes.numeroQuestoes().toString())
     }
 }
