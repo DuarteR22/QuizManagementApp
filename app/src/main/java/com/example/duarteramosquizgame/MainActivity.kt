@@ -7,6 +7,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import com.example.duarteramosquizgame.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -14,6 +15,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var textViewQuizzes: TextView
     private lateinit var textViewQuestoes: TextView
+    private lateinit var recyclerViewQuizzes: RecyclerView
+    private lateinit var quizHelper: QuizHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

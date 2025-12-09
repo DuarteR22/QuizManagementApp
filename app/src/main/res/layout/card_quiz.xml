@@ -21,7 +21,7 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/inner_card_layout"
+            android:id="@+id/quiz_icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="12dp"
@@ -49,12 +49,12 @@
                 app:layout_constraintEnd_toStartOf="@id/button_quiz_menu"/>
 
             <TextView
-                android:id="@+id/textView_quiz_details"
+                android:id="@+id/textView_quiz_description"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:textSize="14sp"
-                android:text="4 Questões | 60 segundos"
+                android:text="Descricao do quiz"
                 app:layout_constraintTop_toBottomOf="@id/textView_quiz_title"
                 app:layout_constraintStart_toEndOf="@id/icon_quiz"
                 app:layout_constraintEnd_toStartOf="@id/button_quiz_menu"/>
