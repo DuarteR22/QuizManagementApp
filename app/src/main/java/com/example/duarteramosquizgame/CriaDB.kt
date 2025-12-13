@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.provider.BaseColumns
 
-class QuizOpenHelper (context: Context) : SQLiteOpenHelper(
+class CriaDB (context: Context) : SQLiteOpenHelper(
     context, DATABASE_NAME, null, DATABASE_VERSION
 ){
     //Atributos da tabela quizzes

@@ -21,20 +21,22 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/quiz_icon"
+            android:id="@+id/quiz_layout_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="12dp"
-            android:background="?android:attr/selectableItemBackground"> <ImageView
-            android:id="@+id/icon_quiz"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:src="@drawable/ic_quiz"
-            android:contentDescription="Ícone do Quiz"
-            app:tint="@color/design_default_color_primary"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            android:background="?android:attr/selectableItemBackground">
+
+            <ImageView
+                android:id="@+id/icon_quiz"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_quiz"
+                android:contentDescription="Ícone do Quiz"
+                app:tint="@color/design_default_color_primary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
             <TextView
                 android:id="@+id/textView_quiz_title"
@@ -46,25 +48,34 @@
                 tools:text="Nome do Quiz Aqui"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toEndOf="@id/icon_quiz"
-                app:layout_constraintEnd_toStartOf="@id/button_quiz_menu"/>
-
-            <TextView
-                android:id="@+id/textView_quiz_description"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:textSize="14sp"
-                android:text="Descricao do quiz"
-                app:layout_constraintTop_toBottomOf="@id/textView_quiz_title"
-                app:layout_constraintStart_toEndOf="@id/icon_quiz"
-                app:layout_constraintEnd_toStartOf="@id/button_quiz_menu"/>
+                app:layout_constraintEnd_toStartOf="@id/button_quiz_delete"/> <TextView
+            android:id="@+id/textView_quiz_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:textSize="14sp"
+            android:text="Descricao do quiz"
+            app:layout_constraintTop_toBottomOf="@id/textView_quiz_title"
+            app:layout_constraintStart_toEndOf="@id/icon_quiz"
+            app:layout_constraintEnd_toStartOf="@id/button_quiz_delete"/> <ImageButton
+            android:id="@+id/button_quiz_delete"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="4dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_delete"
+            android:contentDescription="Remover Quiz"
+            app:tint="@android:color/holo_red_dark"
+            app:layout_constraintEnd_toStartOf="@id/button_quiz_edit"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
             <ImageButton
-                android:id="@+id/button_quiz_menu"
+                android:id="@+id/button_quiz_edit"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_add"
+                android:src="@drawable/editar_quiz"
                 android:contentDescription="Opções do Quiz"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

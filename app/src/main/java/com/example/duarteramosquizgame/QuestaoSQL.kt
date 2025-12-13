@@ -4,9 +4,9 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 
-class QuestaoHelper(context : Context) {
+class QuestaoSQL(context : Context) {
 
-    private val dbHelper: QuizOpenHelper = QuizOpenHelper(context)
+    private val dbHelper: CriaDB = CriaDB(context)
 
     fun insereQuestao(questao : Questao): Long {
         val db = dbHelper.writableDatabase
