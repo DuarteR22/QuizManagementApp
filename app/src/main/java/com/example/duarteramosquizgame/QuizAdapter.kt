@@ -24,11 +24,11 @@ class QuizAdapter(private val context: Context,
 
     inner class QuizViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
-        val textViewTitulo: TextView = itemView.findViewById(R.id.textView_quiz_title)
-        val textViewDescricao: TextView = itemView.findViewById(R.id.textView_quiz_description)
-        val buttonEditarQuiz: ImageButton = itemView.findViewById(R.id.button_quiz_edit)
-        val buttonDelete: ImageButton = itemView.findViewById(R.id.button_quiz_delete)
-        val buttonQuiz: View = itemView.findViewById(R.id.cardView_quiz)
+        val textViewTitulo: TextView = itemView.findViewById(R.id.tv_titulo_quiz)
+        val textViewDescricao: TextView = itemView.findViewById(R.id.tv_descricao_quiz)
+        val buttonEditarQuiz: ImageButton = itemView.findViewById(R.id.btn_editar_quiz)
+        val buttonDelete: ImageButton = itemView.findViewById(R.id.btn_apagar_quiz)
+        val cardViewQuiz: View = itemView.findViewById(R.id.cv_quiz)
     }
 
     override fun getItemCount(): Int {
@@ -76,7 +76,7 @@ class QuizAdapter(private val context: Context,
             intent.putExtra("id_quiz", quizId)
             context.startActivity(intent)
         }
-        holder.buttonQuiz.setOnClickListener{
+        holder.cardViewQuiz.setOnClickListener{
             val intent = Intent(context, ListaQuestoes::class.java)
             intent.putExtra("id_quiz", quizId)
             context.startActivity(intent)

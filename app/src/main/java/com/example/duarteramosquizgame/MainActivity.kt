@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
         recyclerViewQuizzes = findViewById(R.id.recyclerView_quizzes)
         recyclerViewQuizzes.layoutManager = LinearLayoutManager(this)
-        val fabAdicionarQuiz: FloatingActionButton = findViewById(R.id.fab_add_quiz)
+        val fabAdicionarQuiz: FloatingActionButton = findViewById(R.id.fab_adicionar_quiz)
 
         fabAdicionarQuiz.setOnClickListener{
             val intentAdicionarQuiz = Intent(this, InserirQuiz::class.java)

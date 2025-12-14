@@ -14,7 +14,6 @@ class QuestaoSQL(context : Context) {
 
         vals.put("id_quiz", questao.idQuiz)
         vals.put("questao", questao.pergunta)
-        vals.put("num_respostas", questao.numRespostas)
         vals.put("repostas_opcoes", questao.respostas.joinToString {"|"})
         vals.put("resposta_correta", questao.respostaCorreta)
         vals.put("url_imagem", questao.urlImagem)
@@ -23,26 +22,22 @@ class QuestaoSQL(context : Context) {
         db.close()
         return newId
     }
-
-    fun obterQuestoesIdQuiz(quizId: Long): Cursor {
-        val db = dbHelper.readableDatabase
-        val selection = "id_quiz = ?"
-        val selectionArgs = arrayOf(quizId.toString())
-
-        return db.query(
-            "questoes",
-            null, // Retorna todas as colunas
-            selection,
-            selectionArgs,
-            null,
-            null,
-            null
-        )
-    }
     fun eliminaQuestao(questaoId: Long):Int{
         val db = dbHelper.writableDatabase
         val rowsAffected = db.delete("questoes", "_id=?", arrayOf(questaoId.toString()))
         db.close()
         return rowsAffected
+    }
+    fun obterQuestoesQuizId(quizId: Long):Cursor{
+        val db = dbHelper.readableDatabase
+        val sql = "SELECT  q._id, q.pergunta, q.url_imagem, COUNT(r._id) " +
+                "AS num_respostas " +
+                "FROM questoes q " +
+                "LEFT JOIN respostas r ON q._id = r.id_questao " +
+                "WHERE q.id_quiz = ? " +
+                "GROUP BY q._id, q.pergunta, q.url_imagem " +
+                "ORDER BY q._id ASC"
+
+        return db.rawQuery(sql, arrayOf(quizId.toString()))
     }
 }

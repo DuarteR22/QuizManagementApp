@@ -88,23 +88,9 @@ class QuizSQL (context : Context){
         }
         return linhasAfetadas
     }
-    fun obterQuestoesQuiz(idQuiz: Long): Cursor{
-        val db = dbHelper.readableDatabase
-        val sql = """
-        SELECT 
-            q._id, 
-            q.pergunta, 
-            q.url_imagem, 
-            COUNT(r._id) AS num_respostas 
-        FROM 
-            questoes q 
-        LEFT JOIN 
-            respostas r ON q._id = r.id_questao 
-        WHERE 
-            q.id_quiz = ? 
-        GROUP BY 
-            q._id, q.pergunta, q.url_imagem
-    """
-    return db.rawQuery(sql, arrayOf(idQuiz.toString()))
-    }
+//    fun obterQuestoesQuiz(idQuiz: Long): Cursor{
+//        val db = dbHelper.readableDatabase
+//
+//    return db.rawQuery(sql, arrayOf(idQuiz.toString()))
+//    }
 }
