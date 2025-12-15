@@ -43,7 +43,7 @@ class AlterarQuiz : AppCompatActivity() {
         val btnAlterarQuiz: Button = findViewById(R.id.btn_alterar_quiz)
         val btnCancelarQuiz : Button = findViewById(R.id.btn_cancelar_alteracoes)
         if (quizId.toInt() != -1){
-            carregarDadosQuiz(quizId)
+            carregarQuizzes(quizId)
         }else{
             Toast.makeText(this, "Erro: ID do Quiz ausente.", Toast.LENGTH_LONG).show()
             finish()
@@ -59,7 +59,7 @@ class AlterarQuiz : AppCompatActivity() {
 
     }
     @SuppressLint("SetTextI18n")
-    private fun carregarDadosQuiz(id: Long){
+    private fun carregarQuizzes(id: Long){
 
         val cursor = quizSQL.obterQuizId(id)
         if (cursor.moveToFirst()){

@@ -2,15 +2,17 @@ package com.example.duarteramosquizgame
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.database.Cursor
+import android.media.Image
 import android.provider.BaseColumns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.compose.foundation.Image
-import androidx.core.content.ContextCompat
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
@@ -20,7 +22,7 @@ class QuestaoAdapter(
     private val questaoSQL: QuestaoSQL):RecyclerView.Adapter<QuestaoAdapter.QuestaoViewHolder>() {
 
     private val idColunaIndex = cursor.getColumnIndex(BaseColumns._ID)
-    private val perguntaIndex = cursor.getColumnIndexOrThrow("pergunta")
+    private val perguntaIndex = cursor.getColumnIndexOrThrow("questao")
     private val urlImagemIndex = cursor.getColumnIndexOrThrow("url_imagem")
     private val numRespostasIndex = cursor.getColumnIndexOrThrow("num_respostas")
 
@@ -30,6 +32,8 @@ class QuestaoAdapter(
         val textViewNumRespostas: TextView = itemView.findViewById(R.id.tv_num_respostas)
         val imageViewImagem: ImageView = itemView.findViewById(R.id.iv_imagem_questao)
         val cardViewQuestao: View = itemView.findViewById(R.id.cv_questao)
+        val buttonDelete: ImageButton = itemView.findViewById(R.id.btn_apagar_questao)
+        val buttonEditarQuestao: ImageButton = itemView.findViewById(R.id.btn_alterar_questao)
     }
 
     override fun getItemCount(): Int = cursor.count
@@ -66,7 +70,14 @@ class QuestaoAdapter(
             holder.imageViewImagem.setImageResource(R.drawable.ic_resposta)
         }
         holder.cardViewQuestao.setOnClickListener{
-
+        }
+        holder.buttonDelete.setOnClickListener {
+            removerQuestao(questaoId)
+        }
+        holder.buttonEditarQuestao.setOnClickListener{
+            val intent = Intent(context, AlterarQuestao::class.java)
+            intent.putExtra("id_questao", questaoId)
+            context.startActivity(intent)
         }
     }
     @SuppressLint("NotifyDataSetChanged")
@@ -76,5 +87,15 @@ class QuestaoAdapter(
         }
         cursor = newCursor
         notifyDataSetChanged()
+    }
+    fun removerQuestao(idQuestao: Long){
+
+        val linhasAfetadas = questaoSQL.eliminaQuestao(idQuestao)
+        if (linhasAfetadas > 0){
+            Toast.makeText(context, "Questao ID $idQuestao removido com sucesso.", Toast.LENGTH_SHORT).show()
+            val intent = Intent(context, ListaQuestoes::class.java)
+            context.startActivity(intent)
+        }else
+            Toast.makeText(context, "Erro ao remover Questao ID $idQuestao.", Toast.LENGTH_SHORT).show()
     }
 }

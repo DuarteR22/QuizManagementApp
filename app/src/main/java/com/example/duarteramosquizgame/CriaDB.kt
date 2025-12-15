@@ -49,6 +49,7 @@ class CriaDB (context: Context) : SQLiteOpenHelper(
         db?.execSQL(SQL_CREATE_TABLE_QUESTAO)
 
     }
+
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         db.execSQL("DROP TABLE IF EXISTS $NOME_TABELA_QUESTOES")
         db.execSQL("DROP TABLE IF EXISTS $NOME_TABELA_QUIZ")

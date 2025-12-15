@@ -25,18 +25,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="12dp"
-            android:background="?android:attr/selectableItemBackground">
-
-            <ImageView
-                android:id="@+id/icon_quiz"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:src="@drawable/ic_quiz"
-                android:contentDescription="Ícone do Quiz"
-                app:tint="@color/design_default_color_primary"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+            android:background="#303030"> <ImageView
+            android:id="@+id/icon_quiz"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/ic_quiz"
+            android:contentDescription="Ícone do Quiz"
+            app:tint="#FF8C00" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
             <TextView
                 android:id="@+id/tv_titulo_quiz"
@@ -45,38 +42,40 @@
                 android:layout_marginStart="12dp"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                tools:text="Nome do Quiz Aqui"
+                android:textColor="#E0E0E0"
+                tools:text="Nome quiz"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toEndOf="@id/icon_quiz"
-                app:layout_constraintEnd_toStartOf="@id/btn_apagar_quiz"/> <TextView
-            android:id="@+id/tv_descricao_quiz"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:textSize="14sp"
-            android:text="Descricao do quiz"
-            app:layout_constraintTop_toBottomOf="@id/tv_titulo_quiz"
-            app:layout_constraintStart_toEndOf="@id/icon_quiz"
-            app:layout_constraintEnd_toStartOf="@id/btn_apagar_quiz"/> <ImageButton
-            android:id="@+id/btn_apagar_quiz"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="4dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_delete"
-            android:contentDescription="Remover Quiz"
-            app:tint="@android:color/holo_red_dark"
-            app:layout_constraintEnd_toStartOf="@id/btn_editar_quiz"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-            <ImageButton
+                app:layout_constraintEnd_toStartOf="@id/btn_editar_quiz"/> <TextView
+                android:id="@+id/tv_descricao_quiz"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:textSize="14sp"
+                android:textColor="#A0A0A0"
+                android:text="Descricao"
+                app:layout_constraintTop_toBottomOf="@id/tv_titulo_quiz"
+                app:layout_constraintStart_toEndOf="@id/icon_quiz"
+                app:layout_constraintEnd_toStartOf="@id/btn_editar_quiz"/> <ImageButton
                 android:id="@+id/btn_editar_quiz"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:layout_marginEnd="4dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/editar_quiz"
-                android:contentDescription="Opções do Quiz"
+                android:contentDescription="Editar Quiz"
+                app:tint="#FF8C00"
+                app:layout_constraintEnd_toStartOf="@id/btn_apagar_quiz" app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <ImageButton
+                android:id="@+id/btn_apagar_quiz"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_delete"
+                android:contentDescription="Remover Quiz"
+                app:tint="@android:color/holo_red_dark"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>

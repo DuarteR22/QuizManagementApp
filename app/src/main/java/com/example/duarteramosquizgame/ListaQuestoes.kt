@@ -3,9 +3,7 @@ package com.example.duarteramosquizgame
 import android.content.Intent
 import android.database.Cursor
 import android.os.Bundle
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.material3.FloatingActionButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -40,8 +38,7 @@ class ListaQuestoes: AppCompatActivity() {
     }
     override fun onResume() {
         super.onResume()
-        if (::questaoAdapter.isInitialized)
-            carregaQuestoesDB()
+        carregaQuestoesDB()
     }
     private fun carregaQuestoesDB(){
         val cursor : Cursor = questaoSQL.obterQuestoesQuizId(quizId)

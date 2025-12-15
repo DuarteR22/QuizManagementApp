@@ -39,8 +39,7 @@ class QuizSQL (context : Context){
     fun obterQuizzes(): Cursor {
         val db = dbHelper.readableDatabase
         return db.query(
-            "quizzes",
-            arrayOf("_id", "titulo", "descricao", "tempo_max"),
+            "quizzes", arrayOf("_id", "titulo", "descricao", "tempo_max"),
             null,
             null,
             null,
@@ -88,9 +87,4 @@ class QuizSQL (context : Context){
         }
         return linhasAfetadas
     }
-//    fun obterQuestoesQuiz(idQuiz: Long): Cursor{
-//        val db = dbHelper.readableDatabase
-//
-//    return db.rawQuery(sql, arrayOf(idQuiz.toString()))
-//    }
 }

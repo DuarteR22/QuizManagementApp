@@ -4,51 +4,86 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1A2130"> <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="24dp">
+    android:background="#1A2130">
 
-    <TextView
-        android:id="@+id/tv_titulo_pergunta"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="24dp">
+
+        <TextView
+            android:id="@+id/tv_titulo_pergunta"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Inserir Questão"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#E0E0E0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_pergunta_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="Pergunta:"
+            android:textStyle="bold"
+            android:textColor="#E0E0E0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_titulo_pergunta" />
+
+        <EditText
+            android:id="@+id/et_pergunta"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Introduza a sua pergunta"
+            android:inputType="textCapSentences|textMultiLine"
+            android:minHeight="48dp"
+            android:textColor="#E0E0E0"
+            android:textColorHint="#A0A0A0"
+            android:backgroundTint="#A0A0A0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_pergunta_label" />
+
+        <TextView
+            android:id="@+id/tv_label_url_imagem_questao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="URL da Imagem (opcional):"
+            android:textStyle="bold"
+            android:textColor="#E0E0E0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_pergunta" /> <EditText
+        android:id="@+id/et_url_imagem"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Inserir Questão"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="#E0E0E0"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/et_pergunta"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:hint="Pergunta (obrigatório)"
-        android:inputType="textCapSentences"
+        android:layout_marginTop="8dp"
+        android:hint="https://exemplo.com/imagem.png"
+        android:inputType="textUri"
         android:minHeight="48dp"
         android:textColor="#E0E0E0"
         android:textColorHint="#A0A0A0"
         android:backgroundTint="#A0A0A0"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_label_url_imagem_questao"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_titulo_pergunta" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_respostas_titulo2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Número de Respostas:"
-        android:textStyle="bold"
-        android:textColor="#E0E0E0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_pergunta" />
-
-    <RadioGroup
+        <TextView
+            android:id="@+id/tv_respostas_titulo2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Número de Respostas:"
+            android:textStyle="bold"
+            android:textColor="#E0E0E0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_url_imagem" /> <RadioGroup
         android:id="@+id/rg_numero_repostas"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -86,142 +121,142 @@
             android:buttonTint="#FF8C00" />
     </RadioGroup>
 
-    <TextView
-        android:id="@+id/tv_respostas_titulo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:text="Respostas:"
-        android:textStyle="bold"
-        android:textColor="#E0E0E0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rg_numero_repostas" />
-
-    <RadioGroup
-        android:id="@+id/rg_respostas_corretas"
-        android:layout_width="40dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_respostas_titulo"
-        app:layout_constraintBottom_toBottomOf="@id/et_resposta_4">
-
-        <RadioButton
-            android:id="@+id/rb_resposta_1"
+        <TextView
+            android:id="@+id/tv_respostas_titulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:buttonTint="#FF8C00" />
+            android:layout_marginTop="28dp"
+            android:text="Respostas:"
+            android:textStyle="bold"
+            android:textColor="#E0E0E0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rg_numero_repostas" />
 
-        <RadioButton
-            android:id="@+id/rb_resposta_2"
-            android:layout_width="wrap_content"
+        <RadioGroup
+            android:id="@+id/rg_respostas_corretas"
+            android:layout_width="40dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_respostas_titulo"
+            app:layout_constraintBottom_toBottomOf="@id/et_resposta_4">
+
+            <RadioButton
+                android:id="@+id/rb_resposta_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:buttonTint="#FF8C00" />
+
+            <RadioButton
+                android:id="@+id/rb_resposta_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:buttonTint="#FF8C00" />
+
+            <RadioButton
+                android:id="@+id/rb_resposta_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:buttonTint="#FF8C00" />
+
+            <RadioButton
+                android:id="@+id/rb_resposta_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:buttonTint="#FF8C00" />
+        </RadioGroup>
+
+        <EditText
+            android:id="@+id/et_resposta_1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:buttonTint="#FF8C00" />
+            android:layout_marginStart="12dp"
+            android:hint="Resposta 1"
+            android:inputType="textCapSentences"
+            android:textColor="#E0E0E0"
+            android:textColorHint="#A0A0A0"
+            android:backgroundTint="#A0A0A0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/rg_respostas_corretas"
+            app:layout_constraintTop_toTopOf="@id/rg_respostas_corretas" />
 
-        <RadioButton
-            android:id="@+id/rb_resposta_3"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/et_resposta_2"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:buttonTint="#FF8C00" />
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:hint="Resposta 2"
+            android:inputType="textCapSentences"
+            android:textColor="#E0E0E0"
+            android:textColorHint="#A0A0A0"
+            android:backgroundTint="#A0A0A0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/rg_respostas_corretas"
+            app:layout_constraintTop_toBottomOf="@+id/et_resposta_1" />
 
-        <RadioButton
-            android:id="@+id/rb_resposta_4"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/et_resposta_3"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:buttonTint="#FF8C00" />
-    </RadioGroup>
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:hint="Resposta 3"
+            android:inputType="textCapSentences"
+            android:textColor="#E0E0E0"
+            android:textColorHint="#A0A0A0"
+            android:backgroundTint="#A0A0A0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/rg_respostas_corretas"
+            app:layout_constraintTop_toBottomOf="@+id/et_resposta_2" />
 
-    <EditText
-        android:id="@+id/et_resposta_1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:hint="Resposta 1"
-        android:inputType="textCapSentences"
-        android:textColor="#E0E0E0"
-        android:textColorHint="#A0A0A0"
-        android:backgroundTint="#A0A0A0"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/rg_respostas_corretas"
-        app:layout_constraintTop_toTopOf="@id/rg_respostas_corretas" />
+        <EditText
+            android:id="@+id/et_resposta_4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:hint="Resposta 4"
+            android:inputType="textCapSentences"
+            android:textColor="#E0E0E0"
+            android:textColorHint="#A0A0A0"
+            android:backgroundTint="#A0A0A0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/rg_respostas_corretas"
+            app:layout_constraintTop_toBottomOf="@+id/et_resposta_3" />
 
-    <EditText
-        android:id="@+id/et_resposta_2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="8dp"
-        android:hint="Resposta 2"
-        android:inputType="textCapSentences"
-        android:textColor="#E0E0E0"
-        android:textColorHint="#A0A0A0"
-        android:backgroundTint="#A0A0A0"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/rg_respostas_corretas"
-        app:layout_constraintTop_toBottomOf="@+id/et_resposta_1" />
+        <Button
+            android:id="@+id/btn_guardar_questao"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:backgroundTint="#FF8C00"
+            android:paddingVertical="14dp"
+            android:text="GUARDAR QUESTÃO"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_resposta_4" />
 
-    <EditText
-        android:id="@+id/et_resposta_3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="8dp"
-        android:hint="Resposta 3"
-        android:inputType="textCapSentences"
-        android:textColor="#E0E0E0"
-        android:textColorHint="#A0A0A0"
-        android:backgroundTint="#A0A0A0"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/rg_respostas_corretas"
-        app:layout_constraintTop_toBottomOf="@+id/et_resposta_2" />
+        <Button
+            android:id="@+id/btn_cancelar_pergunta"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="@android:color/transparent"
+            android:paddingVertical="14dp"
+            android:text="CANCELAR"
+            android:textColor="#A0A0A0"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_guardar_questao" />
 
-    <EditText
-        android:id="@+id/et_resposta_4"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="8dp"
-        android:hint="Resposta 4"
-        android:inputType="textCapSentences"
-        android:textColor="#E0E0E0"
-        android:textColorHint="#A0A0A0"
-        android:backgroundTint="#A0A0A0"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/rg_respostas_corretas"
-        app:layout_constraintTop_toBottomOf="@+id/et_resposta_3" />
-
-    <Button
-        android:id="@+id/btn_guardar_questao"
-        android:layout_width="381dp"
-        android:layout_height="59dp"
-        android:layout_marginTop="40dp"
-        android:backgroundTint="#FF8C00"
-        android:paddingVertical="14dp"
-        android:text="GUARDAR QUESTÃO"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_resposta_4" />
-
-    <Button
-        android:id="@+id/btn_cancelar_pergunta"
-        android:layout_width="378dp"
-        android:layout_height="57dp"
-        android:layout_marginTop="12dp"
-        android:backgroundTint="@android:color/transparent"
-        android:paddingVertical="14dp"
-        android:text="CANCELAR"
-        android:textColor="#A0A0A0"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_guardar_questao" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

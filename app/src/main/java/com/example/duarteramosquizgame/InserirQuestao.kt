@@ -2,6 +2,7 @@ package com.example.duarteramosquizgame
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Button
@@ -10,31 +11,37 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.duarteramosquizgame.R
 
 class InserirQuestao : AppCompatActivity(){
 
+    private lateinit var questaoSQL: QuestaoSQL
     private lateinit var editTextPergunta: EditText
     private lateinit var editTextResposta1: EditText
     private lateinit var editTextResposta2: EditText
     private lateinit var editTextResposta3: EditText
     private lateinit var editTextResposta4: EditText
-
+    private lateinit var editTextUrl: EditText
     private lateinit var radioButtonResposta1: RadioButton
     private lateinit var radioButtonResposta2: RadioButton
     private lateinit var radioButtonResposta3: RadioButton
     private lateinit var radioButtonResposta4: RadioButton
 
+    private  var quizId: Long = -1
+    private var numeroRespostasFinal: Int = -1
+    private var numeroRespostaCorreta: Int = -1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.inserir_questao)
 
+        quizId = intent.getLongExtra("id_quiz", -1)
+        if (quizId == -1L)
+            finish()
+        questaoSQL = QuestaoSQL(this)
         val rgNumeroRespostas: RadioGroup = findViewById(R.id.rg_numero_repostas)
-        var numeroRespostasFinal: Int = -1
 
         val rgRespostaCorreta: RadioGroup = findViewById(R.id.rg_respostas_corretas)
-        var numeroRespostaCorreta: Int = -1
         editTextPergunta= findViewById(R.id.et_pergunta)
+        editTextUrl = findViewById(R.id.et_url_imagem)
         editTextResposta1 = findViewById(R.id.et_resposta_1)
         editTextResposta2 = findViewById(R.id.et_resposta_2)
         editTextResposta3 = findViewById(R.id.et_resposta_3)
@@ -62,7 +69,6 @@ class InserirQuestao : AppCompatActivity(){
             atualizaEditTextRespostas(numeroRespostasFinal)
 
         }
-        val intentGuardar = Intent(this, MainActivity::class.java)
 
         rgRespostaCorreta.setOnCheckedChangeListener{group,checkedId ->
             val rgSelecionadoIg: Int = rgRespostaCorreta.checkedRadioButtonId
@@ -78,13 +84,14 @@ class InserirQuestao : AppCompatActivity(){
             else
                 numeroRespostaCorreta = -1
         }
-        /**
+
         btnGuardarPergunta.setOnClickListener(){
             var editTextPerguntaFinal = editTextPergunta.text.toString().trim()
             var editTextResposta1Final = editTextResposta1.text.toString().trim()
             var editTextResposta2Final = editTextResposta2.text.toString().trim()
             var editTextResposta3Final = editTextResposta3.text.toString().trim()
             var editTextResposta4Final = editTextResposta4.text.toString().trim()
+            var editTextUrlFinal = editTextUrl.text.toString().toString()
             if (numeroRespostasFinal == -1)
                 Toast.makeText(this, "Por favor selecione um radiobutton que defina o número de perguntas!", Toast.LENGTH_SHORT).show()
             else if(numeroRespostaCorreta == -1)
@@ -102,10 +109,7 @@ class InserirQuestao : AppCompatActivity(){
                     }
                     else{
                         val respostasLista = listOf(editTextResposta1Final,editTextResposta2Final)
-                        val questao = Questao(editTextPerguntaFinal, 2,respostasLista, numeroRespostaCorreta)
-                        GereQuestoes.adicionarQuestao(questao)
-                        Toast.makeText(this, "Questao guardada com sucesso!", Toast.LENGTH_SHORT).show()
-                        finish()
+                        inserirQuestao(editTextPerguntaFinal, respostasLista,2,numeroRespostaCorreta, editTextUrlFinal)
                     }
                     3 -> if (editTextResposta1Final.isEmpty() || editTextResposta2Final.isEmpty()||editTextPerguntaFinal.isEmpty() || numeroRespostaCorreta == -1 || editTextResposta3Final.isEmpty()){
                         if (editTextPerguntaFinal.isEmpty())
@@ -118,13 +122,8 @@ class InserirQuestao : AppCompatActivity(){
                             editTextResposta3.error = "todos os campos são obrigatórios"
                     }
                     else{
-                        val respostasLista = listOf(editTextResposta1Final,editTextResposta2Final, editTextResposta3Final, editTextResposta4Final)
-                        val questao = Questao(editTextPerguntaFinal, 3,respostasLista, numeroRespostaCorreta)
-                        GereQuestoes.adicionarQuestao(questao)
-                        Toast.makeText(this, "Questao guardada com sucesso!", Toast.LENGTH_SHORT).show()
-
-                        finish()
-
+                        val respostasLista = listOf(editTextResposta1Final,editTextResposta2Final, editTextResposta3Final)
+                        inserirQuestao(editTextPerguntaFinal, respostasLista, 3, numeroRespostaCorreta,editTextUrlFinal)
                     }
                     4 -> if (editTextResposta1Final.isEmpty() || editTextResposta2Final.isEmpty()||editTextPerguntaFinal.isEmpty() || numeroRespostaCorreta == -1 || editTextResposta3Final.isEmpty() || editTextResposta4Final.isEmpty()){
                         if (editTextPerguntaFinal.isEmpty())
@@ -140,10 +139,7 @@ class InserirQuestao : AppCompatActivity(){
                     }
                     else{
                         val respostasLista = listOf(editTextResposta1Final,editTextResposta2Final, editTextResposta3Final, editTextResposta4Final)
-                        val questao = Questao(editTextPerguntaFinal, 4,respostasLista, numeroRespostaCorreta)
-                        GereQuestoes.adicionarQuestao(questao)
-                        Toast.makeText(this, "Questao guardada com sucesso!", Toast.LENGTH_SHORT).show()
-                        finish()
+                        inserirQuestao(editTextPerguntaFinal, respostasLista, 4, numeroRespostaCorreta,editTextUrlFinal)
                     }
                 }
             }
@@ -151,9 +147,7 @@ class InserirQuestao : AppCompatActivity(){
         btnCancelarPergunta.setOnClickListener(){
             finish()
         }
-         **/
     }
-
     fun atualizaEditTextRespostas(count: Int){
 
         if(count == 2){
@@ -197,4 +191,16 @@ class InserirQuestao : AppCompatActivity(){
             radioButtonResposta4.visibility = VISIBLE
         }
     }
+    private fun inserirQuestao(pergunta: String, respostas: List<String>, numRespostas: Int, respostaCorreta: Int , urlImagem: String){
+
+        val questao = Questao(idQuiz = quizId, pergunta = pergunta, respostas = respostas, numRespostas = numRespostas, respostaCorreta = respostaCorreta, urlImagem = urlImagem)
+        val idInsercao = questaoSQL.insereQuestao(questao)
+        if (idInsercao > 0) {
+            Toast.makeText(this, "Questão guardada com sucesso!", Toast.LENGTH_SHORT).show()
+
+            finish()
+        }else
+            Toast.makeText(this, "Erro ao guardar questão.", Toast.LENGTH_SHORT).show()
+    }
+
 }

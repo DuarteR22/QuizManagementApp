@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1A2130">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="24dp">
+
+        <TextView
+            android:id="@+id/tv_titulo_editar_questao"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Editar Questão"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#E0E0E0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_pergunta_antiga_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="Pergunta atual:"
+            android:textStyle="bold"
+            android:textColor="#A0A0A0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_titulo_editar_questao" />
+
+        <TextView
+            android:id="@+id/tv_pergunta_antiga"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="#212121"
+            android:padding="8dp"
+            android:textColor="#E0E0E0"
+            android:textSize="16sp"
+            tools:text="Qual é a capital de França e do Japão?"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_pergunta_antiga_label" />
+
+        <TextView
+            android:id="@+id/tv_pergunta_nova_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Nova Pergunta (opcional):"
+            android:textStyle="bold"
+            android:textColor="#E0E0E0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_pergunta_antiga" />
+
+        <EditText
+            android:id="@+id/et_pergunta_nova"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Introduza a nova pergunta"
+            android:inputType="textCapSentences|textMultiLine"
+            android:minHeight="48dp"
+            android:textColor="#E0E0E0"
+            android:textColorHint="#A0A0A0"
+            android:backgroundTint="#FF8C00"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_pergunta_nova_label" />
+
+        <TextView
+            android:id="@+id/tv_url_antiga_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="URL da Imagem atual:"
+            android:textStyle="bold"
+            android:textColor="#A0A0A0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_pergunta_nova" />
+
+        <TextView
+            android:id="@+id/tv_url_antiga"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="#212121"
+            android:padding="8dp"
+            android:textColor="#E0E0E0"
+            android:textSize="16sp"
+            tools:text="https://exemplo.com/imagem_atual.png"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_url_antiga_label" />
+
+        <TextView
+            android:id="@+id/tv_url_nova_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Novo URL da Imagem (opcional):"
+            android:textStyle="bold"
+            android:textColor="#E0E0E0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_url_antiga" />
+
+        <EditText
+            android:id="@+id/et_url_nova"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="https://exemplo.com/nova_imagem.png"
+            android:inputType="textUri"
+            android:minHeight="48dp"
+            android:textColor="#E0E0E0"
+            android:textColorHint="#A0A0A0"
+            android:backgroundTint="#FF8C00"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_url_nova_label" />
+
+        <TextView
+            android:id="@+id/tv_num_respostas_antigo_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Número de Respostas atual:"
+            android:textStyle="bold"
+            android:textColor="#A0A0A0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_url_nova" />
+
+        <TextView
+            android:id="@+id/tv_num_respostas_antigo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="#212121"
+            android:padding="8dp"
+            android:textColor="#E0E0E0"
+            android:textSize="16sp"
+            tools:text="4 Respostas"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_num_respostas_antigo_label" />
+
+        <TextView
+            android:id="@+id/tv_num_respostas_novo_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Novo Número de Respostas (opcional):"
+            android:textStyle="bold"
+            android:textColor="#E0E0E0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_num_respostas_antigo" />
+
+        <RadioGroup
+            android:id="@+id/rg_numero_respostas"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_num_respostas_novo_label">
+
+            <RadioButton
+                android:id="@+id/rb_2_respostas"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="2 Respostas"
+                android:textColor="#E0E0E0"
+                android:buttonTint="#FF8C00" />
+
+            <RadioButton
+                android:id="@+id/rb_3_respostas"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="3 Respostas"
+                android:textColor="#E0E0E0"
+                android:buttonTint="#FF8C00" />
+
+            <RadioButton
+                android:id="@+id/rb_4_respostas"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="4 Respostas"
+                android:textColor="#E0E0E0"
+                android:buttonTint="#FF8C00" />
+        </RadioGroup>
+
+
+        <TextView
+            android:id="@+id/tv_resposta_correta_antiga_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="Resposta Correta atual:"
+            android:textStyle="bold"
+            android:textColor="#A0A0A0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rg_numero_respostas" />
+
+        <TextView
+            android:id="@+id/tv_resposta_correta_antiga"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="#212121"
+            android:padding="8dp"
+            android:textColor="#E0E0E0"
+            android:textSize="16sp"
+            tools:text="Resposta 3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_resposta_correta_antiga_label" />
+
+        <TextView
+            android:id="@+id/tv_resposta_correta_nova_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Nova Resposta Correta (opcional):"
+            android:textStyle="bold"
+            android:textColor="#E0E0E0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_resposta_correta_antiga" />
+
+        <RadioGroup
+            android:id="@+id/rg_respostas_corretas"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_resposta_correta_nova_label">
+
+            <RadioButton
+                android:id="@+id/rb_correta_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="1"
+                android:gravity="center"
+                android:textColor="#E0E0E0"
+                android:buttonTint="#FF8C00" />
+
+            <RadioButton
+                android:id="@+id/rb_correta_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="2"
+                android:gravity="center"
+                android:textColor="#E0E0E0"
+                android:buttonTint="#FF8C00" />
+
+            <RadioButton
+                android:id="@+id/rb_correta_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="3"
+                android:gravity="center"
+                android:textColor="#E0E0E0"
+                android:buttonTint="#FF8C00" />
+
+            <RadioButton
+                android:id="@+id/rb_correta_4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="4"
+                android:gravity="center"
+                android:textColor="#E0E0E0"
+                android:buttonTint="#FF8C00" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/tv_respostas_titulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="Edição das Respostas (Valores Atuais e Novos Campos):"
+            android:textStyle="bold"
+            android:textColor="#E0E0E0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rg_respostas_corretas" />
+
+
+        <TextView
+            android:id="@+id/tv_resp1_antiga_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Resposta 1 atual:"
+            android:textStyle="bold"
+            android:textColor="#A0A0A0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_respostas_titulo" />
+
+        <TextView
+            android:id="@+id/tv_resp1_antiga"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="#212121"
+            android:padding="8dp"
+            android:textColor="#E0E0E0"
+            tools:text="Valor Antigo da Resp 1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_resp1_antiga_label" />
+
+        <EditText
+            android:id="@+id/et_resposta_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Novo valor da Resposta 1 (opcional)"
+            android:inputType="textCapSentences"
+            android:minHeight="48dp"
+            android:textColor="#E0E0E0"
+            android:textColorHint="#A0A0A0"
+            android:backgroundTint="#FF8C00"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_resp1_antiga" />
+
+        <TextView
+            android:id="@+id/tv_resp2_antiga_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Resposta 2 atual:"
+            android:textStyle="bold"
+            android:textColor="#A0A0A0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_resposta_1" />
+
+        <TextView
+            android:id="@+id/tv_resp2_antiga"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="#212121"
+            android:padding="8dp"
+            android:textColor="#E0E0E0"
+            tools:text="Valor Antigo da Resp 2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_resp2_antiga_label" />
+
+        <EditText
+            android:id="@+id/et_resposta_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Novo valor da Resposta 2 (opcional)"
+            android:inputType="textCapSentences"
+            android:minHeight="48dp"
+            android:textColor="#E0E0E0"
+            android:textColorHint="#A0A0A0"
+            android:backgroundTint="#FF8C00"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_resp2_antiga" />
+
+        <TextView
+            android:id="@+id/tv_resp3_antiga_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Resposta 3 atual:"
+            android:textStyle="bold"
+            android:textColor="#A0A0A0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_resposta_2" />
+
+        <TextView
+            android:id="@+id/tv_resp3_antiga"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="#212121"
+            android:padding="8dp"
+            android:textColor="#E0E0E0"
+            tools:text="Valor Antigo da Resp 3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_resp3_antiga_label" />
+
+        <EditText
+            android:id="@+id/et_resposta_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Novo valor da Resposta 3 (opcional)"
+            android:inputType="textCapSentences"
+            android:minHeight="48dp"
+            android:textColor="#E0E0E0"
+            android:textColorHint="#A0A0A0"
+            android:backgroundTint="#FF8C00"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_resp3_antiga" />
+
+        <TextView
+            android:id="@+id/tv_resp4_antiga_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Resposta 4 atual:"
+            android:textStyle="bold"
+            android:textColor="#A0A0A0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_resposta_3" />
+
+        <TextView
+            android:id="@+id/tv_resp4_antiga"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="#212121"
+            android:padding="8dp"
+            android:textColor="#E0E0E0"
+            tools:text="Valor Antigo da Resp 4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_resp4_antiga_label" />
+
+        <EditText
+            android:id="@+id/et_resposta_4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Novo valor da Resposta 4 (opcional)"
+            android:inputType="textCapSentences"
+            android:minHeight="48dp"
+            android:textColor="#E0E0E0"
+            android:textColorHint="#A0A0A0"
+            android:backgroundTint="#FF8C00"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_resp4_antiga" />
+
+        <Button
+            android:id="@+id/btn_alterar_questao"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:backgroundTint="#FF8C00"
+            android:paddingVertical="14dp"
+            android:text="GUARDAR"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_resposta_4" />
+
+        <Button
+            android:id="@+id/btn_cancelar_alteracoes_pergunta"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="@android:color/transparent"
+            android:paddingVertical="14dp"
+            android:text="CANCELAR"
+            android:textColor="#A0A0A0"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_alterar_questao" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
