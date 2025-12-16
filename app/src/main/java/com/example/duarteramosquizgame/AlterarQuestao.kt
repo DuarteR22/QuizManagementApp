@@ -118,6 +118,9 @@ class AlterarQuestao: AppCompatActivity() {
         btnAlterarQuestao.setOnClickListener{
             guardarAlteracoes()
         }
+        btnCancelarQuestao.setOnClickListener{
+            finish()
+        }
     }
     //Carrega a página com o número de respostas que possui a questão a alterar
     @SuppressLint("SetTextI18n")

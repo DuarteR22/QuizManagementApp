@@ -13,12 +13,28 @@
         android:layout_height="wrap_content"
         android:text="Quizzes"
         android:textSize="24sp"
-        android:padding="16dp"
-        android:gravity="center"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:gravity="start"
         android:textColor="#E0E0E0"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toStartOf="@id/btn_adicionar_quiz"/>
+
+    <ImageButton
+        android:id="@+id/btn_adicionar_quiz"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_add"
+        android:background="@android:color/transparent"
+        android:contentDescription="Adicionar novo quiz"
+        app:tint="#FF8C00"
+        app:layout_constraintTop_toTopOf="@id/textView_main_title"
+        app:layout_constraintBottom_toBottomOf="@id/textView_main_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="16dp" />
 
     <View
         android:id="@+id/divider_main"
@@ -40,15 +56,15 @@
         tools:listitem="@layout/card_quiz" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_adicionar_quiz"
+        android:id="@+id/fab_resolver_quiz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_add"
+        android:src="@drawable/ic_seta_resolver"
         app:tint="#FFFFFF"
         app:backgroundTint="#FF8C00"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:contentDescription="Adicionar novo quiz" />
+        android:contentDescription="Resolver Quiz" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

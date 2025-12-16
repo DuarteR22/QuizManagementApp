@@ -5,62 +5,40 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class ResolverQuestao : AppCompatActivity() {
 
 
-
+    private lateinit var questaoSQL: QuestaoSQL
     private lateinit var buttonResposta1: Button
     private lateinit var buttonResposta2: Button
     private lateinit var buttonResposta3: Button
     private lateinit var buttonResposta4: Button
-
+    private lateinit var textViewEnunciado: TextView
+    private var idQuestao: Long = -1
+    private var numeroRespostaCorreta = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.resolver_questao)
 
 
-        val textViewEnunciado: TextView = findViewById(R.id.tv_enunciado_pergunta)
+        textViewEnunciado = findViewById(R.id.tv_enunciado_pergunta)
         buttonResposta1 = findViewById(R.id.btn_resposta_1)
         buttonResposta2 = findViewById(R.id.btn_resposta_2)
         buttonResposta3 = findViewById(R.id.btn_resposta_3)
         buttonResposta4 = findViewById(R.id.btn_resposta_4)
         val buttonCancelar: Button = findViewById(R.id.btn_cancelar_resposta)
-        var numeroRespostaCorreta = -1
-        val idQuestao = intent.getIntExtra("id_questao", -1)
-        /**
-        val questaoAtual = GereQuestoes.encontraQuestao(idQuestao)
-
-        val numeroRespostas: Int = questaoAtual!!.numRespostas
-
-
-        var resposta1 : String = ""
-        var resposta2 : String = ""
-        var resposta3 : String = ""
-        var resposta4 : String = ""
-        when(numeroRespostas){
-
-            2 -> {
-                resposta1 = questaoAtual.respostas[0]
-                resposta2 = questaoAtual.respostas[1]
-            }
-            3 -> {
-                resposta1 = questaoAtual.respostas[0]
-                resposta2 = questaoAtual.respostas[1]
-                resposta3 = questaoAtual.respostas[2]
-            }
-            4 -> {
-                resposta1 = questaoAtual.respostas[0]
-                resposta2 = questaoAtual.respostas[1]
-                resposta3 = questaoAtual.respostas[2]
-                resposta4 = questaoAtual.respostas[3]
-            }
+        idQuestao = intent.getLongExtra("id_questao", -1)
+        questaoSQL = QuestaoSQL(this)
+        if (idQuestao != -1L)
+            carregarQuestao()
+        else{
+            finish()
+            return
         }
-        textViewEnunciado.setText(questaoAtual.pergunta)
-        atualizaEditTextRespostas(numeroRespostas, resposta1, resposta2, resposta3, resposta4)
-        numeroRespostaCorreta = questaoAtual.respostaCorreta
         when(numeroRespostaCorreta){
 
             1 -> {
@@ -125,7 +103,27 @@ class ResolverQuestao : AppCompatActivity() {
         buttonCancelar.setOnClickListener {
             finish()
         }
-        */
+
+    }
+
+    private fun carregarQuestao(){
+        val questao = questaoSQL.obterQuestaoId(idQuestao)
+        if (questao == null) {
+            finish()
+            return
+        }
+        val numeroRespostas: Int = questao.numRespostas
+        val respostas = questao.respostas
+        numeroRespostaCorreta = questao.respostaCorreta
+
+        textViewEnunciado.text = questao.pergunta
+
+        val resposta1 = respostas.getOrNull(0) ?: ""
+        val resposta2 = respostas.getOrNull(1)?: ""
+        val resposta3 = respostas.getOrNull(2)?: ""
+        val resposta4 = respostas.getOrNull(3)?: ""
+        atualizaEditTextRespostas(numeroRespostas,resposta1,resposta2,resposta3,resposta4)
+
     }
     fun atualizaEditTextRespostas(count: Int, resposta1: String, resposta2: String, resposta3: String, resposta4: String){
 

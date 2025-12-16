@@ -70,6 +70,9 @@ class QuestaoAdapter(
             holder.imageViewImagem.setImageResource(R.drawable.ic_resposta)
         }
         holder.cardViewQuestao.setOnClickListener{
+            val intent = Intent(context, ResolverQuestao::class.java)
+            intent.putExtra("id_questao", questaoId)
+            context.startActivity(intent)
         }
         holder.buttonDelete.setOnClickListener {
             removerQuestao(questaoId)
