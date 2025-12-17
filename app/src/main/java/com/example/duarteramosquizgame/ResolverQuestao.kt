@@ -6,16 +6,17 @@ import android.view.View.VISIBLE
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
 
 class ResolverQuestao : AppCompatActivity() {
 
 
     private lateinit var questaoSQL: QuestaoSQL
-    private lateinit var buttonResposta1: Button
-    private lateinit var buttonResposta2: Button
-    private lateinit var buttonResposta3: Button
-    private lateinit var buttonResposta4: Button
+    private lateinit var buttonResposta1: ToggleButton
+    private lateinit var buttonResposta2: ToggleButton
+    private lateinit var buttonResposta3: ToggleButton
+    private lateinit var buttonResposta4: ToggleButton
     private lateinit var textViewEnunciado: TextView
     private var idQuestao: Long = -1
     private var numeroRespostaCorreta = -1
@@ -25,14 +26,14 @@ class ResolverQuestao : AppCompatActivity() {
         setContentView(R.layout.resolver_questao)
 
 
-        textViewEnunciado = findViewById(R.id.tv_enunciado_pergunta)
+        textViewEnunciado = findViewById(R.id.tv_titulo_pergunta)
         buttonResposta1 = findViewById(R.id.btn_resposta_1)
         buttonResposta2 = findViewById(R.id.btn_resposta_2)
         buttonResposta3 = findViewById(R.id.btn_resposta_3)
         buttonResposta4 = findViewById(R.id.btn_resposta_4)
-        val buttonCancelar: Button = findViewById(R.id.btn_cancelar_resposta)
-        idQuestao = intent.getLongExtra("id_questao", -1)
+        val buttonCancelar: Button = findViewById(R.id.btn_cancelar)
         questaoSQL = QuestaoSQL(this)
+        idQuestao = intent.getLongExtra("id_questao", -1)
         if (idQuestao != -1L)
             carregarQuestao()
         else{
@@ -103,9 +104,7 @@ class ResolverQuestao : AppCompatActivity() {
         buttonCancelar.setOnClickListener {
             finish()
         }
-
     }
-
     private fun carregarQuestao(){
         val questao = questaoSQL.obterQuestaoId(idQuestao)
         if (questao == null) {
@@ -133,7 +132,9 @@ class ResolverQuestao : AppCompatActivity() {
             buttonResposta3.visibility = GONE
             buttonResposta4.visibility = GONE
             buttonResposta1.setText(resposta1)
+            buttonResposta1.setTextOn(resposta1)
             buttonResposta2.setText(resposta2)
+            buttonResposta2.setTextOn(resposta2)
         }
         else if (count == 3){
             buttonResposta1.visibility = VISIBLE
@@ -141,8 +142,12 @@ class ResolverQuestao : AppCompatActivity() {
             buttonResposta3.visibility = VISIBLE
             buttonResposta4.visibility = GONE
             buttonResposta1.setText(resposta1)
+            buttonResposta1.setTextOn(resposta1)
             buttonResposta2.setText(resposta2)
+            buttonResposta2.setTextOn(resposta2)
             buttonResposta3.setText(resposta3)
+            buttonResposta3.setTextOn(resposta3)
+
         }
         else if (count == 4){
             buttonResposta1.visibility = VISIBLE
@@ -150,9 +155,14 @@ class ResolverQuestao : AppCompatActivity() {
             buttonResposta3.visibility = VISIBLE
             buttonResposta4.visibility = VISIBLE
             buttonResposta1.setText(resposta1)
+            buttonResposta1.setTextOn(resposta1)
             buttonResposta2.setText(resposta2)
+            buttonResposta2.setTextOn(resposta2)
             buttonResposta3.setText(resposta3)
+            buttonResposta3.setTextOn(resposta3)
             buttonResposta4.setText(resposta4)
+            buttonResposta4.setTextOn(resposta4)
+
         }
     }
 }

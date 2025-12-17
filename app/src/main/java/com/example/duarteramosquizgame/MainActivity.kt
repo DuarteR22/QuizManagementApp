@@ -24,16 +24,11 @@ class MainActivity : AppCompatActivity() {
         recyclerViewQuizzes = findViewById(R.id.recyclerView_quizzes)
         recyclerViewQuizzes.layoutManager = LinearLayoutManager(this)
         val btnAdicionarQuiz: ImageButton = findViewById(R.id.btn_adicionar_quiz)
-        val fabResolverQuiz: FloatingActionButton = findViewById(R.id.fab_resolver_quiz)
 
         btnAdicionarQuiz.setOnClickListener{
             val intentAdicionarQuiz = Intent(this, InserirQuiz::class.java)
             startActivity(intentAdicionarQuiz)
         }
-        fabResolverQuiz.setOnClickListener {
-
-        }
-
     }
     override fun onResume(){
         super.onResume()

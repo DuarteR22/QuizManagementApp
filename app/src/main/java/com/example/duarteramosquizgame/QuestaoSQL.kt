@@ -47,6 +47,8 @@ class QuestaoSQL(context : Context) {
         return db.rawQuery(sql, arrayOf(quizId.toString()))
     }
 
+
+
     fun obterQuestaoId(questaoId: Long): Questao? {
 
         val db = dbHelper.readableDatabase
@@ -55,10 +57,10 @@ class QuestaoSQL(context : Context) {
 
         val colunas = arrayOf(
             BaseColumns._ID,
-            "id_quiz",         // Necessário para o construtor da Questao
+            "id_quiz",
             "questao",
             "num_respostas",
-            "respostas_opcoes", // String serializada das respostas
+            "respostas_opcoes",
             "resposta_correta",
             "url_imagem"
         )
@@ -131,5 +133,57 @@ class QuestaoSQL(context : Context) {
             db.close()
         }
         return linhasAfetadas
+    }
+        fun obterQuestoesQuizIdLista(quizId: Long): List<Questao> {
+        val db = dbHelper.readableDatabase
+        val listaQuestoes = mutableListOf<Questao>()
+        var cursor: Cursor? = null
+        val colunas = arrayOf(
+            BaseColumns._ID,
+            "id_quiz",
+            "questao",
+            "num_respostas",
+            "respostas_opcoes",
+            "resposta_correta",
+            "url_imagem"
+        )
+        cursor = db.query(
+            "questoes", colunas,
+            "id_quiz = ?", arrayOf(quizId.toString()),
+            null,
+            null,
+            "_ID ASC"
+        )
+        if(cursor.moveToFirst()){
+            val idIndex = cursor.getColumnIndexOrThrow(BaseColumns._ID)
+            val idQuizIndex = cursor.getColumnIndexOrThrow("id_quiz")
+            val perguntaIndex = cursor.getColumnIndexOrThrow("questao")
+            val numRespostasIndex = cursor.getColumnIndexOrThrow("num_respostas")
+            val respostasOpcoesIndex = cursor.getColumnIndexOrThrow("respostas_opcoes")
+            val respostaCorretaIndex = cursor.getColumnIndexOrThrow("resposta_correta")
+            val urlImagemIndex = cursor.getColumnIndexOrThrow("url_imagem")
+
+            do {
+                val id = cursor.getLong(idIndex)
+                val idQuiz = cursor.getLong(idQuizIndex)
+                val pergunta = cursor.getString(perguntaIndex)
+                val numRespostas = cursor.getInt(numRespostasIndex)
+                val respostaCorreta = cursor.getInt(respostaCorretaIndex)
+                val respostasOpcoes = cursor.getString(respostasOpcoesIndex)
+
+                val listaRespostas = respostasOpcoes.split("|").filter { it.isNotBlank() }
+                val urlImagem: String?
+                if (cursor.isNull(urlImagemIndex))
+                    urlImagem = null
+                else
+                    urlImagem = cursor.getString(urlImagemIndex)
+
+                val questao = Questao(id,idQuiz,pergunta,numRespostas,listaRespostas,respostaCorreta,urlImagem)
+                listaQuestoes.add(questao)
+            }while (cursor.moveToNext())
+        }
+        cursor.close()
+        db.close()
+        return listaQuestoes
     }
 }

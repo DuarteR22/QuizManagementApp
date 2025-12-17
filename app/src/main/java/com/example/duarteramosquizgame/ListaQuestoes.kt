@@ -3,6 +3,8 @@ package com.example.duarteramosquizgame
 import android.content.Intent
 import android.database.Cursor
 import android.os.Bundle
+import android.widget.Button
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,10 +30,16 @@ class ListaQuestoes: AppCompatActivity() {
             finish()
             return
         }
-        val fabInserirQuestao: FloatingActionButton = findViewById(R.id.fab_adicionar_questao)
+        val buttonInserirQuestao: ImageButton = findViewById(R.id.btn_adicionar_questao)
 
-        fabInserirQuestao.setOnClickListener{
+        buttonInserirQuestao.setOnClickListener{
             val intent = Intent(this, InserirQuestao::class.java)
+            intent.putExtra("id_quiz", quizId)
+            startActivity(intent)
+        }
+        val fabResolverQuiz: FloatingActionButton = findViewById(R.id.fab_resolver_quiz)
+        fabResolverQuiz.setOnClickListener {
+            val intent = Intent(this, ResolverQuiz::class.java)
             intent.putExtra("id_quiz", quizId)
             startActivity(intent)
         }

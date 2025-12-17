@@ -9,7 +9,7 @@
     android:background="#1A2130">
 
     <TextView
-        android:id="@+id/tv_titulo_tela"
+        android:id="@+id/tv_titulo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Resolver Questão"
@@ -28,13 +28,13 @@
         android:padding="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_titulo_tela">
+        app:layout_constraintTop_toBottomOf="@id/tv_titulo">
 
         <TextView
-            android:id="@+id/tv_enunciado_pergunta"
+            android:id="@+id/tv_titulo_pergunta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=""
+            android:text="Qual é a capital do Japão?"
             android:textSize="20sp"
             android:textStyle="normal"
             android:textColor="#E0E0E0"
@@ -55,72 +55,76 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/card_pergunta" />
 
-    <Button
+    <ToggleButton
         android:id="@+id/btn_resposta_1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:backgroundTint="#FF8C00"
+        android:background="@drawable/botao_resposta_background"
+        android:textOn="Resposta 1"
+        android:textOff="Resposta 1"
         android:gravity="start|center_vertical"
         android:paddingStart="24dp"
         android:paddingEnd="16dp"
         android:paddingTop="18dp"
         android:paddingBottom="18dp"
-        android:text="Resposta 1"
         android:textColor="#E0E0E0"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_respostas_titulo3" />
 
-    <Button
+    <ToggleButton
         android:id="@+id/btn_resposta_2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:backgroundTint="#FF8C00"
+        android:background="@drawable/botao_resposta_background"
+        android:textOn="Resposta 2"
+        android:textOff="Resposta 2"
         android:gravity="start|center_vertical"
         android:paddingStart="24dp"
         android:paddingTop="18dp"
         android:paddingBottom="18dp"
         android:paddingEnd="16dp"
-        android:text="Resposta 2"
         android:textColor="#E0E0E0"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_resposta_1" />
 
-    <Button
+    <ToggleButton
         android:id="@+id/btn_resposta_3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:backgroundTint="#FF8C00"
+        android:background="@drawable/botao_resposta_background"
+        android:textOn="Resposta 3"
+        android:textOff="Resposta 3"
         android:gravity="start|center_vertical"
         android:paddingStart="24dp"
         android:paddingEnd="16dp"
         android:paddingTop="18dp"
         android:paddingBottom="18dp"
-        android:text="Resposta 3"
         android:textColor="#E0E0E0"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_resposta_2" />
 
-    <Button
+    <ToggleButton
         android:id="@+id/btn_resposta_4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:backgroundTint="#FF8C00"
+        android:background="@drawable/botao_resposta_background"
+        android:textOn="Resposta 4"
+        android:textOff="Resposta 4"
         android:gravity="start|center_vertical"
         android:paddingStart="24dp"
         android:paddingEnd="16dp"
         android:paddingTop="18dp"
         android:paddingBottom="18dp"
-        android:text="Resposta 4"
         android:textColor="#E0E0E0"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -128,22 +132,47 @@
         app:layout_constraintTop_toBottomOf="@+id/btn_resposta_3" />
 
     <Button
-        android:id="@+id/btn_cancelar_resposta"
-        android:layout_width="380dp"
+        android:id="@+id/btn_submeter"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="#007BFF"
+        android:paddingVertical="14dp"
+        android:text="SUBMETER"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_resposta_4" />
+
+    <Button
+        android:id="@+id/btn_seguinte"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="#4CAF50"
+        android:paddingVertical="14dp"
+        android:text="SEGUINTE"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_submeter" />
+
+    <Button
+        android:id="@+id/btn_cancelar"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:backgroundTint="@android:color/transparent"
         android:paddingVertical="14dp"
-        android:paddingTop="18dp"
-        android:paddingBottom="18dp"
-        android:text="VOLTAR AO MENU"
+        android:text="cancelar"
         android:textColor="#A0A0A0"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_resposta_4"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@id/btn_seguinte" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

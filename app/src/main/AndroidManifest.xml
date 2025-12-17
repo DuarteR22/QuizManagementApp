@@ -73,6 +73,11 @@
             android:exported="true"
             android:label="QuizManagementApp">
         </activity>
+        <activity
+            android:name=".ResolverQuiz"
+            android:exported="true"
+            android:label="QuizManagementApp">
+        </activity>
     </application>
 
 </manifest>
