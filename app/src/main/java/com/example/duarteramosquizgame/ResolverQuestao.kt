@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 
 class ResolverQuestao : AppCompatActivity() {
 
@@ -18,9 +20,10 @@ class ResolverQuestao : AppCompatActivity() {
     private lateinit var buttonResposta3: ToggleButton
     private lateinit var buttonResposta4: ToggleButton
     private lateinit var textViewEnunciado: TextView
+    private lateinit var imagemQuestao: ImageView
     private var idQuestao: Long = -1
     private var numeroRespostaCorreta = -1
-
+    private var urlImagem: String? = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.resolver_questao)
@@ -31,6 +34,7 @@ class ResolverQuestao : AppCompatActivity() {
         buttonResposta2 = findViewById(R.id.btn_resposta_2)
         buttonResposta3 = findViewById(R.id.btn_resposta_3)
         buttonResposta4 = findViewById(R.id.btn_resposta_4)
+        imagemQuestao = findViewById(R.id.iv_imagem_questao)
         val buttonCancelar: Button = findViewById(R.id.btn_cancelar)
         questaoSQL = QuestaoSQL(this)
         idQuestao = intent.getLongExtra("id_questao", -1)
@@ -116,6 +120,19 @@ class ResolverQuestao : AppCompatActivity() {
         numeroRespostaCorreta = questao.respostaCorreta
 
         textViewEnunciado.text = questao.pergunta
+        urlImagem = questao.urlImagem
+        if (!urlImagem.isNullOrEmpty()) {
+            imagemQuestao.scaleType = ImageView.ScaleType.CENTER_CROP
+            Glide.with(this)
+                .load(urlImagem)
+                .placeholder(R.drawable.ic_resposta)
+                .error(R.drawable.ic_resposta)
+                .into(imagemQuestao)
+        }
+        else{
+            imagemQuestao.scaleType = ImageView.ScaleType.CENTER_INSIDE
+            imagemQuestao.setImageResource(R.drawable.ic_resposta)
+        }
 
         val resposta1 = respostas.getOrNull(0) ?: ""
         val resposta2 = respostas.getOrNull(1)?: ""

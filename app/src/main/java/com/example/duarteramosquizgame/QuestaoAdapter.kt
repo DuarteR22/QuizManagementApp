@@ -58,7 +58,7 @@ class QuestaoAdapter(
         holder.itemView.tag = questaoId
 
 
-        if(urlImagem.isNullOrEmpty()){
+        if(!urlImagem.isNullOrEmpty()){
             holder.imageViewImagem.scaleType = ImageView.ScaleType.CENTER_CROP
             Glide.with(context) //https://www.geeksforgeeks.org/android/image-loading-caching-library-android-set-2/
                 .load(urlImagem)

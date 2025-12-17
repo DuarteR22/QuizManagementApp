@@ -157,6 +157,13 @@ class ResolverQuiz: AppCompatActivity() {
             Toast.makeText(this, "Resposta Correta! (+1 ponto)", Toast.LENGTH_SHORT).show()
         }
         else{
+            buttonResposta1.setBackgroundColor(corVermelho)
+            buttonResposta2.setBackgroundColor(corVermelho)
+
+            if (questao.numRespostas >=3)
+                buttonResposta3.setBackgroundColor(corVermelho)
+            if (questao.numRespostas >=4)
+                buttonResposta4.setBackgroundColor(corVermelho)
             when (respostaSelecionada) {
                 1 -> buttonResposta1.setBackgroundColor(corVermelho)
                 2 -> buttonResposta2.setBackgroundColor(corVermelho)
@@ -169,6 +176,8 @@ class ResolverQuiz: AppCompatActivity() {
                 3 -> buttonResposta3.setBackgroundColor(corVerde)
                 4 -> buttonResposta4.setBackgroundColor(corVerde)
             }
+            Toast.makeText(this, "Resposta Errada! (-1 ponto)", Toast.LENGTH_SHORT).show()
+
         }
         buttonSeguinte.visibility = View.VISIBLE
     }

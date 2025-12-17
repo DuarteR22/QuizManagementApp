@@ -23,7 +23,7 @@
         android:id="@+id/card_pergunta"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:background="#222B3D"
         android:padding="24dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,16 +44,28 @@
             app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <ImageView
+        android:id="@+id/iv_imagem_questao"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="centerCrop"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/card_pergunta"
+        />
+
     <TextView
         android:id="@+id/tv_respostas_titulo3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:text="Escolha uma opção:"
         android:textStyle="bold"
         android:textColor="#E0E0E0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/card_pergunta" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_imagem_questao" />
 
     <ToggleButton
         android:id="@+id/btn_resposta_1"
@@ -170,7 +182,6 @@
         android:text="cancelar"
         android:textColor="#A0A0A0"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_seguinte" />
