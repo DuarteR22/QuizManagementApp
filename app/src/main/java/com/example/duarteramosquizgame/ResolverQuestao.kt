@@ -9,7 +9,10 @@ import android.widget.TextView
 import android.widget.Toast
 import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class ResolverQuestao : AppCompatActivity() {
 
@@ -24,6 +27,7 @@ class ResolverQuestao : AppCompatActivity() {
     private var idQuestao: Long = -1
     private var numeroRespostaCorreta = -1
     private var urlImagem: String? = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.resolver_questao)
@@ -182,4 +186,5 @@ class ResolverQuestao : AppCompatActivity() {
 
         }
     }
+
 }

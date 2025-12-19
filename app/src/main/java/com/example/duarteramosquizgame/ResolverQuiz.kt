@@ -9,6 +9,12 @@ import android.widget.Toast
 import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
 import android.graphics.Color
+import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+
 class ResolverQuiz: AppCompatActivity() {
 
     private lateinit var questaoSQL: QuestaoSQL
@@ -28,16 +34,19 @@ class ResolverQuiz: AppCompatActivity() {
     private lateinit var buttonSubmeter: Button
     private lateinit var buttonSeguinte: Button
     private lateinit var buttonCancelar: Button
-
+    private lateinit var textViewTempo: TextView
     private val corDefault = Color.parseColor("#FF8C00")
     private val corVerde = Color.parseColor("#4CAF50")
     private val corVermelho = Color.parseColor("#F44336")
+    private var tempoRestante = 60
+    private var cronometroJob: Job? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.resolver_questao)
 
         textViewEnunciado = findViewById(R.id.tv_titulo_pergunta)
         textViewTitulo = findViewById(R.id.tv_titulo)
+        textViewTempo = findViewById(R.id.tv_cronometro)
         buttonResposta1 = findViewById(R.id.btn_resposta_1)
         buttonResposta2 = findViewById(R.id.btn_resposta_2)
         buttonResposta3 = findViewById(R.id.btn_resposta_3)
@@ -61,6 +70,7 @@ class ResolverQuiz: AppCompatActivity() {
         }
         configurarListeners()
         carregarQuestao(indiceQuestao)
+        iniciarTempo()
     }
     fun configurarListeners(){
 
@@ -128,7 +138,7 @@ class ResolverQuiz: AppCompatActivity() {
                 pontuacaoFinal()
         }
         buttonCancelar.setOnClickListener {
-            finish()
+            pontuacaoFinal()
         }
     }
     private fun submeterResposta(){
@@ -154,7 +164,6 @@ class ResolverQuiz: AppCompatActivity() {
                 3 -> buttonResposta3.setBackgroundColor(corVerde)
                 4 -> buttonResposta4.setBackgroundColor(corVerde)
             }
-            Toast.makeText(this, "Resposta Correta! (+1 ponto)", Toast.LENGTH_SHORT).show()
         }
         else{
             buttonResposta1.setBackgroundColor(corVermelho)
@@ -176,8 +185,6 @@ class ResolverQuiz: AppCompatActivity() {
                 3 -> buttonResposta3.setBackgroundColor(corVerde)
                 4 -> buttonResposta4.setBackgroundColor(corVerde)
             }
-            Toast.makeText(this, "Resposta Errada! (-1 ponto)", Toast.LENGTH_SHORT).show()
-
         }
         buttonSeguinte.visibility = View.VISIBLE
     }
@@ -258,9 +265,33 @@ class ResolverQuiz: AppCompatActivity() {
             buttonResposta4.visibility = View.VISIBLE
         }
     }
-    private fun pontuacaoFinal(){
-        Toast.makeText(this, "Pontuação final: $pontuacao / ${listaQuestoes.size}", Toast.LENGTH_LONG).show()
-        finish()
+    private fun pontuacaoFinal(){ //https://kotlinlang.org/docs/coroutines-overview.html#coroutine-context-and-behavior
+        val titulo: String = ("Quiz Terminado")
+        cronometroJob?.cancel()
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(titulo)
+        builder.setMessage("Resultado: $pontuacao/${listaQuestoes.size} - $pontuacao acertos em ${listaQuestoes.size} questoes")
+        builder.setCancelable(false)
+        builder.setPositiveButton("Confirmar"){ _, _ ->
+            finish()
+        }
+        val dialog = builder.create()
+        dialog.show()
+    }
+    private fun iniciarTempo(){
+        cronometroJob?.cancel()
+
+        cronometroJob = lifecycleScope.launch {
+            while (tempoRestante > 0){
+                textViewTempo.text = "Tempo: $tempoRestante s"
+                delay(1000)
+                tempoRestante--
+            }
+            if(tempoRestante == 0){
+                textViewTempo. text = "Tempo: 0s"
+
+            }
+        }
     }
 
 }
