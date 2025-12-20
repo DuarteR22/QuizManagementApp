@@ -78,6 +78,11 @@
             android:exported="true"
             android:label="QuizManagementApp">
         </activity>
+        <activity
+            android:name=".Detalhes"
+            android:exported="true"
+            android:label="QuizManagementApp">
+        </activity>
     </application>
 
 </manifest>

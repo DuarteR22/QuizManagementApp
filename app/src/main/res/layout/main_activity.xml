@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1A2130"
-    >
+    android:background="#1A2130">
 
     <TextView
         android:id="@+id/textView_main_title"
@@ -24,17 +23,30 @@
 
     <ImageButton
         android:id="@+id/btn_adicionar_quiz"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginEnd="16dp"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
         android:src="@drawable/ic_add"
         android:background="@android:color/transparent"
-        android:contentDescription="Adicionar novo quiz"
+        android:scaleType="fitCenter"
+        android:padding="12dp"
         app:tint="#FF8C00"
         app:layout_constraintTop_toTopOf="@id/textView_main_title"
         app:layout_constraintBottom_toBottomOf="@id/textView_main_title"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:padding="16dp" />
+        app:layout_constraintEnd_toStartOf="@id/btn_detalhes" />
+
+    <ImageButton
+        android:id="@+id/btn_detalhes"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/ic_detalhes"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        android:padding="12dp"
+        app:tint="#FF8C00"
+        app:layout_constraintTop_toTopOf="@id/textView_main_title"
+        app:layout_constraintBottom_toBottomOf="@id/textView_main_title"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <View
         android:id="@+id/divider_main"
@@ -54,7 +66,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:listitem="@layout/card_quiz" />
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

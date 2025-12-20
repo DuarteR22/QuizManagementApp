@@ -24,10 +24,14 @@ class MainActivity : AppCompatActivity() {
         recyclerViewQuizzes = findViewById(R.id.recyclerView_quizzes)
         recyclerViewQuizzes.layoutManager = LinearLayoutManager(this)
         val btnAdicionarQuiz: ImageButton = findViewById(R.id.btn_adicionar_quiz)
-
+        val btnInformacoes: ImageButton = findViewById(R.id.btn_detalhes)
         btnAdicionarQuiz.setOnClickListener{
             val intentAdicionarQuiz = Intent(this, InserirQuiz::class.java)
             startActivity(intentAdicionarQuiz)
+        }
+        btnInformacoes.setOnClickListener {
+            val intentDetalhes = Intent(this, Detalhes::class.java)
+            startActivity(intentDetalhes)
         }
     }
     override fun onResume(){
