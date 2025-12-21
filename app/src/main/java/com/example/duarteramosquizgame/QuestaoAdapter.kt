@@ -62,6 +62,7 @@ class QuestaoAdapter(
             holder.imageViewImagem.scaleType = ImageView.ScaleType.CENTER_CROP
             Glide.with(context) //https://www.geeksforgeeks.org/android/image-loading-caching-library-android-set-2/
                 .load(urlImagem)
+                .centerCrop()
                 .placeholder(R.drawable.ic_resposta)
                 .error(R.drawable.ic_resposta)
                 .into(holder.imageViewImagem)

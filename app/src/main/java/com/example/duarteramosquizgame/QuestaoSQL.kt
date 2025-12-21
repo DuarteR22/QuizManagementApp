@@ -4,7 +4,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.provider.BaseColumns
-import java.io.File.separator
 
 class QuestaoSQL(context : Context) {
 
@@ -28,13 +27,13 @@ class QuestaoSQL(context : Context) {
 
     fun eliminaQuestao(questaoId: Long): Int {
         val db = dbHelper.writableDatabase
-        val rowsAffected = db.delete(
+        val linhasAfetadas = db.delete(
             "questoes",
             "_id=?",
             arrayOf(questaoId.toString())
         )
         db.close()
-        return rowsAffected
+        return linhasAfetadas
     }
 
     fun obterQuestoesQuizId(quizId: Long): Cursor {
@@ -46,8 +45,6 @@ class QuestaoSQL(context : Context) {
 
         return db.rawQuery(sql, arrayOf(quizId.toString()))
     }
-
-
 
     fun obterQuestaoId(questaoId: Long): Questao? {
 

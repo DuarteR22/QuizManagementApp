@@ -9,8 +9,10 @@ import android.widget.Toast
 import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
 import android.graphics.Color
+import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -40,6 +42,8 @@ class ResolverQuiz: AppCompatActivity() {
     private val corVermelho = Color.parseColor("#F44336")
     private var tempoRestante = 60
     private var cronometroJob: Job? = null
+    private lateinit var imageViewQuestao: ImageView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.resolver_questao)
@@ -51,6 +55,7 @@ class ResolverQuiz: AppCompatActivity() {
         buttonResposta2 = findViewById(R.id.btn_resposta_2)
         buttonResposta3 = findViewById(R.id.btn_resposta_3)
         buttonResposta4 = findViewById(R.id.btn_resposta_4)
+        imageViewQuestao = findViewById(R.id.iv_imagem_questao)
         questaoSQL = QuestaoSQL(this)
         quizId = intent.getLongExtra("id_quiz", -1)
 
@@ -213,6 +218,17 @@ class ResolverQuiz: AppCompatActivity() {
         textViewEnunciado.text = questao.pergunta
         val respostas = questao.respostas
         val numRespostas = questao.numRespostas
+        if (!questao.urlImagem.isNullOrEmpty()){
+            imageViewQuestao.visibility = View.VISIBLE
+            Glide.with(this)
+                .load(questao.urlImagem)
+                .placeholder(R.drawable.ic_resposta)
+                .error(R.drawable.ic_resposta)
+                .into(imageViewQuestao)
+        }else{
+            imageViewQuestao.visibility = View.VISIBLE
+            imageViewQuestao.setImageResource(R.drawable.ic_resposta)
+        }
         val resposta1 = respostas.getOrNull(0) ?: "Erro"
         val resposta2 = respostas.getOrNull(1) ?: "Erro"
         val resposta3 = respostas.getOrNull(2) ?: "Erro"

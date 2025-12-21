@@ -25,13 +25,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="12dp"
-            android:background="#303030"> <ImageView
+            android:background="#303030">
+            <ImageView
             android:id="@+id/icon_quiz"
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:src="@drawable/ic_quiz"
-            android:contentDescription="Ícone do Quiz"
-            app:tint="#FF8C00" app:layout_constraintStart_toStartOf="parent"
+            app:tint="#FF8C00"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
@@ -63,7 +64,6 @@
                 android:layout_marginEnd="4dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/editar_quiz"
-                android:contentDescription="Editar Quiz"
                 app:tint="#FF8C00"
                 app:layout_constraintEnd_toStartOf="@id/btn_apagar_quiz" app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
@@ -74,14 +74,10 @@
                 android:layout_height="40dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_delete"
-                android:contentDescription="Remover Quiz"
                 app:tint="@android:color/holo_red_dark"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.cardview.widget.CardView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

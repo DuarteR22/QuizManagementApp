@@ -57,51 +57,63 @@ class ResolverQuestao : AppCompatActivity() {
                 }
                 buttonResposta2.setOnClickListener {
                     Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                    finish()
                 }
                 buttonResposta3.setOnClickListener {
                     Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                    finish()
                 }
                 buttonResposta4.setOnClickListener {
                     Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                    finish()
                 }
             }
             2 -> {
                 buttonResposta1.setOnClickListener{
                     Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                    finish()
                 }
                 buttonResposta2.setOnClickListener{
                     Toast.makeText(this, "Resposta Correta!", Toast.LENGTH_SHORT).show()
                     finish()                }
                 buttonResposta3.setOnClickListener {
                     Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                    finish()
                 }
                 buttonResposta4.setOnClickListener {
                     Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                    finish()
                 }
             }
             3 -> {
                 buttonResposta1.setOnClickListener{
                     Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                    finish()
                 }
                 buttonResposta2.setOnClickListener {
                     Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                    finish()
                 }
                 buttonResposta3.setOnClickListener{
                     Toast.makeText(this, "Resposta Correta!", Toast.LENGTH_SHORT).show()
                     finish()                }
                 buttonResposta4.setOnClickListener {
                     Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                    finish()
                 }
             }
             4 -> {
                 buttonResposta1.setOnClickListener{
                     Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                    finish()
                 }
                 buttonResposta2.setOnClickListener {
                     Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                    finish()
                 }
                 buttonResposta3.setOnClickListener {
                     Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                    finish()
                 }
                 buttonResposta4.setOnClickListener{
                     Toast.makeText(this, "Resposta Correta!", Toast.LENGTH_SHORT).show()

@@ -82,7 +82,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Tempo Máximo (segundos):"
+        android:text="Tempo Máximo para Realização (segundos):"
         android:textStyle="bold"
         android:textColor="#E0E0E0"
         app:layout_constraintStart_toStartOf="parent"
