@@ -8,10 +8,12 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class AlterarQuiz : AppCompatActivity() {
 
-    private lateinit var quizSQL: QuizSQL
     private var quizId: Long = -1
 
     private lateinit var editTextTituloQuiz: EditText
@@ -28,8 +30,6 @@ class AlterarQuiz : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.editar_quiz)
-
-        quizSQL = QuizSQL(this)
 
         quizId = intent.getLongExtra("id_quiz", -1)
         editTextTituloQuiz = findViewById(R.id.et_titulo_quiz)
@@ -61,23 +61,32 @@ class AlterarQuiz : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun carregarQuizzes(id: Long){
 
-        val cursor = quizSQL.obterQuizId(id)
-        if (cursor.moveToFirst()){
-            val titulo = cursor.getString(cursor.getColumnIndexOrThrow("titulo"))
-            val descricao = cursor.getString(cursor.getColumnIndexOrThrow("descricao"))
-            val tempo = cursor.getInt(cursor.getColumnIndexOrThrow("tempo_max"))
+        val request = QuizIdRequest(qid = id)
+        ClienteRetrofit.instance.listarQuizId(request).enqueue(object : Callback<Quiz>{
+            override fun onResponse(call: Call<Quiz>, response: Response<Quiz>) {
+                if (response.isSuccessful){
+                    val quiz = response.body()
+                    if (quiz != null){
+                        tituloOriginal = quiz.titulo
+                        descricaoOriginal = quiz.descricao
+                        tempoOriginal = quiz.tempo_max
+                        tvTituloAntigo.setText(quiz.titulo)
+                        tvDescricaoAntiga.setText(quiz.descricao)
+                        tvTempoAntigo.setText(quiz.tempo_max.toString())
+                        editTextTituloQuiz.setText(quiz.titulo)
+                        editTextDescricaoQuiz.setText(quiz.descricao)
+                        editTextTempoQuiz.setText(quiz.tempo_max.toString())
+                    }
+                }else{
+                    Toast.makeText(this@AlterarQuiz, "Erro ao obter dados do servidor", Toast.LENGTH_SHORT).show()
+                }
+            }
 
-            tituloOriginal = titulo
-            descricaoOriginal = descricao
-            tempoOriginal = tempo
+            override fun onFailure(call: Call<Quiz>, t: Throwable) {
+                Toast.makeText(this@AlterarQuiz, "Falha de rede: ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
 
-            tvTituloAntigo.setText(titulo)
-            tvDescricaoAntiga.setText(descricao)
-            tvTempoAntigo.setText(tempo.toString())
-        }else{
-            Toast.makeText(this, "Quiz nao encontrado", Toast.LENGTH_LONG).show()
-        }
-        cursor.close()
     }
     private fun guardarAlteracoes(){
         var novoTituloQuiz = editTextTituloQuiz.text.toString().trim()
@@ -104,15 +113,26 @@ class AlterarQuiz : AppCompatActivity() {
             finish()
             return
         }
-        val linhasAfetadas = quizSQL.alteraQuiz(quizId,tituloFinalQuiz,descricaoFinalQuiz,tempoFinalQuiz.toInt())
-
-        if (linhasAfetadas > 0){
-            Toast.makeText(this, "Quiz alterado com sucesso", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-        }else {
-            Toast.makeText(this, "Erro: Nenhuma alteração guardada ou quiz não encontrado.", Toast.LENGTH_SHORT).show()
-        }
+        val novoQuiz = Quiz(
+            id = quizId,
+            titulo = tituloFinalQuiz,
+            descricao = descricaoFinalQuiz,
+            tempo_max = tempoFinalQuiz.toInt()
+        )
+        ClienteRetrofit.instance.alterarQuiz(novoQuiz).enqueue(object : Callback<RegistoResposta> {
+            override fun onResponse(call: Call<RegistoResposta>, response: Response<RegistoResposta>) {
+                if (response.isSuccessful) {
+                    Toast.makeText(this@AlterarQuiz, "Quiz alterado com sucesso!", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this@AlterarQuiz, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    Toast.makeText(this@AlterarQuiz, "Erro ao alterar o quiz", Toast.LENGTH_SHORT).show()
+                }
+            }
+            override fun onFailure(call: Call<RegistoResposta>, t: Throwable) {
+                Toast.makeText(this@AlterarQuiz, "Falha de rede: ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }

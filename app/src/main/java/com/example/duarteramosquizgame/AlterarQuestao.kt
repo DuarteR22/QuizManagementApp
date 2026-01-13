@@ -11,10 +11,12 @@ import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class AlterarQuestao: AppCompatActivity() {
 
-    private lateinit var questaoSQL: QuestaoSQL
     private var questaoId: Long = -1
     private var quizId: Long = -1
     private lateinit var editTextTituloQuestao: EditText
@@ -48,10 +50,8 @@ class AlterarQuestao: AppCompatActivity() {
 
     private var tituloOriginal: String = ""
     private var urlOriginal: String = ""
-    private var resposta1: String = ""
-    private var resposta2: String = ""
-    private var resposta3: String = ""
-    private var resposta4: String = ""
+    private var respostasOriginais: List<String> = emptyList()
+    private var corretaOriginal: Int = -1
 
     private var numeroRespostasFinal: Int = -1
 
@@ -59,7 +59,6 @@ class AlterarQuestao: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.editar_questao)
 
-        questaoSQL = QuestaoSQL(this)
         questaoId = intent.getLongExtra("id_questao", -1)
 
         editTextTituloQuestao = findViewById(R.id.et_pergunta_nova)
@@ -124,182 +123,213 @@ class AlterarQuestao: AppCompatActivity() {
     }
     //Carrega a página com o número de respostas que possui a questão a alterar
     @SuppressLint("SetTextI18n")
-    private fun carregarQuestoes(){
-        val questao = questaoSQL.obterQuestaoId(questaoId)
+    private fun carregarQuestoes() {
+        val request = ListarQuestaoIdRequest(quid = questaoId)
+        ClienteRetrofit.instance.listarQuestaoId(request).enqueue(object : Callback<Questao> {
+            override fun onResponse(call: Call<Questao>, response: Response<Questao>) {
+                if (response.isSuccessful) {
+                    val questao = response.body()
+                    if (questao != null) {
+                        tituloOriginal = questao.pergunta
+                        urlOriginal = questao.urlImagem ?: ""
+                        quizId = questao.quizId
+                        respostasOriginais = questao.respostas
+                        corretaOriginal = questao.respostaCorreta
+                        textViewTituloQuestao.text = questao.pergunta
+                        textViewUrlImagem.text = questao.urlImagem ?: "Não foi escolhida uma imagem"
+                        textViewNumRespostas.text = "${questao.numRespostas} Respostas"
+                        textViewRespostaCorreta.text = "Resposta ${questao.respostaCorreta}"
+                        editTextTituloQuestao.setText(questao.pergunta)
+                        editTextUrlImagem.setText(questao.urlImagem)
+                        val respostas = questao.respostas
+                        textViewResposta1.text = respostas.getOrNull(0) ?: ""
+                        editTextResposta1.setText(respostas.getOrNull(0) ?: "")
+                        textViewLabelResposta1.visibility = VISIBLE
+                        editTextResposta1.visibility = VISIBLE
+                        if (questao.numRespostas >= 2) {
+                            textViewResposta2.text = respostas.getOrNull(1) ?: ""
+                            textViewResposta2.visibility = VISIBLE
+                            textViewLabelResposta2.visibility = VISIBLE
+                            editTextResposta2.visibility = VISIBLE
 
-        if (questao == null) {
-            Toast.makeText(this, "Questão não encontrada!", Toast.LENGTH_LONG).show()
-            finish()
-            return
-        }
-        tituloOriginal = questao.pergunta
-        urlOriginal = questao.urlImagem ?: ""
-        quizId = questao.idQuiz
-        textViewTituloQuestao.text = questao.pergunta
-        textViewUrlImagem.text = questao.urlImagem ?: "Não foi escolhida uma imagem"
-        textViewNumRespostas.text = "${questao.numRespostas} Respostas"
-        textViewRespostaCorreta.text = "Resposta ${questao.respostaCorreta}"
+                        } else {
+                            textViewResposta2.visibility = GONE
+                            textViewLabelResposta2.visibility = GONE
+                            editTextResposta2.visibility = GONE
+                        }
+                        if (questao.numRespostas >= 3) {
+                            textViewResposta3.text = respostas.getOrNull(2) ?: ""
+                            textViewResposta3.visibility = VISIBLE
+                            textViewLabelResposta3.visibility = VISIBLE
+                            editTextResposta3.visibility = VISIBLE
+                        } else {
+                            textViewResposta3.visibility = GONE
+                            textViewLabelResposta3.visibility = GONE
+                            editTextResposta3.visibility = GONE
+                        }
+                        if (questao.numRespostas >= 4) {
+                            textViewResposta4.text = respostas.getOrNull(3) ?: ""
+                            textViewResposta4.visibility = VISIBLE
+                            textViewLabelResposta4.visibility = VISIBLE
+                            editTextResposta4.visibility = VISIBLE
+                        } else {
+                            textViewResposta4.visibility = GONE
+                            textViewLabelResposta4.visibility = GONE
+                            editTextResposta4.visibility = GONE
+                        }
+                        when (questao.numRespostas) {
+                            2 -> rgNumeroRespostas.check(R.id.rb_2_respostas)
+                            3 -> rgNumeroRespostas.check(R.id.rb_3_respostas)
+                            4 -> rgNumeroRespostas.check(R.id.rb_4_respostas)
+                        }
+                        when (questao.respostaCorreta) {
+                            1 -> rgRespostaCorreta.check(R.id.rb_correta_1)
+                            2 -> rgRespostaCorreta.check(R.id.rb_correta_2)
+                            3 -> rgRespostaCorreta.check(R.id.rb_correta_3)
+                            4 -> rgRespostaCorreta.check(R.id.rb_correta_4)
+                        }
+                    }
+                } else {
+                    Toast.makeText(
+                        this@AlterarQuestao,
+                        "Erro ao carregar dados",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
 
-        val respostas = questao.respostas
+            }
 
-        textViewResposta1.text = respostas.getOrNull(0) ?: ""
-        textViewLabelResposta1.visibility = VISIBLE
-        editTextResposta1.visibility = VISIBLE
-
-        if(questao.numRespostas >= 2){
-            textViewResposta2.text = respostas.getOrNull(1) ?: ""
-            textViewResposta2.visibility = VISIBLE
-            textViewLabelResposta2.visibility = VISIBLE
-            editTextResposta2.visibility = VISIBLE
-
-        }else{
-            textViewResposta2.visibility = GONE
-            textViewLabelResposta2.visibility = GONE
-            editTextResposta2.visibility = GONE
-        }
-        if (questao.numRespostas >= 3){
-            textViewResposta3.text = respostas.getOrNull(2) ?: ""
-            textViewResposta3.visibility = VISIBLE
-            textViewLabelResposta3.visibility = VISIBLE
-            editTextResposta3.visibility = VISIBLE
-        }else{
-            textViewResposta3.visibility = GONE
-            textViewLabelResposta3.visibility = GONE
-            editTextResposta3.visibility = GONE
-        }
-        if (questao.numRespostas >= 4) {
-            textViewResposta4.text = respostas.getOrNull(3) ?: ""
-            textViewResposta4.visibility = VISIBLE
-            textViewLabelResposta4.visibility = VISIBLE
-            editTextResposta4.visibility = VISIBLE
-        } else {
-            textViewResposta4.visibility = GONE
-            textViewLabelResposta4.visibility = GONE
-            editTextResposta4.visibility = GONE
-        }
-
-        when(questao.numRespostas){
-            2 -> rgNumeroRespostas.check(R.id.rb_2_respostas)
-            3 -> rgNumeroRespostas.check(R.id.rb_3_respostas)
-            4 -> rgNumeroRespostas.check(R.id.rb_4_respostas)
-        }
-        when(questao.respostaCorreta){
-            1 -> rgRespostaCorreta.check(R.id.rb_correta_1)
-            2 -> rgRespostaCorreta.check(R.id.rb_correta_2)
-            3 -> rgRespostaCorreta.check(R.id.rb_correta_3)
-            4 -> rgRespostaCorreta.check(R.id.rb_correta_4)
-        }
-
+            override fun onFailure(call: Call<Questao>, t: Throwable) {
+                Toast.makeText(
+                    this@AlterarQuestao,
+                    "Falha de rede: ${t.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
     }
-    //Altera o número de respostas em função da atualização do número de respostas
-    fun atualizaEditTextRespostas(count: Int){
+        //Altera o número de respostas em função da atualização do número de respostas
+        fun atualizaEditTextRespostas(count: Int) {
 
 
-        if (count == 2){
-            editTextResposta1.visibility = VISIBLE
-            editTextResposta2.visibility = VISIBLE
-            editTextResposta3.visibility = GONE
-            editTextResposta4.visibility = GONE
-            textViewResposta1.visibility = VISIBLE
-            textViewResposta2.visibility = VISIBLE
-            textViewResposta3.visibility = GONE
-            textViewResposta4.visibility = GONE
-            textViewLabelResposta1.visibility = VISIBLE
-            textViewLabelResposta2.visibility = VISIBLE
-            textViewLabelResposta3.visibility = GONE
-            textViewLabelResposta4.visibility = GONE
+            if (count == 2) {
+                editTextResposta1.visibility = VISIBLE
+                editTextResposta2.visibility = VISIBLE
+                editTextResposta3.visibility = GONE
+                editTextResposta4.visibility = GONE
+                textViewResposta1.visibility = VISIBLE
+                textViewResposta2.visibility = VISIBLE
+                textViewResposta3.visibility = GONE
+                textViewResposta4.visibility = GONE
+                textViewLabelResposta1.visibility = VISIBLE
+                textViewLabelResposta2.visibility = VISIBLE
+                textViewLabelResposta3.visibility = GONE
+                textViewLabelResposta4.visibility = GONE
 
-        }
-        else if (count == 3) {
-            editTextResposta1.visibility = VISIBLE
-            editTextResposta2.visibility = VISIBLE
-            editTextResposta3.visibility = VISIBLE
-            editTextResposta4.visibility = GONE
-            textViewResposta1.visibility = VISIBLE
-            textViewResposta2.visibility = VISIBLE
-            textViewResposta3.visibility = VISIBLE
-            textViewResposta4.visibility = GONE
-            textViewLabelResposta1.visibility = VISIBLE
-            textViewLabelResposta2.visibility = VISIBLE
-            textViewLabelResposta3.visibility = VISIBLE
-            textViewLabelResposta4.visibility = GONE
-        }
-        else if (count == 4) {
-            editTextResposta1.visibility = VISIBLE
-            editTextResposta2.visibility = VISIBLE
-            editTextResposta3.visibility = VISIBLE
-            editTextResposta4.visibility = VISIBLE
-            textViewResposta1.visibility = VISIBLE
-            textViewResposta2.visibility = VISIBLE
-            textViewResposta3.visibility = VISIBLE
-            textViewResposta4.visibility = VISIBLE
-            textViewLabelResposta1.visibility = VISIBLE
-            textViewLabelResposta2.visibility = VISIBLE
-            textViewLabelResposta3.visibility = VISIBLE
-            textViewLabelResposta4.visibility = VISIBLE
-        }
-    }
-    fun guardarAlteracoes(){
-        var novoTituloQuestao = editTextTituloQuestao.text.toString().trim()
-        var novoUrl = editTextUrlImagem.text.toString().trim()
-        val numRespostasNovo = when (rgNumeroRespostas.checkedRadioButtonId){
-            R.id.rb_2_respostas -> 2
-            R.id.rb_3_respostas -> 3
-            R.id.rb_4_respostas -> 4
-            else -> -1
-        }
-        val novaRespostaCorreta = when(rgRespostaCorreta.checkedRadioButtonId){
-            R.id.rb_correta_1 -> 1
-            R.id.rb_correta_2 -> 2
-            R.id.rb_correta_3 -> 3
-            R.id.rb_correta_4 -> 4
-            else -> -1
+            } else if (count == 3) {
+                editTextResposta1.visibility = VISIBLE
+                editTextResposta2.visibility = VISIBLE
+                editTextResposta3.visibility = VISIBLE
+                editTextResposta4.visibility = GONE
+                textViewResposta1.visibility = VISIBLE
+                textViewResposta2.visibility = VISIBLE
+                textViewResposta3.visibility = VISIBLE
+                textViewResposta4.visibility = GONE
+                textViewLabelResposta1.visibility = VISIBLE
+                textViewLabelResposta2.visibility = VISIBLE
+                textViewLabelResposta3.visibility = VISIBLE
+                textViewLabelResposta4.visibility = GONE
+            } else if (count == 4) {
+                editTextResposta1.visibility = VISIBLE
+                editTextResposta2.visibility = VISIBLE
+                editTextResposta3.visibility = VISIBLE
+                editTextResposta4.visibility = VISIBLE
+                textViewResposta1.visibility = VISIBLE
+                textViewResposta2.visibility = VISIBLE
+                textViewResposta3.visibility = VISIBLE
+                textViewResposta4.visibility = VISIBLE
+                textViewLabelResposta1.visibility = VISIBLE
+                textViewLabelResposta2.visibility = VISIBLE
+                textViewLabelResposta3.visibility = VISIBLE
+                textViewLabelResposta4.visibility = VISIBLE
+            }
         }
 
-        val respostasEditTexts = listOf(editTextResposta1,editTextResposta2,editTextResposta3,editTextResposta4)
-        val respostasOriginais = questaoSQL.obterQuestaoId(questaoId)?.respostas
-        val novasRespostas = mutableListOf<String>()
+        fun guardarAlteracoes() {
+            var novoTituloQuestao = editTextTituloQuestao.text.toString().trim()
+            var novoUrl = editTextUrlImagem.text.toString().trim()
+            val numRespostasNovo = when (rgNumeroRespostas.checkedRadioButtonId) {
+                R.id.rb_2_respostas -> 2
+                R.id.rb_3_respostas -> 3
+                R.id.rb_4_respostas -> 4
+                else -> -1
+            }
+            val novaRespostaCorreta = when (rgRespostaCorreta.checkedRadioButtonId) {
+                R.id.rb_correta_1 -> 1
+                R.id.rb_correta_2 -> 2
+                R.id.rb_correta_3 -> 3
+                R.id.rb_correta_4 -> 4
+                else -> -1
+            }
 
-        for (i in 0 until numRespostasNovo) {
-            var resposta = respostasEditTexts[i].text.toString().trim()
-            if (resposta.isEmpty()){
-                if (respostasOriginais != null) {
+            val respostasEditTexts =
+                listOf(editTextResposta1, editTextResposta2, editTextResposta3, editTextResposta4)
+            val novasRespostas = mutableListOf<String>()
+
+            for (i in 0 until numRespostasNovo) {
+                var resposta = respostasEditTexts[i].text.toString().trim()
+                if (resposta.isEmpty()) {
                     resposta = respostasOriginais.getOrNull(i) ?: ""
                 }
+                if (resposta.isEmpty()) {
+                    Toast.makeText(
+                        this,
+                        "A Resposta ${i + 1} não pode estar vazia",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    return
+                }
+                novasRespostas.add(resposta)
             }
-            if (resposta.isEmpty()){
-                Toast.makeText(this, "A Resposta ${i + 1} não pode estar vazia", Toast.LENGTH_LONG).show()
+            if (novoTituloQuestao.isEmpty()) {
+                novoTituloQuestao = tituloOriginal
+            }
+            if (novoUrl.isEmpty()) {
+                novoUrl = urlOriginal
+            }
+            if (novaRespostaCorreta == -1 || novaRespostaCorreta > numRespostasNovo) {
+                Toast.makeText(
+                    this,
+                    "Selecione a resposta correta e verifique o número de respostas.",
+                    Toast.LENGTH_SHORT
+                ).show()
                 return
             }
-            novasRespostas.add(resposta)
-        }
-        if (novoTituloQuestao.isEmpty()){
-            novoTituloQuestao = tituloOriginal
-        }
-        if(novoUrl.isEmpty()){
-            novoUrl = urlOriginal
-        }
-        if (novaRespostaCorreta == -1 || novaRespostaCorreta > numRespostasNovo) {
-            Toast.makeText(this, "Selecione a resposta correta e verifique o número de respostas.", Toast.LENGTH_SHORT).show()
-            return
-        }
-        val questaoAtualizada = Questao(
-            id = questaoId,
-            idQuiz = quizId,
-            pergunta = novoTituloQuestao,
-            numRespostas = numRespostasNovo,
-            respostas = novasRespostas,
-            respostaCorreta = novaRespostaCorreta,
-            urlImagem = novoUrl.ifEmpty { null }
-        )
+            val questaoAtualizada = Questao(
+                id = questaoId,
+                quizId = quizId,
+                pergunta = novoTituloQuestao,
+                numRespostas = numRespostasNovo,
+                respostas = novasRespostas,
+                respostaCorreta = novaRespostaCorreta,
+                urlImagem = novoUrl.ifEmpty { null }
+            )
 
-        val linhasAfetadas = questaoSQL.alteraQuestao(questaoAtualizada)
-        if (linhasAfetadas > 0) {
-            Toast.makeText(this, "Questão atualizada com sucesso!", Toast.LENGTH_SHORT).show()
-            finish()
-        } else {
-            Toast.makeText(this, "Erro ao atualizar a questão.", Toast.LENGTH_SHORT).show()
-        }
-    }
+            ClienteRetrofit.instance.alterarQuestao(questaoAtualizada).enqueue(object : Callback<RegistoResposta>{
+                override fun onResponse(
+                    call: Call<RegistoResposta>,
+                    response: Response<RegistoResposta>
+                ) {
+                    if (response.isSuccessful){
+                        Toast.makeText(this@AlterarQuestao, "Questão alterada com sucesso!", Toast.LENGTH_SHORT).show()
+                        finish()
+                    }else
+                        Toast.makeText(this@AlterarQuestao, "Erro ao alterar a questão no servidor.", Toast.LENGTH_SHORT).show()
+                }
+                override fun onFailure(call: Call<RegistoResposta>, t: Throwable) {
+                    Toast.makeText(this@AlterarQuestao, "Falha de rede: ${t.message}", Toast.LENGTH_SHORT).show()
+                }
+            })
 
+        }
 }

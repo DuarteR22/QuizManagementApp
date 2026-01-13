@@ -15,16 +15,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class QuestaoAdapter(
     private val context: Context,
-    private var cursor: Cursor,
-    private val questaoSQL: QuestaoSQL):RecyclerView.Adapter<QuestaoAdapter.QuestaoViewHolder>() {
-
-    private val idColunaIndex = cursor.getColumnIndex(BaseColumns._ID)
-    private val perguntaIndex = cursor.getColumnIndexOrThrow("questao")
-    private val urlImagemIndex = cursor.getColumnIndexOrThrow("url_imagem")
-    private val numRespostasIndex = cursor.getColumnIndexOrThrow("num_respostas")
+    private var questoes: List<Questao>):RecyclerView.Adapter<QuestaoAdapter.QuestaoViewHolder>() {
 
     inner class QuestaoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 
@@ -36,7 +33,7 @@ class QuestaoAdapter(
         val buttonEditarQuestao: ImageButton = itemView.findViewById(R.id.btn_alterar_questao)
     }
 
-    override fun getItemCount(): Int = cursor.count
+    override fun getItemCount(): Int = questoes.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuestaoViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.card_questao, parent,false  )
@@ -45,23 +42,18 @@ class QuestaoAdapter(
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: QuestaoViewHolder, position: Int) {
-        if (!cursor.moveToPosition(position))
-            return
+        val questao = questoes[position]
+        val questaoId = questao.id ?: 0L
 
-        val questaoId = cursor.getLong(idColunaIndex)
-        val pergunta = cursor.getString(perguntaIndex)
-        val urlImagem = cursor.getString(urlImagemIndex)
-        val numRespostas = cursor.getInt(numRespostasIndex)
-
-        holder.textViewPergunta.text = pergunta
-        holder.textViewNumRespostas.text = "$numRespostas Respostas"
+        holder.textViewPergunta.text = questao.pergunta
+        holder.textViewNumRespostas.text = "${questao.numRespostas} Respostas"
         holder.itemView.tag = questaoId
 
 
-        if(!urlImagem.isNullOrEmpty()){
+        if(!questao.urlImagem.isNullOrEmpty()){
             holder.imageViewImagem.scaleType = ImageView.ScaleType.CENTER_CROP
             Glide.with(context) //https://www.geeksforgeeks.org/android/image-loading-caching-library-android-set-2/
-                .load(urlImagem)
+                .load(questao.urlImagem)
                 .centerCrop()
                 .placeholder(R.drawable.ic_resposta)
                 .error(R.drawable.ic_resposta)
@@ -76,7 +68,7 @@ class QuestaoAdapter(
             context.startActivity(intent)
         }
         holder.buttonDelete.setOnClickListener {
-            removerQuestao(questaoId)
+            removerQuestao(questaoId, position)
         }
         holder.buttonEditarQuestao.setOnClickListener{
             val intent = Intent(context, AlterarQuestao::class.java)
@@ -85,21 +77,31 @@ class QuestaoAdapter(
         }
     }
     @SuppressLint("NotifyDataSetChanged")
-    fun changeCursor(newCursor: Cursor) {
-        if (cursor != newCursor) {
-            cursor.close()
-        }
-        cursor = newCursor
+    fun atualizarDados(novaLista: List<Questao>) {
+        this.questoes = novaLista
         notifyDataSetChanged()
     }
-    fun removerQuestao(idQuestao: Long){
+    fun removerQuestao(idQuestao: Long, position: Int){
 
-        val linhasAfetadas = questaoSQL.eliminaQuestao(idQuestao)
-        if (linhasAfetadas > 0){
-            Toast.makeText(context, "Questao ID $idQuestao removido com sucesso.", Toast.LENGTH_SHORT).show()
-            val intent = Intent(context, ListaQuestoes::class.java)
-            context.startActivity(intent)
-        }else
-            Toast.makeText(context, "Erro ao remover Questao ID $idQuestao.", Toast.LENGTH_SHORT).show()
+        val request = EliminarQuestaoRequest(quid = idQuestao)
+        ClienteRetrofit.instance.eliminarQuestao(request).enqueue(object : Callback<RegistoResposta> {
+            override fun onResponse(
+                call: Call<RegistoResposta>,
+                response: Response<RegistoResposta>
+            ) {
+                if (response.isSuccessful) {
+                    Toast.makeText(context, "Questão eliminada com sucesso!", Toast.LENGTH_SHORT)
+                        .show()
+
+                    val novaLista = questoes.toMutableList()
+                    novaLista.removeAt(position)
+                    atualizarDados(novaLista)
+                } else
+                    Toast.makeText(context, "Não foi possível eliminar a questão", Toast.LENGTH_SHORT).show()
+            }
+            override fun onFailure(call: Call<RegistoResposta>, t: Throwable) {
+                Toast.makeText(context, "Falha de rede: ${t.message}", Toast.LENGTH_LONG).show()
+            }
+        })
     }
 }

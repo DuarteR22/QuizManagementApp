@@ -1,68 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp"
-    android:background="#1A2130"> <TextView
-    android:id="@+id/tv_titulo_quiz"
-    android:layout_width="0dp"
+    android:fillViewport="true"
+    android:background="#1A2130">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="Inserir Novo Quiz"
-    android:textSize="24sp"
-    android:textStyle="bold"
-    android:gravity="center"
-    android:textColor="#E0E0E0"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent" />
+    android:padding="24dp"
+    android:background="#1A2130">
+
+    <TextView
+        android:id="@+id/tv_titulo_quiz"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Inserir Novo Quiz"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textColor="#E0E0E0"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_label_titulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="Título:"
+        android:textStyle="bold"
+        android:textColor="#E0E0E0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_titulo_quiz" />
 
     <EditText
         android:id="@+id/et_titulo_quiz"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:hint="Título do Quiz"
+        android:layout_marginTop="8dp"
+        android:hint="Obrigatório"
         android:inputType="textCapSentences"
         android:minHeight="48dp"
         android:textColor="#E0E0E0"
         android:textColorHint="#A0A0A0"
         android:backgroundTint="#A0A0A0"
-        app:layout_constraintTop_toBottomOf="@id/tv_titulo_quiz"
+        app:layout_constraintTop_toBottomOf="@id/tv_label_titulo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_label_descricao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Descrição:"
+        android:textStyle="bold"
+        android:textColor="#E0E0E0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_titulo_quiz" />
 
     <EditText
         android:id="@+id/et_descricao_quiz"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:backgroundTint="#A0A0A0"
         android:gravity="top|start"
-        android:hint="Descrição do Quiz"
+        android:hint="Obrigatório"
         android:inputType="textMultiLine"
-        android:lines="3"
-        android:minHeight="80dp"
+        android:minHeight="48dp"
         android:textColor="#E0E0E0"
         android:textColorHint="#A0A0A0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_titulo_quiz" />
+        app:layout_constraintTop_toBottomOf="@id/tv_label_descricao" />
+
+    <TextView
+        android:id="@+id/tv_label_tempo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Tempo Máximo para Realização (segundos):"
+        android:textStyle="bold"
+        android:textColor="#E0E0E0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_descricao_quiz" />
 
     <EditText
         android:id="@+id/et_tempo_quiz"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:hint="Tempo Máximo (segundos)"
+        android:layout_marginTop="8dp"
+        android:hint="Obrigatório"
         android:inputType="number"
         android:minHeight="48dp"
         android:textColor="#E0E0E0"
         android:textColorHint="#A0A0A0"
         android:backgroundTint="#A0A0A0"
-        app:layout_constraintTop_toBottomOf="@id/et_descricao_quiz"
+        app:layout_constraintTop_toBottomOf="@id/tv_label_tempo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -76,12 +113,10 @@
         android:text="GUARDAR QUIZ"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toEndOf="@+id/btn_cancelar_quiz"
-        app:layout_constraintTop_toBottomOf="@id/et_tempo_quiz"
-        app:layout_constraintVertical_bias="0.048" />
+        app:layout_constraintTop_toBottomOf="@id/et_tempo_quiz" />
 
     <Button
         android:id="@+id/btn_cancelar_quiz"
@@ -94,11 +129,10 @@
         android:text="CANCELAR"
         android:textColor="#A0A0A0"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_guardar_quiz"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_tempo_quiz"
-        app:layout_constraintVertical_bias="0.048" />
+        app:layout_constraintTop_toBottomOf="@id/et_tempo_quiz" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

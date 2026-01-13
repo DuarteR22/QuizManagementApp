@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
@@ -37,31 +38,27 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         carregaQuizzes()
     }
-
-    private fun carregaQuizzes(){
+    private fun carregaQuizzes() {
         val sharedPref = getSharedPreferences("sessao", MODE_PRIVATE)
         val uidLogado = sharedPref.getInt("u_uid", -1)
-        ClienteRetrofit.instance.getQuizzes().enqueue(object : retrofit2.Callback<List<Quiz>>{
-            override fun onResponse(call: Call<List<Quiz>>, response: Response<List<Quiz>>) {
-                if (response.isSuccessful){
-                    val listaQuizzes = response.body() ?: emptyList()
-                    if (!::quizAdapter.isInitialized){
-                    quizAdapter = QuizAdapter(this@MainActivity, listaQuizzes,uidLogado )
-                        recyclerViewQuizzes.adapter = quizAdapter
-                }else
-                        quizAdapter.atualizarDados(listaQuizzes)
-            }
-                else
-                    Toast.makeText(this@MainActivity, "Erro ao carregar quizzes", Toast.LENGTH_SHORT).show()
-                override fun onFailure(call: retrofit2.Call<List<Quiz>>, t: Throwable) {
-                    Toast.makeText(this@MainActivity, "Falha de rede: ${t.message}", Toast.LENGTH_LONG).show()
-                }
-        })
 
-        if (!::quizAdapter.isInitialized){
-            quizAdapter = QuizAdapter(this, cursor,quizSQL )
-            recyclerViewQuizzes.adapter = quizAdapter
-        }else
-            quizAdapter.changeCursor(cursor)
+        ClienteRetrofit.instance.getQuizzes().enqueue(object : Callback<List<Quiz>> {
+            override fun onResponse(call: Call<List<Quiz>>, response: Response<List<Quiz>>) {
+                if (response.isSuccessful) {
+                    val listaQuizzes = response.body() ?: emptyList()
+                    if (!::quizAdapter.isInitialized) {
+                        quizAdapter = QuizAdapter(this@MainActivity, listaQuizzes, uidLogado)
+                        recyclerViewQuizzes.adapter = quizAdapter
+                    } else {
+                        quizAdapter.atualizarDados(listaQuizzes)
+                    }
+                } else {
+                    Toast.makeText(this@MainActivity, "Erro ao carregar os quizzes", Toast.LENGTH_SHORT).show()
+                }
+            }
+            override fun onFailure(call: Call<List<Quiz>>, t: Throwable) {
+                Toast.makeText(this@MainActivity, "Falha de rede: ${t.message}", Toast.LENGTH_LONG).show()
+            }
+        })
     }
 }

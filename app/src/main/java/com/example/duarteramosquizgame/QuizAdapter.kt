@@ -3,8 +3,6 @@ package com.example.duarteramosquizgame
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.database.Cursor
-import android.provider.BaseColumns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -84,8 +82,8 @@ class QuizAdapter(private val context: Context,
         )
         ClienteRetrofit.instance.eliminarQuiz(request).enqueue(object: Callback<RegistoResposta>{
             override fun onResponse(
-                call: Call<EliminarQuizRequest>,
-                response: Response<EliminarQuizRequest>
+                call: Call<RegistoResposta>,
+                response: Response<RegistoResposta>
             ) {
                 if(response.isSuccessful){
                     Toast.makeText(context, "Quiz eliminado com sucesso!", Toast.LENGTH_SHORT).show()
@@ -96,7 +94,7 @@ class QuizAdapter(private val context: Context,
                     Toast.makeText(context, "Não tens permissão para apagar este quiz", Toast.LENGTH_SHORT).show()
                 }
             }
-            override fun onFailure(call: Call<EliminarQuizRequest>, t: Throwable) {
+            override fun onFailure(call: Call<RegistoResposta>, t: Throwable) {
                 Toast.makeText(context, "Erro de ligação", Toast.LENGTH_SHORT).show()
             }
         })

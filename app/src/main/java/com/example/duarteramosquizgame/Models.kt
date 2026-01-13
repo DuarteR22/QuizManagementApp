@@ -13,3 +13,12 @@ data class RegistoQuizResposta(val mensagem: String, val qid: Int? = null)
 data class RegistoQuestaoResposta(val mensagem: String, val qid: Int? = null, val quid: Int? = null)
 
 data class EliminarQuizRequest(val qid: Int, val u_uid: Int)
+
+data class ListaQuestaoRequest(val qid: Long)
+
+data class EliminarQuestaoRequest(val quid: Long)
+
+data class ListarQuestaoIdRequest(val quid: Long)
+
+data class QuizIdRequest(@SerializedName("qid") val qid: Long)
+

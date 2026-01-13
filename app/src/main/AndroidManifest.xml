@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -27,34 +27,62 @@
             android:name=".InserirQuiz"
             android:exported="true"
             android:label="QuizManagementApp">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".InserirQuestao"
             android:exported="true"
             android:label="QuizManagementApp">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ResolverQuestao"
             android:exported="true"
             android:label="QuizManagementApp">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
-
-
+        <activity
+            android:name=".QuestaoSQL"
+            android:exported="true"
+            android:label="QuizManagementApp">
+        </activity>
+        <activity
+            android:name=".QuizSQL"
+            android:exported="true"
+            android:label="QuizManagementApp">
+        </activity>
+        <activity
+            android:name=".CriaDB"
+            android:exported="true"
+            android:label="QuizManagementApp">
+        </activity>
+        <activity
+            android:name=".QuizAdapter"
+            android:exported="true"
+            android:label="QuizManagementApp">
+        </activity>
+        <activity
+            android:name=".AlterarQuiz"
+            android:exported="true"
+            android:label="QuizManagementApp">
+        </activity>
+        <activity
+            android:name=".ListaQuestoes"
+            android:exported="true"
+            android:label="QuizManagementApp">
+        </activity>
+        <activity
+            android:name=".AlterarQuestao"
+            android:exported="true"
+            android:label="QuizManagementApp">
+        </activity>
+        <activity
+            android:name=".ResolverQuiz"
+            android:exported="true"
+            android:label="QuizManagementApp">
+        </activity>
+        <activity
+            android:name=".Detalhes"
+            android:exported="true"
+            android:label="QuizManagementApp">
+        </activity>
     </application>
 
 </manifest>

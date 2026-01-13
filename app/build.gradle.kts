@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.quizmanagementapp"
+    namespace = "com.example.duarteramosquizgame"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.quizmanagementapp"
+        applicationId = "com.example.duarteramosquizgame"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
@@ -52,6 +52,13 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
+    implementation("androidx.recyclerview:recyclerview:1.4.0")
+    implementation("com.google.android.material:material:1.13.0")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
+    implementation("com.squareup.retrofit2:retrofit:3.0.0")
+    implementation("com.squareup.retrofit2:converter-gson:3.0.0")
+    implementation("com.squareup.retrofit2:converter-scalars:3.0.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

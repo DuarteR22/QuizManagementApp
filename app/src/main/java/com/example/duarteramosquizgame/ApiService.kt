@@ -25,4 +25,21 @@ interface ApiService {
     @POST("eliminar_quiz")
     fun eliminarQuiz(@Body req: EliminarQuizRequest) : Call<RegistoResposta>
 
+    @POST("listar_questoes")
+    fun listarQuestoes(@Body req: ListaQuestaoRequest): Call<List<Questao>>
+
+    @POST("eliminar_questao")
+    fun eliminarQuestao(@Body req: EliminarQuestaoRequest): Call<RegistoResposta>
+
+    @POST("alterar_questao")
+    fun alterarQuestao(@Body questao: Questao): Call<RegistoResposta>
+
+    @POST("listar_questao_id")
+    fun listarQuestaoId(@Body req: ListarQuestaoIdRequest):  Call<Questao>
+
+    @POST("alterar_quiz")
+    fun alterarQuiz(@Body quiz: Quiz): Call<RegistoResposta>
+
+    @POST("listar_quiz_id")
+    fun listarQuizId(@Body request: QuizIdRequest): Call<Quiz>
 }
