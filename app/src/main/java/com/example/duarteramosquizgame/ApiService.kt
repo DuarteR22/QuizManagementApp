@@ -10,7 +10,7 @@ interface ApiService {
     @POST("login_utilizador")
     fun login(@Body req: UtilizadorRequest): Call<LoginResponse>
 
-    @GET("quizzes")
+    @GET("listar_quizzes")
     fun getQuizzes(): Call<List<Quiz>>
 
     @POST("inserir_utilizador")

@@ -31,14 +31,20 @@ class Registo: AppCompatActivity() {
             val username = editTextUsername.text.toString()
             val password = editTextPassword.text.toString()
             val confirmar = editTextConfirmar.text.toString()
-            if (username.isEmpty())
+            if (username.isEmpty()){
                 editTextUsername.error = "O username é obrigatório"
-            if (password.isEmpty())
+                return@setOnClickListener
+            }
+            if (password.isEmpty()){
                 editTextUsername.error = "A password é obrigatória"
-            if (password != confirmar)
+                return@setOnClickListener
+            }
+            if (password != confirmar){
                 editTextUsername.error = "As passwords têm de ser iguais!"
+                return@setOnClickListener
+            }
 
-            val registoRequest = UtilizadorRequest(u_username = username, u_password = password)
+            val registoRequest = UtilizadorRequest(username = username, password = password)
 
             ClienteRetrofit.instance.registar(registoRequest).enqueue(object : Callback<RegistoResposta>{
                 override fun onResponse(

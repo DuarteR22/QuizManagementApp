@@ -13,6 +13,9 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ResolverQuestao : AppCompatActivity() {
 
@@ -46,114 +49,122 @@ class ResolverQuestao : AppCompatActivity() {
             finish()
             return
         }
-        when(numeroRespostaCorreta){
-
-            1 -> {
-                buttonResposta1.setOnClickListener{
-                    Toast.makeText(this, "Resposta Correta!", Toast.LENGTH_SHORT).show()
-                    finish()
-                }
-                buttonResposta2.setOnClickListener {
-                    Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
-                    finish()
-                }
-                buttonResposta3.setOnClickListener {
-                    Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
-                    finish()
-                }
-                buttonResposta4.setOnClickListener {
-                    Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
-                    finish()
-                }
-            }
-            2 -> {
-                buttonResposta1.setOnClickListener{
-                    Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
-                    finish()
-                }
-                buttonResposta2.setOnClickListener{
-                    Toast.makeText(this, "Resposta Correta!", Toast.LENGTH_SHORT).show()
-                    finish()                }
-                buttonResposta3.setOnClickListener {
-                    Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
-                    finish()
-                }
-                buttonResposta4.setOnClickListener {
-                    Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
-                    finish()
-                }
-            }
-            3 -> {
-                buttonResposta1.setOnClickListener{
-                    Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
-                    finish()
-                }
-                buttonResposta2.setOnClickListener {
-                    Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
-                    finish()
-                }
-                buttonResposta3.setOnClickListener{
-                    Toast.makeText(this, "Resposta Correta!", Toast.LENGTH_SHORT).show()
-                    finish()                }
-                buttonResposta4.setOnClickListener {
-                    Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
-                    finish()
-                }
-            }
-            4 -> {
-                buttonResposta1.setOnClickListener{
-                    Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
-                    finish()
-                }
-                buttonResposta2.setOnClickListener {
-                    Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
-                    finish()
-                }
-                buttonResposta3.setOnClickListener {
-                    Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
-                    finish()
-                }
-                buttonResposta4.setOnClickListener{
-                    Toast.makeText(this, "Resposta Correta!", Toast.LENGTH_SHORT).show()
-                    finish()
-                }
-            }
-        }
         buttonCancelar.setOnClickListener {
             finish()
         }
     }
     private fun carregarQuestao(){
-        val questao = null
-        if (questao == null) {
-            finish()
-            return
-        }
-        val numeroRespostas: Int = questao.numRespostas
-        val respostas = questao.respostas
-        numeroRespostaCorreta = questao.respostaCorreta
 
-        textViewEnunciado.text = questao.pergunta
-        urlImagem = questao.urlImagem
-        if (!urlImagem.isNullOrEmpty()) {
-            imagemQuestao.scaleType = ImageView.ScaleType.CENTER_CROP
-            Glide.with(this)
-                .load(urlImagem)
-                .placeholder(R.drawable.ic_resposta)
-                .error(R.drawable.ic_resposta)
-                .into(imagemQuestao)
-        }
-        else{
-            imagemQuestao.scaleType = ImageView.ScaleType.CENTER_INSIDE
-            imagemQuestao.setImageResource(R.drawable.ic_resposta)
-        }
+        val request = ListarQuestaoIdRequest(quid = idQuestao)
+        ClienteRetrofit.instance.listarQuestaoId(request).enqueue(object : Callback<Questao>{
+            override fun onResponse(call: Call<Questao>, response: Response<Questao>) {
+                if(response.isSuccessful){
+                    val questao = response.body()
+                    if (questao != null){
+                        val numeroRespostas: Int = questao.numRespostas
+                        val respostas = questao.respostas
+                        numeroRespostaCorreta = questao.respostaCorreta
+                        textViewEnunciado.text = questao.pergunta
+                        urlImagem = questao.urlImagem
+                        if (!urlImagem.isNullOrEmpty()) {
+                            imagemQuestao.scaleType = ImageView.ScaleType.CENTER_CROP
+                            Glide.with(this@ResolverQuestao)
+                                .load(urlImagem)
+                                .placeholder(R.drawable.ic_resposta)
+                                .error(R.drawable.ic_resposta)
+                                .into(imagemQuestao)
+                        }
+                        else{
+                            imagemQuestao.scaleType = ImageView.ScaleType.CENTER_INSIDE
+                            imagemQuestao.setImageResource(R.drawable.ic_resposta)
+                        }
+                        val resposta1 = respostas.getOrNull(0) ?: ""
+                        val resposta2 = respostas.getOrNull(1)?: ""
+                        val resposta3 = respostas.getOrNull(2)?: ""
+                        val resposta4 = respostas.getOrNull(3)?: ""
+                        atualizaEditTextRespostas(numeroRespostas,resposta1,resposta2,resposta3,resposta4)
+                        when(numeroRespostaCorreta){
+                            1 -> {
+                                buttonResposta1.setOnClickListener{
+                                    Toast.makeText(this@ResolverQuestao, "Resposta Correta!", Toast.LENGTH_SHORT).show()
+                                    finish()
+                                }
+                                buttonResposta2.setOnClickListener {
+                                    Toast.makeText(this@ResolverQuestao, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                                    finish()
+                                }
+                                buttonResposta3.setOnClickListener {
+                                    Toast.makeText(this@ResolverQuestao, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                                    finish()
+                                }
+                                buttonResposta4.setOnClickListener {
+                                    Toast.makeText(this@ResolverQuestao, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                                    finish()
+                                }
+                            }
+                            2 -> {
+                                buttonResposta1.setOnClickListener{
+                                    Toast.makeText(this@ResolverQuestao, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                                    finish()
+                                }
+                                buttonResposta2.setOnClickListener{
+                                    Toast.makeText(this@ResolverQuestao, "Resposta Correta!", Toast.LENGTH_SHORT).show()
+                                    finish()                }
+                                buttonResposta3.setOnClickListener {
+                                    Toast.makeText(this@ResolverQuestao, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                                    finish()
+                                }
+                                buttonResposta4.setOnClickListener {
+                                    Toast.makeText(this@ResolverQuestao, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                                    finish()
+                                }
+                            }
+                            3 -> {
+                                buttonResposta1.setOnClickListener{
+                                    Toast.makeText(this@ResolverQuestao, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                                    finish()
+                                }
+                                buttonResposta2.setOnClickListener {
+                                    Toast.makeText(this@ResolverQuestao, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                                    finish()
+                                }
+                                buttonResposta3.setOnClickListener{
+                                    Toast.makeText(this@ResolverQuestao, "Resposta Correta!", Toast.LENGTH_SHORT).show()
+                                    finish()                }
+                                buttonResposta4.setOnClickListener {
+                                    Toast.makeText(this@ResolverQuestao, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                                    finish()
+                                }
+                            }
+                            4 -> {
+                                buttonResposta1.setOnClickListener{
+                                    Toast.makeText(this@ResolverQuestao, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                                    finish()
+                                }
+                                buttonResposta2.setOnClickListener {
+                                    Toast.makeText(this@ResolverQuestao, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                                    finish()
+                                }
+                                buttonResposta3.setOnClickListener {
+                                    Toast.makeText(this@ResolverQuestao, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                                    finish()
+                                }
+                                buttonResposta4.setOnClickListener{
+                                    Toast.makeText(this@ResolverQuestao, "Resposta Correta!", Toast.LENGTH_SHORT).show()
+                                    finish()
+                                }
+                            }
+                        }
 
-        val resposta1 = respostas.getOrNull(0) ?: ""
-        val resposta2 = respostas.getOrNull(1)?: ""
-        val resposta3 = respostas.getOrNull(2)?: ""
-        val resposta4 = respostas.getOrNull(3)?: ""
-        atualizaEditTextRespostas(numeroRespostas,resposta1,resposta2,resposta3,resposta4)
+                    }else
+                        finish()
+                }
+            }
 
+            override fun onFailure(call: Call<Questao>, t: Throwable) {
+                finish()
+            }
+        })
     }
     fun atualizaEditTextRespostas(count: Int, resposta1: String, resposta2: String, resposta3: String, resposta4: String){
 

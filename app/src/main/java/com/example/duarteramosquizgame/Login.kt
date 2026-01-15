@@ -14,6 +14,14 @@ import retrofit2.Response
 class Login: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val sharedPref = getSharedPreferences("sessao", MODE_PRIVATE)
+        val tokenExistente = sharedPref.getString("token", null)
+        if (tokenExistente != null) {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+            return
+        }
         setContentView(R.layout.login)
         val editTextUsername: EditText
         val editTextPassword: EditText
@@ -34,7 +42,7 @@ class Login: AppCompatActivity() {
                 editTextPassword.error = "A password é obrigatória!"
                 return@setOnClickListener
             }
-            val loginRequest = UtilizadorRequest(u_username = username,u_password = password)
+            val loginRequest = UtilizadorRequest(username = username,password = password)
             ClienteRetrofit.instance.login(loginRequest).enqueue(object : retrofit2.Callback<LoginResponse>{
                 override fun onResponse(
                     call: Call<LoginResponse>,
@@ -48,7 +56,6 @@ class Login: AppCompatActivity() {
                             putInt("u_uid", dados?.u_uid ?: -1)
                             apply()
                         }
-                        Toast.makeText(this@Login, "Sucesso!", Toast.LENGTH_SHORT).show()
                         startActivity(Intent(this@Login, MainActivity::class.java))
                         finish()
 

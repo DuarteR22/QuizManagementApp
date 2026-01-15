@@ -30,8 +30,8 @@ class MainActivity : AppCompatActivity() {
             startActivity(intentAdicionarQuiz)
         }
         btnInformacoes.setOnClickListener {
-            val intentDetalhes = Intent(this, Detalhes::class.java)
-            startActivity(intentDetalhes)
+            val intentPerfil = Intent(this, Perfil::class.java)
+            startActivity(intentPerfil)
         }
     }
     override fun onResume(){

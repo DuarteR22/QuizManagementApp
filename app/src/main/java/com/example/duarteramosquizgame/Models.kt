@@ -2,7 +2,7 @@ package com.example.duarteramosquizgame
 
 import com.google.gson.annotations.SerializedName
 
-data class UtilizadorRequest (val u_username: String, val u_password: String)
+data class UtilizadorRequest (val username: String, val password: String)
 
 data class LoginResponse(val mensagem: String, val token: String, @SerializedName("u_uid") val u_uid: Int)
 

@@ -16,10 +16,11 @@ import com.bumptech.glide.Glide
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import retrofit2.Callback
+import retrofit2.Response
 
 class ResolverQuiz: AppCompatActivity() {
 
-    private lateinit var questaoSQL: QuestaoSQL
     private var quizId: Long = -1
     private var listaQuestoes: List<Questao> = emptyList()
     private var pontuacao: Int = 0
@@ -56,7 +57,6 @@ class ResolverQuiz: AppCompatActivity() {
         buttonResposta3 = findViewById(R.id.btn_resposta_3)
         buttonResposta4 = findViewById(R.id.btn_resposta_4)
         imageViewQuestao = findViewById(R.id.iv_imagem_questao)
-        questaoSQL = QuestaoSQL(this)
         quizId = intent.getLongExtra("id_quiz", -1)
 
         buttonSubmeter = findViewById(R.id.btn_submeter)
@@ -65,17 +65,37 @@ class ResolverQuiz: AppCompatActivity() {
 
         if (quizId == -1L)
             finish()
-        questaoSQL = QuestaoSQL(this)
 
-        listaQuestoes = questaoSQL.obterQuestoesQuizIdLista(quizId)
-        if (listaQuestoes.isEmpty()){
-            Toast.makeText(this, "Este quiz não possui questões", Toast.LENGTH_LONG).show()
-            finish()
-            return
-        }
-        configurarListeners()
-        carregarQuestao(indiceQuestao)
-        iniciarTempo()
+        val request = ListaQuestaoRequest(qid = quizId)
+        ClienteRetrofit.instance.listarQuestoes(request).enqueue(object : Callback<List<Questao>>{
+            override fun onResponse(
+                call: retrofit2.Call<List<Questao>>,
+                response: Response<List<Questao>>
+            ) {
+                if(response.isSuccessful){
+                    listaQuestoes = response.body() ?: emptyList()
+                    if (listaQuestoes.isEmpty()) {
+                        finish()
+                    } else {
+                        configurarListeners()
+                        carregarQuestao(indiceQuestao)
+                        iniciarTempo()
+                    }
+                }else {
+                    Toast.makeText(
+                        this@ResolverQuiz,
+                        "Erro ao carregar questões",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    finish()
+                }
+            }
+
+            override fun onFailure(call: retrofit2.Call<List<Questao>>, t: Throwable) {
+                Toast.makeText(this@ResolverQuiz, "Falha de rede: ${t.message}", Toast.LENGTH_LONG).show()
+                finish()
+            }
+        })
     }
     fun configurarListeners(){
 
@@ -305,7 +325,7 @@ class ResolverQuiz: AppCompatActivity() {
             }
             if(tempoRestante == 0){
                 textViewTempo. text = "Tempo: 0s"
-
+                pontuacaoFinal()
             }
         }
     }

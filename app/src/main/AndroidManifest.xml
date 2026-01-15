@@ -17,11 +17,7 @@
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.QuizManagementApp">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".InserirQuiz"
@@ -35,21 +31,6 @@
         </activity>
         <activity
             android:name=".ResolverQuestao"
-            android:exported="true"
-            android:label="QuizManagementApp">
-        </activity>
-        <activity
-            android:name=".QuestaoSQL"
-            android:exported="true"
-            android:label="QuizManagementApp">
-        </activity>
-        <activity
-            android:name=".QuizSQL"
-            android:exported="true"
-            android:label="QuizManagementApp">
-        </activity>
-        <activity
-            android:name=".CriaDB"
             android:exported="true"
             android:label="QuizManagementApp">
         </activity>
@@ -80,6 +61,26 @@
         </activity>
         <activity
             android:name=".Detalhes"
+            android:exported="true"
+            android:label="QuizManagementApp">
+        </activity>
+        <activity
+            android:name=".Login"
+            android:exported="true"
+            android:label="QuizManagementApp">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Registo"
+            android:exported="true"
+            android:label="QuizManagementApp">
+        </activity>
+        <activity
+            android:name=".Perfil"
             android:exported="true"
             android:label="QuizManagementApp">
         </activity>

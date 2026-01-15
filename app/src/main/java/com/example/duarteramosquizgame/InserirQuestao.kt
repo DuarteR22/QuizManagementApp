@@ -97,7 +97,6 @@ class InserirQuestao : AppCompatActivity(){
                 Toast.makeText(this, "Por favor selecione um radiobutton que defina a resposta correta!", Toast.LENGTH_SHORT).show()
             else{
                 when(numeroRespostasFinal){
-
                     2 -> if (editTextResposta1Final.isEmpty() || editTextResposta2Final.isEmpty()||editTextPerguntaFinal.isEmpty() || numeroRespostaCorreta == -1){
                         if (editTextPerguntaFinal.isEmpty())
                             editTextPergunta.error = "todos os campos são obrigatórios"
@@ -123,6 +122,7 @@ class InserirQuestao : AppCompatActivity(){
                     else{
                         val respostasLista = listOf(editTextResposta1Final,editTextResposta2Final, editTextResposta3Final)
                         inserirQuestao(editTextPerguntaFinal, respostasLista, 3, numeroRespostaCorreta,editTextUrlFinal)
+                        finish()
                     }
                     4 -> if (editTextResposta1Final.isEmpty() || editTextResposta2Final.isEmpty()||editTextPerguntaFinal.isEmpty() || numeroRespostaCorreta == -1 || editTextResposta3Final.isEmpty() || editTextResposta4Final.isEmpty()){
                         if (editTextPerguntaFinal.isEmpty())
@@ -139,6 +139,7 @@ class InserirQuestao : AppCompatActivity(){
                     else{
                         val respostasLista = listOf(editTextResposta1Final,editTextResposta2Final, editTextResposta3Final, editTextResposta4Final)
                         inserirQuestao(editTextPerguntaFinal, respostasLista, 4, numeroRespostaCorreta,editTextUrlFinal)
+                        finish()
                     }
                 }
             }

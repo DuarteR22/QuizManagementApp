@@ -148,6 +148,7 @@ class AlterarQuestao: AppCompatActivity() {
                         editTextResposta1.visibility = VISIBLE
                         if (questao.numRespostas >= 2) {
                             textViewResposta2.text = respostas.getOrNull(1) ?: ""
+                            editTextResposta2.setText(respostas.getOrNull(1) ?: "")
                             textViewResposta2.visibility = VISIBLE
                             textViewLabelResposta2.visibility = VISIBLE
                             editTextResposta2.visibility = VISIBLE
@@ -159,6 +160,7 @@ class AlterarQuestao: AppCompatActivity() {
                         }
                         if (questao.numRespostas >= 3) {
                             textViewResposta3.text = respostas.getOrNull(2) ?: ""
+                            editTextResposta3.setText(respostas.getOrNull(2) ?: "")
                             textViewResposta3.visibility = VISIBLE
                             textViewLabelResposta3.visibility = VISIBLE
                             editTextResposta3.visibility = VISIBLE
@@ -169,6 +171,7 @@ class AlterarQuestao: AppCompatActivity() {
                         }
                         if (questao.numRespostas >= 4) {
                             textViewResposta4.text = respostas.getOrNull(3) ?: ""
+                            editTextResposta4.setText(respostas.getOrNull(3) ?: "")
                             textViewResposta4.visibility = VISIBLE
                             textViewLabelResposta4.visibility = VISIBLE
                             editTextResposta4.visibility = VISIBLE
