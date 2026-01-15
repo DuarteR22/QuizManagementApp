@@ -1,11 +1,14 @@
 package com.example.duarteramosquizgame
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.database.Cursor
 import android.os.Bundle
 import android.widget.ImageButton
+import android.widget.Switch
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SwitchCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import retrofit2.Call
@@ -17,6 +20,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var recyclerViewQuizzes: RecyclerView
     private lateinit var quizAdapter: QuizAdapter
+    private var listaCompleta: List<Quiz> = emptyList()
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
@@ -25,6 +30,12 @@ class MainActivity : AppCompatActivity() {
         recyclerViewQuizzes.layoutManager = LinearLayoutManager(this)
         val btnAdicionarQuiz: ImageButton = findViewById(R.id.btn_adicionar_quiz)
         val btnInformacoes: ImageButton = findViewById(R.id.btn_detalhes)
+        val switchFiltrar: SwitchCompat = findViewById(R.id.sw_filtrar)
+
+        switchFiltrar.setOnCheckedChangeListener { _, isChecked ->
+            aplicarFiltro(isChecked)
+        }
+
         btnAdicionarQuiz.setOnClickListener{
             val intentAdicionarQuiz = Intent(this, InserirQuiz::class.java)
             startActivity(intentAdicionarQuiz)
@@ -45,12 +56,12 @@ class MainActivity : AppCompatActivity() {
         ClienteRetrofit.instance.getQuizzes().enqueue(object : Callback<List<Quiz>> {
             override fun onResponse(call: Call<List<Quiz>>, response: Response<List<Quiz>>) {
                 if (response.isSuccessful) {
-                    val listaQuizzes = response.body() ?: emptyList()
+                    listaCompleta = response.body() ?: emptyList()
                     if (!::quizAdapter.isInitialized) {
-                        quizAdapter = QuizAdapter(this@MainActivity, listaQuizzes, uidLogado)
+                        quizAdapter = QuizAdapter(this@MainActivity, listaCompleta, uidLogado)
                         recyclerViewQuizzes.adapter = quizAdapter
                     } else {
-                        quizAdapter.atualizarDados(listaQuizzes)
+                        quizAdapter.atualizarDados(listaCompleta)
                     }
                 } else {
                     Toast.makeText(this@MainActivity, "Erro ao carregar os quizzes", Toast.LENGTH_SHORT).show()
@@ -60,5 +71,21 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this@MainActivity, "Falha de rede: ${t.message}", Toast.LENGTH_LONG).show()
             }
         })
+    }
+    private fun aplicarFiltro(apenasMenus: Boolean){
+        val sharedPref = getSharedPreferences("sessao", MODE_PRIVATE)
+        val uidLogado = sharedPref.getInt("u_uid", -1)
+
+        if (apenasMenus){
+            val listaFiltrada = mutableListOf<Quiz>()
+
+            for (quiz in listaCompleta){
+                if (quiz.utilizador_uid == uidLogado){
+                    listaFiltrada.add(quiz)
+                }
+            }
+            quizAdapter.atualizarDados(listaFiltrada)
+        }else
+            quizAdapter.atualizarDados(listaCompleta)
     }
 }
