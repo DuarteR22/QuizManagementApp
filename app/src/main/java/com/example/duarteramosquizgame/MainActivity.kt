@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         carregaQuizzes()
     }
-    private fun carregaQuizzes() {
+    fun carregaQuizzes() {
         val sharedPref = getSharedPreferences("sessao", MODE_PRIVATE)
         val uidLogado = sharedPref.getInt("u_uid", -1)
 

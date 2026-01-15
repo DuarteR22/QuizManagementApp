@@ -1,6 +1,7 @@
 package com.example.duarteramosquizgame
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -54,7 +55,7 @@ class QuizAdapter(private val context: Context,
         }
 
         holder.buttonDelete.setOnClickListener{
-            removerQuiz(quizId, position)
+            dialogConfirmar(quizId, position, quiz.titulo)
         }
         holder.buttonEditarQuiz.setOnClickListener{
             val intent = Intent(context, AlterarQuiz::class.java)
@@ -74,7 +75,7 @@ class QuizAdapter(private val context: Context,
         notifyDataSetChanged()
     }
 
-    fun removerQuiz(idQuiz: Long, position: Int) {
+    private fun removerQuiz(idQuiz: Long, position: Int) {
 
         val request = EliminarQuizRequest(
             qid = idQuiz.toInt(),
@@ -90,6 +91,9 @@ class QuizAdapter(private val context: Context,
                     val novaLista = quizzes.toMutableList()
                     novaLista.removeAt(position)
                     atualizarDados(novaLista)
+                    if (context is MainActivity){
+                        context.carregaQuizzes()
+                    }
                 }else{
                     Toast.makeText(context, "Não tens permissão para apagar este quiz", Toast.LENGTH_SHORT).show()
                 }
@@ -99,4 +103,19 @@ class QuizAdapter(private val context: Context,
             }
         })
     }
+    private fun dialogConfirmar(idQuiz: Long, position: Int, tituloQuiz: String){
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("Confirmar eliminação")
+        builder.setMessage("Tem a certeza que deseja eliminar o quiz '$tituloQuiz'?")
+
+        builder.setPositiveButton("Sim") { _, _ ->
+            removerQuiz(idQuiz, position)
+        }
+        builder.setNegativeButton("Não") { dialog, _ ->
+            dialog.dismiss()
+        }
+        val alertDialog = builder.create()
+        alertDialog.show()
+    }
+
 }
