@@ -19,12 +19,13 @@ class ListaQuestoes: AppCompatActivity() {
     private lateinit var recyclerViewQuestoes: RecyclerView
     private lateinit var questaoAdapter: QuestaoAdapter
     private var quizId: Long = -1
-
+    private var criadorId: Int = -1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.lista_questoes)
 
         quizId = intent.getLongExtra("id_quiz", -1)
+        criadorId = intent.getIntExtra("utilizador_uid", -1)
         recyclerViewQuestoes = findViewById(R.id.recyclerView_questoes)
         recyclerViewQuestoes.layoutManager = LinearLayoutManager(this)
 
@@ -51,13 +52,14 @@ class ListaQuestoes: AppCompatActivity() {
         carregaQuestoesDB()
     }
     private fun carregaQuestoesDB(){
-
+        val sharedPref = getSharedPreferences("sessao", MODE_PRIVATE)
+        val uidLogado = sharedPref.getInt("u_uid", -1)
         val request = ListaQuestaoRequest(qid = quizId)
         ClienteRetrofit.instance.listarQuestoes(request).enqueue(object : Callback<List<Questao>> {
             override fun onResponse(call: Call<List<Questao>>, response: Response<List<Questao>>) {
                 if (response.isSuccessful) {
                     val lista = response.body() ?: emptyList()
-                    questaoAdapter = QuestaoAdapter(this@ListaQuestoes, lista)
+                    questaoAdapter = QuestaoAdapter(this@ListaQuestoes, lista, uidLogado, criadorId)
                     recyclerViewQuestoes.adapter = questaoAdapter
                 } else {
                     Toast.makeText(this@ListaQuestoes, "Erro ao listar questões", Toast.LENGTH_SHORT).show()

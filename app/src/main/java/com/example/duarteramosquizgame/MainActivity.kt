@@ -57,12 +57,9 @@ class MainActivity : AppCompatActivity() {
             override fun onResponse(call: Call<List<Quiz>>, response: Response<List<Quiz>>) {
                 if (response.isSuccessful) {
                     listaCompleta = response.body() ?: emptyList()
-                    if (!::quizAdapter.isInitialized) {
+
                         quizAdapter = QuizAdapter(this@MainActivity, listaCompleta, uidLogado)
                         recyclerViewQuizzes.adapter = quizAdapter
-                    } else {
-                        quizAdapter.atualizarDados(listaCompleta)
-                    }
                 } else {
                     Toast.makeText(this@MainActivity, "Erro ao carregar os quizzes", Toast.LENGTH_SHORT).show()
                 }

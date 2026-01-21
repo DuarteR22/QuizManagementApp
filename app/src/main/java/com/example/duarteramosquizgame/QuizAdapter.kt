@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -63,8 +64,10 @@ class QuizAdapter(private val context: Context,
             context.startActivity(intent)
         }
         holder.cardViewQuiz.setOnClickListener{
+            Log.d("DEBUG_CLICK", "A abrir Quiz ID: $quizId | Dono do Quiz na Lista: ${quiz.utilizador_uid}")
             val intent = Intent(context, ListaQuestoes::class.java)
             intent.putExtra("id_quiz", quizId)
+            intent.putExtra("utilizador_uid", quiz.utilizador_uid)
             context.startActivity(intent)
         }
     }

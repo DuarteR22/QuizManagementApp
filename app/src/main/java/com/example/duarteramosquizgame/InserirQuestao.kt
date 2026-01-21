@@ -1,5 +1,6 @@
 package com.example.duarteramosquizgame
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -139,7 +140,7 @@ class InserirQuestao : AppCompatActivity(){
                     else{
                         val respostasLista = listOf(editTextResposta1Final,editTextResposta2Final, editTextResposta3Final, editTextResposta4Final)
                         inserirQuestao(editTextPerguntaFinal, respostasLista, 4, numeroRespostaCorreta,editTextUrlFinal)
-                        finish()
+
                     }
                 }
             }
@@ -202,7 +203,7 @@ class InserirQuestao : AppCompatActivity(){
                 if(response.isSuccessful){
                     val quidInserido = response.body()?.quid
                     Toast.makeText(this@InserirQuestao, "Questão $quidInserido inserida com sucesso!", Toast.LENGTH_SHORT).show()
-
+                    finish()
                 }else
                     Toast.makeText(this@InserirQuestao, "Erro ao guardar no servidor remoto", Toast.LENGTH_SHORT).show()
             }

@@ -1,11 +1,13 @@
 package com.example.duarteramosquizgame
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.database.Cursor
 import android.media.Image
 import android.provider.BaseColumns
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +15,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.compose.ui.util.unpackFloat1
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import retrofit2.Call
@@ -21,7 +24,10 @@ import retrofit2.Response
 
 class QuestaoAdapter(
     private val context: Context,
-    private var questoes: List<Questao>):RecyclerView.Adapter<QuestaoAdapter.QuestaoViewHolder>() {
+    private var questoes: List<Questao>,
+    private val uidLogado: Int,
+    private val uidCriador: Int
+    ):RecyclerView.Adapter<QuestaoAdapter.QuestaoViewHolder>() {
 
     inner class QuestaoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 
@@ -48,7 +54,18 @@ class QuestaoAdapter(
         holder.textViewPergunta.text = questao.pergunta
         holder.textViewNumRespostas.text = "${questao.numRespostas} Respostas"
         holder.itemView.tag = questaoId
+        Log.d("DEBUG_PERMISSAO", "Comparando -> Logado: $uidLogado | Criador: $uidCriador")
+        if (uidLogado == uidCriador) {
+            Log.d("log","UID LOGADO == UID CRIADOR")
+            holder.buttonDelete.visibility = View.VISIBLE
+            holder.buttonEditarQuestao.visibility = View.VISIBLE
+        }
+        else {
+            Log.d("log","UID LOGADO != UID CRIADOR")
 
+            holder.buttonDelete.visibility = View.GONE
+            holder.buttonEditarQuestao.visibility = View.GONE
+        }
 
         if(!questao.urlImagem.isNullOrEmpty()){
             holder.imageViewImagem.scaleType = ImageView.ScaleType.CENTER_CROP
@@ -67,8 +84,9 @@ class QuestaoAdapter(
             intent.putExtra("id_questao", questaoId)
             context.startActivity(intent)
         }
+
         holder.buttonDelete.setOnClickListener {
-            removerQuestao(questaoId, position)
+            dialogConfirmar(questaoId, position, questao.pergunta)
         }
         holder.buttonEditarQuestao.setOnClickListener{
             val intent = Intent(context, AlterarQuestao::class.java)
@@ -103,5 +121,19 @@ class QuestaoAdapter(
                 Toast.makeText(context, "Falha de rede: ${t.message}", Toast.LENGTH_LONG).show()
             }
         })
+    }
+    private fun dialogConfirmar(idQuestao: Long, position: Int, pergunta: String){
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("Confirmar eliminação")
+        builder.setMessage("Tem a certeza que deseja eliminar a pergunta '$pergunta'?")
+
+        builder.setPositiveButton("Sim") { _, _ ->
+            removerQuestao(idQuestao, position)
+        }
+        builder.setNegativeButton("Não") { dialog, _ ->
+            dialog.dismiss()
+        }
+        val alertDialog = builder.create()
+        alertDialog.show()
     }
 }
