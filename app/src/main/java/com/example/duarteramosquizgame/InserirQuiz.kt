@@ -1,6 +1,4 @@
 package com.example.duarteramosquizgame
-
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -51,10 +49,18 @@ class InserirQuiz : AppCompatActivity() {
                     response: Response<RegistoQuizResposta>
                 ) {
                     if (response.isSuccessful){
-                        val qidCriado = response.body()?.qid
-                        Toast.makeText(this@InserirQuiz, "Quiz inserido com sucesso! ID: $qidCriado", Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(this@InserirQuiz, MainActivity::class.java))
-                        finish()
+                        val qidRetornado = response.body()?.qid ?: -1
+                        when(qidRetornado){
+                            -2 ->{
+                                editTextTituloQuiz.error = "Já existe um quiz com este título!"
+                            }-1 ->{
+                                Toast.makeText(this@InserirQuiz, "Erro ao inserir quiz", Toast.LENGTH_SHORT).show()
+                            }
+                            else -> {
+                                Toast.makeText(this@InserirQuiz, "Quiz inserido com sucesso! ID: $qidRetornado", Toast.LENGTH_SHORT).show()
+                                finish()
+                            }
+                        }
                     }else
                         Toast.makeText(this@InserirQuiz, "Erro ao inserir quiz", Toast.LENGTH_SHORT).show()
                 }

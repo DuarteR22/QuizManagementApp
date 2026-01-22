@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
@@ -97,6 +98,8 @@ class ResolverQuiz: AppCompatActivity() {
             }
         })
     }
+
+
     fun configurarListeners(){
 
         buttonResposta1.setOnClickListener{
@@ -309,7 +312,7 @@ class ResolverQuiz: AppCompatActivity() {
         builder.setMessage("Resultado: $pontuacao/${listaQuestoes.size} - $pontuacao acertos em ${listaQuestoes.size} questoes")
         builder.setCancelable(false)
         builder.setPositiveButton("Confirmar"){ _, _ ->
-            finish()
+            terminarQuiz()
         }
         val dialog = builder.create()
         dialog.show()
@@ -328,6 +331,25 @@ class ResolverQuiz: AppCompatActivity() {
                 pontuacaoFinal()
             }
         }
+    }
+    private fun terminarQuiz(){
+        val request = ExecutarQuizRequest(qid = quizId)
+
+        ClienteRetrofit.instance.terminarQuiz(request).enqueue(object : Callback<ExecutarQuizResponse>{
+            override fun onResponse(call: Call<ExecutarQuizResponse>, response: Response<ExecutarQuizResponse>) {
+                finish()
+            }
+
+            override fun onFailure(call: Call<ExecutarQuizResponse>, t: Throwable) {
+                finish()
+            }
+        })
+    }
+    @SuppressLint("MissingSuperCall")
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        super.onBackPressed()
+        terminarQuiz()
     }
 
 }

@@ -42,4 +42,10 @@ interface ApiService {
 
     @POST("listar_quiz_id")
     fun listarQuizId(@Body request: QuizIdRequest): Call<Quiz>
+
+    @POST("executar_quiz")
+    fun executarQuiz(@Body req: ExecutarQuizRequest): Call<ExecutarQuizResponse>
+
+    @POST("terminar_quiz")
+    fun terminarQuiz(@Body req: ExecutarQuizRequest): Call<ExecutarQuizResponse>
 }

@@ -127,7 +127,14 @@ class AlterarQuiz : AppCompatActivity() {
                     startActivity(intent)
                     finish()
                 } else {
-                    Toast.makeText(this@AlterarQuiz, "Erro ao alterar o quiz", Toast.LENGTH_SHORT).show()
+                    when(response.code()){
+                        400 -> {
+                            Toast.makeText(this@AlterarQuiz, "Este quiz está em execução!", Toast.LENGTH_LONG).show()
+                        }
+                        403 ->{
+                            Toast.makeText(this@AlterarQuiz, "Houve um erro ao eliminar este quiz!", Toast.LENGTH_LONG).show()
+                        }
+                    }
                 }
             }
             override fun onFailure(call: Call<RegistoResposta>, t: Throwable) {

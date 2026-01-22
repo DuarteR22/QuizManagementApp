@@ -98,7 +98,15 @@ class QuizAdapter(private val context: Context,
                         context.carregaQuizzes()
                     }
                 }else{
-                    Toast.makeText(context, "Não tens permissão para apagar este quiz", Toast.LENGTH_SHORT).show()
+
+                    when(response.code()){
+                        400 -> {
+                            Toast.makeText(context, "Este quiz está em execução!", Toast.LENGTH_LONG).show()
+                        }
+                        403 ->{
+                            Toast.makeText(context, "Houve um erro ao eliminar este quiz!", Toast.LENGTH_LONG).show()
+                        }
+                    }
                 }
             }
             override fun onFailure(call: Call<RegistoResposta>, t: Throwable) {

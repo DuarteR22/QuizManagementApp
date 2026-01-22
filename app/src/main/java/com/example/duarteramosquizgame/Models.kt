@@ -22,3 +22,6 @@ data class ListarQuestaoIdRequest(val quid: Long)
 
 data class QuizIdRequest(@SerializedName("qid") val qid: Long)
 
+data class ExecutarQuizRequest(val qid: Long)
+
+data class ExecutarQuizResponse(val mensagem: String, val estado: Boolean)

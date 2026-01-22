@@ -42,9 +42,23 @@ class ListaQuestoes: AppCompatActivity() {
         }
         val fabResolverQuiz: FloatingActionButton = findViewById(R.id.fab_resolver_quiz)
         fabResolverQuiz.setOnClickListener {
-            val intent = Intent(this, ResolverQuiz::class.java)
-            intent.putExtra("id_quiz", quizId)
-            startActivity(intent)
+            val requestExecutar = ExecutarQuizRequest(qid = quizId)
+            ClienteRetrofit.instance.executarQuiz(requestExecutar).enqueue(object : Callback<ExecutarQuizResponse>{
+                override fun onResponse(
+                    call: Call<ExecutarQuizResponse>,
+                    response: Response<ExecutarQuizResponse>
+                ) {
+                    if (response.isSuccessful && response.body()?.estado == true){
+                        val intent = Intent(this@ListaQuestoes, ResolverQuiz::class.java)
+                        intent.putExtra("id_quiz", quizId)
+                        startActivity(intent)
+                    }else
+                        Toast.makeText(this@ListaQuestoes, "Erro: Não foi possível iniciar a execução do quiz.", Toast.LENGTH_SHORT).show()
+                }
+                override fun onFailure(call: Call<ExecutarQuizResponse>, t: Throwable) {
+                    Toast.makeText(this@ListaQuestoes, "Falha de ligação ao servidor: ${t.message}", Toast.LENGTH_LONG).show()
+                }
+            })
         }
     }
     override fun onResume() {
