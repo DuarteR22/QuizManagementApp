@@ -52,16 +52,24 @@ class MainActivity : AppCompatActivity() {
     fun carregaQuizzes() {
         val sharedPref = getSharedPreferences("sessao", MODE_PRIVATE)
         val uidLogado = sharedPref.getInt("u_uid", -1)
-
-        ClienteRetrofit.instance.getQuizzes().enqueue(object : Callback<List<Quiz>> {
+        val tokenGuardado = sharedPref.getString("token", "")
+        val authHeader = "Bearer $tokenGuardado"
+        ClienteRetrofit.instance.listarQuizzes(authHeader).enqueue(object : Callback<List<Quiz>> {
             override fun onResponse(call: Call<List<Quiz>>, response: Response<List<Quiz>>) {
                 if (response.isSuccessful) {
                     listaCompleta = response.body() ?: emptyList()
 
                         quizAdapter = QuizAdapter(this@MainActivity, listaCompleta, uidLogado)
                         recyclerViewQuizzes.adapter = quizAdapter
-                } else {
-                    Toast.makeText(this@MainActivity, "Erro ao carregar os quizzes", Toast.LENGTH_SHORT).show()
+                } else if(response.code() == 401) {
+                    val sharedPref = getSharedPreferences("sessao", MODE_PRIVATE)
+                    with(sharedPref.edit()) {
+                        remove("token")
+                        apply()
+                    }
+                    Toast.makeText(this@MainActivity, "Sessão expirada", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this@MainActivity, Login::class.java))
+                    finish()
                 }
             }
             override fun onFailure(call: Call<List<Quiz>>, t: Throwable) {

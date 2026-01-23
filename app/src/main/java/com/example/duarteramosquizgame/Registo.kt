@@ -40,7 +40,8 @@ class Registo: AppCompatActivity() {
                 return@setOnClickListener
             }
             if (password != confirmar){
-                editTextUsername.error = "As passwords têm de ser iguais!"
+                editTextPassword.error = "As passwords têm de ser iguais!"
+                editTextConfirmar.error = "As passwords têm de ser iguais!"
                 return@setOnClickListener
             }
 

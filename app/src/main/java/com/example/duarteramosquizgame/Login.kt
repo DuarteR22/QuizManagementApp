@@ -18,9 +18,7 @@ class Login: AppCompatActivity() {
         val sharedPref = getSharedPreferences("sessao", MODE_PRIVATE)
         val tokenExistente = sharedPref.getString("token", null)
         if (tokenExistente != null) {
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
-            return
+            verificarToken(tokenExistente)
         }
         setContentView(R.layout.login)
         val editTextUsername: EditText
@@ -72,5 +70,24 @@ class Login: AppCompatActivity() {
             val intent = Intent(this, Registo::class.java)
             startActivity(intent)
         }
+    }
+    private fun verificarToken(token: String) {
+        val authHeader = "Bearer $token"
+
+        ClienteRetrofit.instance.listarQuizzes(authHeader).enqueue(object : retrofit2.Callback<List<Quiz>> {
+            override fun onResponse(call: Call<List<Quiz>>, response: Response<List<Quiz>>) {
+                if (response.isSuccessful) {
+                    startActivity(Intent(this@Login, MainActivity::class.java))
+                    finish()
+                } else if (response.code() == 401) {
+                    val sharedPref = getSharedPreferences("sessao", MODE_PRIVATE)
+                    sharedPref.edit().remove("token").apply()
+                }
+            }
+
+            override fun onFailure(call: Call<List<Quiz>>, t: Throwable) {
+                Toast.makeText(this@Login, "Erro ao validar sessão: ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }
