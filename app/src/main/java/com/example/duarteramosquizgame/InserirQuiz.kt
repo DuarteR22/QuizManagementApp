@@ -57,7 +57,7 @@ class InserirQuiz : AppCompatActivity() {
                                 Toast.makeText(this@InserirQuiz, "Erro ao inserir quiz", Toast.LENGTH_SHORT).show()
                             }
                             else -> {
-                                Toast.makeText(this@InserirQuiz, "Quiz inserido com sucesso! ID: $qidRetornado", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this@InserirQuiz, "Quiz inserido com sucesso!", Toast.LENGTH_SHORT).show()
                                 finish()
                             }
                         }
