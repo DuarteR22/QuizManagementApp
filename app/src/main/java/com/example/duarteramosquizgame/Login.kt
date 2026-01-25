@@ -52,6 +52,7 @@ class Login: AppCompatActivity() {
                         with(sharedPref.edit()) {
                             putString("token", dados?.token)
                             putInt("u_uid", dados?.u_uid ?: -1)
+                            putString("username", username)
                             apply()
                         }
                         startActivity(Intent(this@Login, MainActivity::class.java))

@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
                 } else if(response.code() == 401) {
                     val sharedPref = getSharedPreferences("sessao", MODE_PRIVATE)
                     with(sharedPref.edit()) {
-                        remove("token")
+                        clear()
                         apply()
                     }
                     Toast.makeText(this@MainActivity, "Sessão expirada", Toast.LENGTH_SHORT).show()

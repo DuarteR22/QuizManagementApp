@@ -58,14 +58,35 @@ class ResolverQuiz: AppCompatActivity() {
         buttonResposta3 = findViewById(R.id.btn_resposta_3)
         buttonResposta4 = findViewById(R.id.btn_resposta_4)
         imageViewQuestao = findViewById(R.id.iv_imagem_questao)
-        quizId = intent.getLongExtra("id_quiz", -1)
-
         buttonSubmeter = findViewById(R.id.btn_submeter)
         buttonSeguinte = findViewById(R.id.btn_seguinte)
         buttonCancelar = findViewById(R.id.btn_cancelar)
 
+        if(savedInstanceState != null){
+            tempoRestante = savedInstanceState.getInt("tempo_restante")
+            indiceQuestao = savedInstanceState.getInt("indice_questao")
+            pontuacao = savedInstanceState.getInt("pontuacao")
+            quizId = savedInstanceState.getLong("quiz_id")
+            respostaSelecionada = savedInstanceState.getInt("resposta_selecionada")
+        }
+        else
+            quizId = intent.getLongExtra("id_quiz", -1)
+
         if (quizId == -1L)
             finish()
+
+        val quizRequest = QuizIdRequest(qid = quizId)
+        ClienteRetrofit.instance.listarQuizId(quizRequest).enqueue(object : Callback<Quiz> {
+            override fun onResponse(call: Call<Quiz>, response: Response<Quiz>) {
+                if (response.isSuccessful) {
+                    if(savedInstanceState == null)
+                    tempoRestante = response.body()?.tempo_max ?: 60
+                }
+            }
+            override fun onFailure(call: Call<Quiz>, t: Throwable) {
+                finish()
+            }
+        })
 
         val request = ListaQuestaoRequest(qid = quizId)
         ClienteRetrofit.instance.listarQuestoes(request).enqueue(object : Callback<List<Questao>>{
@@ -97,6 +118,14 @@ class ResolverQuiz: AppCompatActivity() {
                 finish()
             }
         })
+    }
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("tempo_restante", tempoRestante)
+        outState.putInt("indice_questao", indiceQuestao)
+        outState.putInt("pontuacao", pontuacao)
+        outState.putLong("quiz_id",quizId)
+        outState.putInt("resposta_selecionada", respostaSelecionada)
     }
 
 
@@ -160,6 +189,7 @@ class ResolverQuiz: AppCompatActivity() {
         }
         buttonSeguinte.setOnClickListener {
             indiceQuestao++
+            respostaSelecionada = 0
             if (indiceQuestao < listaQuestoes.size)
                 carregarQuestao(indiceQuestao)
             else
@@ -220,7 +250,6 @@ class ResolverQuiz: AppCompatActivity() {
     private fun carregarQuestao(indice: Int){
         val questao = listaQuestoes[indice]
         estadoSubmetido = false
-        respostaSelecionada = 0
         buttonSeguinte.visibility = View.GONE
         buttonSubmeter.visibility = View.VISIBLE
 
@@ -249,8 +278,7 @@ class ResolverQuiz: AppCompatActivity() {
                 .error(R.drawable.ic_resposta)
                 .into(imageViewQuestao)
         }else{
-            imageViewQuestao.visibility = View.VISIBLE
-            imageViewQuestao.setImageResource(R.drawable.ic_resposta)
+            imageViewQuestao.visibility = View.GONE
         }
         val resposta1 = respostas.getOrNull(0) ?: "Erro"
         val resposta2 = respostas.getOrNull(1) ?: "Erro"
@@ -303,6 +331,14 @@ class ResolverQuiz: AppCompatActivity() {
             buttonResposta4.text = resposta4
             buttonResposta4.visibility = View.VISIBLE
         }
+        if (respostaSelecionada != 0){
+            when (respostaSelecionada) {
+                1 -> buttonResposta1.isChecked = true
+                2 -> buttonResposta2.isChecked = true
+                3 -> buttonResposta3.isChecked = true
+                4 -> buttonResposta4.isChecked = true
+            }
+        }
     }
     private fun pontuacaoFinal(){ //https://kotlinlang.org/docs/coroutines-overview.html#coroutine-context-and-behavior
         val titulo: String = ("Quiz Terminado")
@@ -319,7 +355,6 @@ class ResolverQuiz: AppCompatActivity() {
     }
     private fun iniciarTempo(){
         cronometroJob?.cancel()
-
         cronometroJob = lifecycleScope.launch {
             while (tempoRestante > 0){
                 textViewTempo.text = "Tempo: $tempoRestante s"
@@ -332,6 +367,7 @@ class ResolverQuiz: AppCompatActivity() {
             }
         }
     }
+
     private fun terminarQuiz(){
         val request = ExecutarQuizRequest(qid = quizId)
 
@@ -351,5 +387,6 @@ class ResolverQuiz: AppCompatActivity() {
         super.onBackPressed()
         terminarQuiz()
     }
+
 
 }

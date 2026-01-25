@@ -29,6 +29,11 @@ class ResolverQuestao : AppCompatActivity() {
     private var idQuestao: Long = -1
     private var numeroRespostaCorreta = -1
     private var urlImagem: String? = ""
+    private var resposta1: String = ""
+    private var resposta2: String = ""
+    private var resposta3: String = ""
+    private var resposta4: String = ""
+    private var enunciadoPergunta: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +47,26 @@ class ResolverQuestao : AppCompatActivity() {
         buttonResposta4 = findViewById(R.id.btn_resposta_4)
         imagemQuestao = findViewById(R.id.iv_imagem_questao)
         val buttonCancelar: Button = findViewById(R.id.btn_cancelar)
-        idQuestao = intent.getLongExtra("id_questao", -1)
+        if (savedInstanceState != null){
+            idQuestao = savedInstanceState.getLong("id_questao")
+            numeroRespostaCorreta = savedInstanceState.getInt("correta")
+            urlImagem = savedInstanceState.getString("url")
+            textViewEnunciado.text = savedInstanceState.getString("pergunta")
+            val r1 = savedInstanceState.getString("r1") ?: ""
+            val r2 = savedInstanceState.getString("r2") ?: ""
+            val r3 = savedInstanceState.getString("r3") ?: ""
+            val r4 = savedInstanceState.getString("r4") ?: ""
+            var count= -1
+            if (r4.isNotEmpty())
+                count = 4
+            else if(r3.isNotEmpty())
+                count = 3
+            else
+                count = 2
+            atualizaEditTextRespostas(count,r1,r2,r3,r4)
+        }else{
+            idQuestao = intent.getLongExtra("id_questao", -1)
+        }
         if (idQuestao != -1L)
             carregarQuestao()
         else{
@@ -52,6 +76,17 @@ class ResolverQuestao : AppCompatActivity() {
         buttonCancelar.setOnClickListener {
             finish()
         }
+    }
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putLong("id_questao", idQuestao)
+        outState.putString("pergunta", textViewEnunciado.text.toString())
+        outState.putString("r1", buttonResposta1.text.toString())
+        outState.putString("r2", buttonResposta2.text.toString())
+        outState.putString("r3", buttonResposta3.text.toString())
+        outState.putString("r4", buttonResposta4.text.toString())
+        outState.putInt("correta", numeroRespostaCorreta)
+        outState.putString("url", urlImagem)
     }
     private fun carregarQuestao(){
 
@@ -75,8 +110,7 @@ class ResolverQuestao : AppCompatActivity() {
                                 .into(imagemQuestao)
                         }
                         else{
-                            imagemQuestao.scaleType = ImageView.ScaleType.CENTER_INSIDE
-                            imagemQuestao.setImageResource(R.drawable.ic_resposta)
+                            imagemQuestao.visibility = GONE
                         }
                         val resposta1 = respostas.getOrNull(0) ?: ""
                         val resposta2 = respostas.getOrNull(1)?: ""
